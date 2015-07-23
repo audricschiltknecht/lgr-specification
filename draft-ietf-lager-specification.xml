@@ -67,7 +67,8 @@
                 These algorithms are comprised of a list of permissible code points, variant code
                 point mappings, and a set of rules acting on them. These algorithms form part of an
                 administrator's policies, and can be referred to as Label Generation Rulesets
-                (LGRs), or IDN tables. </t>
+                (LGRs). In deploying internationalized domain names (IDNs), they have also been
+                known as IDN tables or variant tables. </t>
             <t>There are other kinds of policies relating to labels which are not normally covered by
                 Label Generation Rulesets and are therefore not representable by the XML format
                 described here. These include, but are not limited to policies around trademarks, or
@@ -92,7 +93,7 @@
                 explicit and machine implementable. A remaining small set of implicit algorithms is
                 described in this document to allow commonality in implementation. </t>
             <t>While the predominant usage of this specification is to represent IDN label policy,
-                the format is not limited to IDN usage may also be used for describing ASCII domain
+                the format is not limited to IDN usage and may also be used for describing ASCII domain
                 name label rulesets, or other types of identifier labels beyond those used for
                 domain names. </t>
 
