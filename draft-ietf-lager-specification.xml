@@ -1972,20 +1972,24 @@
                 be transmitted with a media type of "application/lgr+xml". This media
                 type will signal to an LGR-aware client that the content is designed to
                 be interpreted as an LGR.</t>
-            <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
+            
         </section>
 
-        <section title="URN Registration" anchor="urn_reg">
-                
-                <t>This document uses a URN to describe the XML namespace in accordance
-                        with <xref target="RFC3688"/>.</t>
-                        <t>URI: urn:ietf:params:xml:ns:lgr-1.0</t>
-                        <t>Registrant Contact: See the Authors of this document.</t>
-                        <t>XML: None.</t>
-                </section>
-                
         <section title="IANA Considerations">
-            <t>This document does not specify any IANA actions.</t>
+            <t>This document requests the following actions from IANA:</t>
+            <section title="Media Type Registration">
+                <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
+            </section>
+            <section title="URN Registration" anchor="urn_reg">
+                <t>This document uses a URN to describe the XML namespace in accordance
+                   with <xref target="RFC3688"/>.</t>
+                <t>URI: urn:ietf:params:xml:ns:lgr-1.0</t>
+                <t>Registrant Contact: See the Authors of this document.</t>
+                <t>XML: None.</t>
+            </section>
+            <section title="Disposition Registry">
+                <t>[TODO: Request a registry for managing final dispositions of labels.]</t>
+            </section>
         </section>
 
         <section title="Security Considerations">
