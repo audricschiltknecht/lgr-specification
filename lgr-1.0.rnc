@@ -114,7 +114,6 @@ variant = element var {
     attribute when { rule-ref }?,
     attribute not-when { rule-ref }?,
     attribute comment { text }?,
-    attribute type { text }?,
     attribute ref { text }?
 }
 
