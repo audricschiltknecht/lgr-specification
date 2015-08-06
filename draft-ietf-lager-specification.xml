@@ -67,8 +67,7 @@
                 These algorithms are comprised of a list of permissible code points, variant code
                 point mappings, and a set of rules acting on them. These algorithms form part of an
                 administrator's policies, and can be referred to as Label Generation Rulesets
-                (LGRs). In deploying internationalized domain names (IDNs), they have also been
-                known as IDN tables or variant tables. </t>
+                (LGRs), or IDN tables.</t>
             <t>There are other kinds of policies relating to labels which are not normally covered by
                 Label Generation Rulesets and are therefore not representable by the XML format
                 described here. These include, but are not limited to policies around trademarks, or
@@ -1972,26 +1971,22 @@
                 be transmitted with a media type of "application/lgr+xml". This media
                 type will signal to an LGR-aware client that the content is designed to
                 be interpreted as an LGR.</t>
-            
+            <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
         </section>
 
-        <section title="IANA Considerations">
-            <t>This document requests the following actions from IANA:</t>
-            <section title="Media Type Registration">
-                <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
-            </section>
-            <section title="URN Registration" anchor="urn_reg">
+        <section title="URN Registration" anchor="urn_reg">
+                
                 <t>This document uses a URN to describe the XML namespace in accordance
-                   with <xref target="RFC3688"/>.</t>
-                <t>URI: urn:ietf:params:xml:ns:lgr-1.0</t>
-                <t>Registrant Contact: See the Authors of this document.</t>
-                <t>XML: None.</t>
-            </section>
-            <section title="Disposition Registry">
-                <t>[TODO: Request a registry for managing final dispositions of labels.]</t>
-            </section>
+                        with <xref target="RFC3688"/>.</t>
+                        <t>URI: urn:ietf:params:xml:ns:lgr-1.0</t>
+                        <t>Registrant Contact: See the Authors of this document.</t>
+                        <t>XML: None.</t>
+                </section>
+                
+        <section title="IANA Considerations">
+            <t>This document does not specify any IANA actions.</t>
         </section>
-
+        
         <section title="Security Considerations">
             <t>If a system that is querying an identifier list (such as a domain zone) that uses
                 the rules in this memo, and those rules are not implemented correctly, and that
