@@ -10,7 +10,7 @@
         <!ENTITY rfc5892 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5892.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-00">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-01">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -67,7 +67,8 @@
                 These algorithms are comprised of a list of permissible code points, variant code
                 point mappings, and a set of rules acting on them. These algorithms form part of an
                 administrator's policies, and can be referred to as Label Generation Rulesets
-                (LGRs), or IDN tables.</t>
+                (LGRs). In deploying internationalized domain names (IDNs), they have also been
+                known as IDN tables or variant tables. </t>
             <t>There are other kinds of policies relating to labels which are not normally covered by
                 Label Generation Rulesets and are therefore not representable by the XML format
                 described here. These include, but are not limited to policies around trademarks, or
@@ -507,8 +508,58 @@
                     attributes for conditional inclusion, commenting, cross referencing and
                     character tagging, as described below.</t>
             </section>
+      
+      <section title="Contextual Conditions" anchor="contextual_conditions">
+        <t>A conditional context is specified by a rule that must be satisfied (or alternatively, 
+            must not be satisfied) for a code point at a particular location in a label.</t>
 
-            <section title="Variants">
+       <t>To specify a conditional variant relationship the optional "when" attribute
+          is used. The variant relationship exists when the condition in the "when"
+          attribute is satisfied. Alternatively, a "not-when" attribute may be used 
+          for conditions that must not be satisfied. The value of each "when" or
+          "not-when" attributes is a whole label or parameterized context rule as described
+          below in [TBD].</t>
+           
+        <t>A parameterized context rule (see <xref target="parameterized_context_rule"/>) most
+          directly defines the context surrounding a given code point; unlike a sequrence, the
+          context is not limited to a specific fixed code point, but for example may be a code
+          point that is a member of a certain subset or has a certain Unicode property.</t>
+          
+          <t>Given a suitable definition of a parameterized context rule this example specifies
+          that a ZERO-WIDTH JOINER is restricted to immediately follow a virama:
+          <figure>
+              <artwork><![CDATA[    <char cp="200D" when="follows-virama" />]]>
+              </artwork>
+          </figure>
+          For a complete example, see <xref target="example_tables" />.
+          </t>
+          
+        <t>In contrast, a whole label rule (see <xref target="whole_label"/>) specifies a condition 
+          to be met by the entire label, for example that it must contain at least one code point
+          from a given script anywhere in the label.  In the follwoing example no digit from either
+          range must occur in a label that mixes digits from both ranges:
+           <figure>
+                            <artwork><![CDATA[    <data>
+       <range first-cp="0660" last-cp="0669" not-when="mixed-digits"
+              tag="arabic-indic-digits" />
+       <range first-cp="06F0" last-cp="06F9" not-when="mixed-digits"
+              tag="extended-arabic-indic-digits" />
+    </data>]]>
+    </artwork>
+    </figure>
+          (See <xref target="IDNA2008-example"/> for an example of the "mixed-digits" rule.)</t>
+           
+        <t>The "when" or "not-when" attributes are mutually exclusive. They may be 
+            applied to both "char" and "range" elemets, as well as "var" elements (see
+            <xref target="when"/>).</t>
+
+          <t>If a contextual condition is not satisfied for any code point in a label, the
+            label is invalid, see <xref target="implied_actions"/>. For variants, the conditional
+            context restricts the definition of the variant to the case where the condition is
+            met.</t>
+      </section>
+
+            <section title="Variants" anchor="variants">
 
                 <t>Most LGRs typically only determine simple code point eligibility, and for them,
                     the elements described so far would be the only ones required for their "data"
@@ -705,16 +756,9 @@
                         variants in the positions corresponding to those forms. Such positional
                         context cannot be solely derived from the code point by itself, as the code
                         point would be the same for the various forms. </t>
-
-                    <t>To specify a conditional variant relationship the optional "when" attribute
-                        is used. The variant relationship exists when the condition in the "when"
-                        attribute is satisfied. A "not-when" attribute may be used for conditions
-                        that must not be satisfied. The value of each "when" or "not-when"
-                        attributes is a parameterized context rule as described below in <xref
-                            target="parameterized_context_rule"/>. </t>
                             
-                    <t>As described in <xref target="sequences"/> a "when" or "not-when" attribute
-                        may also be specified to any "char" element in the data section to define
+                    <t>As described in <xref target="contextual_conditions"/> a "when" or "not-when" attribute
+                        may also be specified to any "var" element to define
                         required or prohibited contextual conditions under which a code point is
                         valid. </t>        
                         
@@ -759,7 +803,7 @@
                          
                          <t>For symmetry, the reverse mappings must exist, and must agree in their
                          "when" or "not-when" attributes. However, symmetry does not apply to the other
-                         attributes. For example, these are the actual reverse mappings for the above: </t>
+                         attributes. For example, these are potential reverse mappings for the above: </t>
                     <t>
                         <figure>
                             <artwork><![CDATA[    <char cp="0629" >
@@ -776,8 +820,8 @@
                         by parsers and tools. (The same applies to entries created for transitivity.)</t>
                         
                     <t>Arabic is an example of a script for which such conditional variants
-                        have been established in at least some existing LGRs.  The mechanism
-                        defined here supports other forms of conditional variants that may
+                        have been implemented based on the joining contexts for Arabic code points.  
+            The mechanism defined here supports other forms of conditional variants that may
                         required by other scripts.</t>
                 </section>
                 </section>
@@ -1030,8 +1074,9 @@
                         is not material, but it is RECOMMENDED to list them in ascending
                         order.
                     </t>
-                    <t>Code point ranges are represented by a start and end value separated
-                        by a hyphen. The following declaration is equivalent to the preceding:
+                    <t>In a class definition, ranges of code points are represented by a hexadecimal 
+              start and end value separated by a hyphen. The following declaration is equivalent 
+            to the preceding:
                     </t>
                     <t><figure>
                         <artwork><![CDATA[    <class name="abcd">0061-0064</class>
@@ -1042,6 +1087,9 @@
                         <artwork><![CDATA[    <class name="abcd">0061 0062-0063 0064</class>
 ]]></artwork>
                     </figure></t>
+          <t>The contents of a class difffer from a repertoire in that the latter may
+          contain sequences as elements, while the former may not. Instead, they closely 
+          resemble character classes as found in regular expressions.</t>
                 </section>
 
                 <section title="Combined Classes" anchor="combined_classes">
@@ -1134,7 +1182,7 @@
                 </section>
             </section>
 
-            <section title="Whole Label and Context Rules">
+            <section title="Whole Label and Context Rules" anchor="whole_label">
                 <t>Each rule is comprised of a series of matching operators that must be satisfied
                     in order to determine whether a label meets a given condition. Rules may
                     reference other rules or character classes defined elsewhere in the table. </t>
@@ -1270,8 +1318,9 @@
                         <t>To reference a named rule or class inside a rule or match operator
                             use a rule or "class" element with an optional "by-ref" attribute
                             containing the name of the referenced element. It is an error to
-                            reference a rule or class for which the definition has not been
-                            seen. The "by-ref" attribute cannot appear in the same element as
+                            reference a rule or class for which the complete definition has not been
+                            seen. In other words, it is explicitly not possible to define recursive rules or
+              class definitions. The "by-ref" attribute cannot appear in the same element as
                             the "name" attribute, or in an element that has any child elements.</t>
                         <t>Here's an example of a rule requiring that all labels be letters
                             (optionally followed by combining marks) and possibly digits. The
@@ -1414,9 +1463,9 @@
 
             <section anchor="parameterized_context_rule" title="Parameterized Context or When Rules">
                 <t>A special type of rule provides a context for evaluating the validity of a code
-                    point or variant mapping. This rule is invoked by the "when" attribute described
+                    point or variant mapping. This rule is invoked by the "when" or "not-when" attributes described
                     in <xref target="when"/>. An action implied by a context rule always has a
-                    disposition of "invalid" whenever the rule is not matched (see <xref
+                    disposition of "invalid" whenever the rule given by the "when" attribute is not matched (see <xref
                         target="implied_actions"/>). Conversely, a "not-when" attribute results in a
                     disposition of invalid whenever the rule is matched.</t>
 
@@ -1971,22 +2020,26 @@
                 be transmitted with a media type of "application/lgr+xml". This media
                 type will signal to an LGR-aware client that the content is designed to
                 be interpreted as an LGR.</t>
-            <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
+            
         </section>
 
-        <section title="URN Registration" anchor="urn_reg">
-                
-                <t>This document uses a URN to describe the XML namespace in accordance
-                        with <xref target="RFC3688"/>.</t>
-                        <t>URI: urn:ietf:params:xml:ns:lgr-1.0</t>
-                        <t>Registrant Contact: See the Authors of this document.</t>
-                        <t>XML: None.</t>
-                </section>
-                
         <section title="IANA Considerations">
-            <t>This document does not specify any IANA actions.</t>
+            <t>This document requests the following actions from IANA:</t>
+            <section title="Media Type Registration">
+                <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
+            </section>
+            <section title="URN Registration" anchor="urn_reg">
+                <t>This document uses a URN to describe the XML namespace in accordance
+                   with <xref target="RFC3688"/>.</t>
+                <t>URI: urn:ietf:params:xml:ns:lgr-1.0</t>
+                <t>Registrant Contact: See the Authors of this document.</t>
+                <t>XML: None.</t>
+            </section>
+            <section title="Disposition Registry">
+                <t>[TODO: Request a registry for managing final dispositions of labels.]</t>
+            </section>
         </section>
-        
+
         <section title="Security Considerations">
             <t>If a system that is querying an identifier list (such as a domain zone) that uses
                 the rules in this memo, and those rules are not implemented correctly, and that
@@ -2093,7 +2146,7 @@
             </reference>
         </references>
 
-        <section title="Example Tables">
+        <section title="Example Tables" anchor="example_tables">
             <t>The following presents a minimal LGR table defining the lower case LDH
                 (letter-digit-hyphen) repertoire and containing no rules or metadata elements.
                 Many simple LGR tables will look quite similar, except that they would contain some
@@ -2697,6 +2750,10 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                         <t hangText="draft-ietf-lager-specification-00">
                             Update to reflect adoption as
                             a work item by the IETF LAGER working group.</t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                      <t hangText="draft-ietf-lager-specification-01">
+                      </t>
                     </list>
                 </t>
             </section>
