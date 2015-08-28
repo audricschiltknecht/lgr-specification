@@ -2182,7 +2182,7 @@
     &lt;version comment="initial version"&gt;1&lt;/version&gt;
     &lt;date&gt;2010-01-01&lt;/date&gt;
     &lt;language&gt;sv&lt;/language&gt;
-    &lt;domain&gt;example&lt;/domain&gt;
+    &lt;scope type="domain"&gt;example&lt;/scope&gt;
     &lt;validity-start&gt;2010-01-01&lt;/validity-start&gt;
     &lt;validity-end&gt;2013-12-31&lt;/validity-end&gt;
     &lt;description type="text/html"&gt;
