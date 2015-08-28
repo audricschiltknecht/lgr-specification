@@ -637,10 +637,10 @@
                     </t>
                     <t><figure>
                         <artwork><![CDATA[    <char cp="767C">
-        <var cp="53D1" type="allocate"/>
-        <var cp="5F42" type="block"/>
-        <var cp="9AEA" type="block"/>
-        <var cp="9AEE" type="block"/>
+        <var cp="53D1" type="allocatable"/>
+        <var cp="5F42" type="blocked"/>
+        <var cp="9AEA" type="blocked"/>
+        <var cp="9AEE" type="blocked"/>
     </char>]]></artwork>
                     </figure></t>
                     <t>By default, if a variant label contains any instance of one of the variants of
@@ -723,12 +723,12 @@
       <var cp="3473" type="preferred" ref="1 3" />
     </char>
     <char cp="3473" ref="0">
-      <var cp="3447" type="block" ref="1 3" />
+      <var cp="3447" type="blocked" ref="1 3" />
       <var cp="3473" type="preferred" ref="0" />
     </char>]]></artwork>
                     </figure></t>
                     <t>Having established the variant types in this way, a set of actions could be defined
-                        that return a disposition of "allocate" or "activate" for a label consisting
+                        that return a disposition of "allocatable" or "activated" for a label consisting
                         exclusively of variants with type "preferred" for example. (For details on how to
                         define actions based on variant types see <xref target="variant_triggers"/>.)</t>
                         
@@ -1214,11 +1214,11 @@
                         rule shown above would be: </t>
                     <t>
                         <figure>
-                            <artwork><![CDATA[    <action disp="allocate" match="preferred" />]]></artwork>
+                            <artwork><![CDATA[    <action disp="allocatable" match="preferred" />]]></artwork>
                         </figure>
                     </t>
                     <t>This has the effect of setting the policy disposition for a label made up
-                        entirely of "preferred" code points to "allocate". Explicit actions are
+                        entirely of "preferred" code points to "allocatable". Explicit actions are
                         further discussed in <xref target="actions"/> and the use of rules in
                         conditional contexts for implied actions is discussed in <xref target="when"
                         /> and <xref target="implied_actions"/>. </t>
@@ -1628,7 +1628,7 @@
 
                 <t>
                     <figure>
-                        <artwork><![CDATA[    <action disp="allocate" />]]></artwork>
+                        <artwork><![CDATA[    <action disp="allocatable" />]]></artwork>
                     </figure>
                 </t>
 
@@ -1664,29 +1664,29 @@
                                 target="reflexive_mapping" />).</t>
 
                     <t><figure><artwork><![CDATA[     <char cp="0078" comment="x" />
-        <var cp="0078" type="allocate" comment="reflexive" />
-        <var cp="0079" type="block" />
+        <var cp="0078" type="allocatable" comment="reflexive" />
+        <var cp="0079" type="blocked" />
     </char>
     <char cp="0079"  comment="y"/>
         <var cp="0078" type="allocate" />
     </char>
     . . .
-    <action disp="block" any-variants="block" />
-    <action disp="allocate" only-variants="allocate" />
-    <action disp="some-type" any-variants="allocate" />    ]]></artwork></figure></t>
+    <action disp="blocked" any-variants="blocked" />
+    <action disp="allocate" only-variants="allocatable" />
+    <action disp="some-type" any-variants="allocatable" />    ]]></artwork></figure></t>
                     <t>In the example above, the label "xx" would have variant labels "xx", "xy",
                         "yx" and "yy". The first action would result in blocking any variant label
                         containing "y", because the variant mapping from "x" to "y" is of type
-                        "block", triggering the "any-variants" condition. Because in this example
-                        "x" has a reflexive variant mapping to itself of type "allocate" the
+                        "blocked", triggering the "any-variants" condition. Because in this example
+                        "x" has a reflexive variant mapping to itself of type "allocatable" the
                         original label "xx" has a reflexive variant "xx" that would trigger the
                         "only_variants" condition on the second action. </t>
 
                     <t>A label "yy" would have the variants "xy", "yx" and "xx". Because the variant
-                        mapping from "y" to "x" is of type "allocate" and a mapping from "y" to
+                        mapping from "y" to "x" is of type "allocatable" and a mapping from "y" to
                         "y" is not defined, the labels "xy" and "yx" trigger the "any-variants"
                         condition on the third label.  The variant "xx", being generated using the
-                        mapping from "y" to "x" of type "allocate", would trigger the "only-variants"
+                        mapping from "y" to "x" of type "allocatable", would trigger the "only-variants"
                         condition on the section action. As there is no reflexive variant "yy", the
                         original label "yy" cannot trigger any variant type triggers. However, it
                         could still trigger an action defined as matching or not matching a rule.</t>
@@ -1746,21 +1746,21 @@
                         original label. </t>
                         
                  <t>Assuming an LGR where all variants have been given suitable "type" attributes
-                     of "block", "simplified", "traditional", or "both", similar to the ones
+                     of "blocked", "simplified", "traditional", or "both", similar to the ones
                      discussed in <xref target="translate_rfc3743" />. Given such an LGR, the
                      following example actions evaluate the disposition for the variant label:
                 </t>
                 <t>
                     <figure>
-                        <artwork><![CDATA[    <action disp="block" any-variant="block" />
-    <action disp="allocate" only-variants="simplified both" />
-    <action disp="allocate" only-variants="traditional both" />
-    <action disp="block" all-variants="simplified traditional " />
-    <action disp="allocate" />]]></artwork>
+                        <artwork><![CDATA[    <action disp="blocked" any-variant="blocked" />
+    <action disp="allocatable" only-variants="simplified both" />
+    <action disp="allocatable" only-variants="traditional both" />
+    <action disp="blocked" all-variants="simplified traditional " />
+    <action disp="allocatable" />]]></artwork>
                     </figure>
                 </t>
                 <t>The first action matches any variant label for which at least one of the code
-                    point variants is of type "block". The second matches any variant label for
+                    point variants is of type "blocked". The second matches any variant label for
                     which all of the code point  variants are of type "simplified" or "both",
                     in other words an all-simplified label. The third matches any label for which
                     all variants are of type "traditional" or "both", that is all traditional. These
@@ -1778,7 +1778,7 @@
                     then be part of a mixed label, and so are blocked; all labels surviving to the
                     last action are original code points only (that is the original label). The
                     example assumes that an original label may be a mixed label; if that is not
-                    the case, the disposition for the last action would be set to "block".</t>
+                    the case, the disposition for the last action would be set to "blocked".</t>
 
                 <t>There are exceptions where the assumption on reflexive mappings made above does
                     not hold, so this basic scheme needs some refinements to cover all cases. For
@@ -1797,14 +1797,14 @@
                             disposition may be assigned implicitly, see <xref
                                 target="implied_actions"/>. No variant labels should be generated
                             from a variant mapping with this type. </t>
-                        <t hangText="block">The resulting string is a valid label, but should be
-                            block from registration. This would typically apply for a derived
+                        <t hangText="blocked">The resulting string is a valid label, but should be
+                            blocked from registration. This would typically apply for a derived
                             variant that has is undesirable as having no practical use or being
                             confusingly similar to some other label. </t>
-                        <t hangText="allocate">The resulting string should be reserved for use by
+                        <t hangText="allocatable">The resulting string should be reserved for use by
                             the same operator of the origin string, but not automatically allocated
                             for use. </t>
-                        <t hangText="activate">The resulting string should be activated for use.
+                        <t hangText="activated">The resulting string should be activated for use.
                             (This is the typical default action if no dispositions are defined and
                             is known as a "preferred" variant in <xref target="RFC3743"/>) </t>
                     </list>
@@ -1816,7 +1816,7 @@
                     disposition for that label. To define a specific order of precedence, list the
                     actions in the desired order. The conventional order of precedence for the
                     actions defined in <xref target="recommended_disposition_values"/> is "invalid",
-                    "block", "allocate", then "activate". This default precedence is used for the
+                    "blocked", "allocatable", then "activated". This default precedence is used for the
                     default actions defined in <xref target="default_actions"/>. </t>
             </section>
 
@@ -1847,7 +1847,7 @@
                     disposition for the entire variant label. </t>
 
                 <t>If no actions are defined for the standard disposition values of "invalid",
-                    "block", "allocate" and "activate", then the following default actions exist
+                    "blocked", "allocatable" and "activated", then the following default actions exist
                     that are shown below in their default order of precedence (see <xref
                         target="precedence"/>). This default order for evaluating dispositions
                     applies only to labels that triggered no explicitly defined actions and which
@@ -1859,17 +1859,17 @@
                 <t>
                     <figure>
                         <artwork><![CDATA[    <action disp="invalid" any-variant="invalid"/>
-    <action disp="block" any-variant="block"/>
-    <action disp="allocate" any-variant="allocate"/>
-    <action disp="activate" all-variants="activate"/>]]></artwork>
+    <action disp="blocked" any-variant="blocked"/>
+    <action disp="allocatable" any-variant="allocatable"/>
+    <action disp="activated" all-variants="activated"/>]]></artwork>
                     </figure>
                 </t>
 
-                <t>A final default action sets the disposition to "allocate" for any label matching
+                <t>A final default action sets the disposition to "allocatable" for any label matching
                     the repertoire for which no other action has been triggered (catch-all). </t>
                 <t>
                     <figure>
-                        <artwork><![CDATA[    <action disp="allocate" />]]></artwork>
+                        <artwork><![CDATA[    <action disp="allocatable" />]]></artwork>
                     </figure>
                 </t>
             </section>
@@ -1990,7 +1990,7 @@
                             (see <xref target="recommended_disposition_values" />) are ignored.
                         </t>
 
-                        <t>For any remaining label, set the disposition to "allocate". </t>
+                        <t>For any remaining label, set the disposition to "allocatable". </t>
                     </list>
                 </t>
             </section>
@@ -2222,16 +2222,16 @@
 
     &lt;!-- code points with variants --&gt;
     &lt;char cp="4E16" tag="preferred" ref="0"&gt;
-      &lt;var cp="4E17" type="block" ref="2" /&gt;
-      &lt;var cp="534B" type="allocate" ref="2" /&gt;
+      &lt;var cp="4E17" type="blocked" ref="2" /&gt;
+      &lt;var cp="534B" type="allocatable" ref="2" /&gt;
     &lt;/char&gt;
     &lt;char cp="4E17" ref="0"&gt;
-      &lt;var cp="4E16" type="allocate" ref="2" /&gt;
-      &lt;var cp="534B" type="allocate" ref="2" /&gt;
+      &lt;var cp="4E16" type="allocatable" ref="2" /&gt;
+      &lt;var cp="534B" type="allocatable" ref="2" /&gt;
     &lt;/char&gt;
     &lt;char cp="534B" ref="0"&gt;
-      &lt;var cp="4E16" type="allocate" ref="2" /&gt;
-      &lt;var cp="4E17" type="block" ref="2" /&gt;
+      &lt;var cp="4E16" type="allocatable" ref="2" /&gt;
+      &lt;var cp="4E17" type="blocked" ref="2" /&gt;
     &lt;/char&gt;
   &lt;/data&gt;
 
@@ -2290,8 +2290,8 @@
         variant types --&gt;
     &lt;action disp="consonants" 
             match="three-or-more-consonants" /&gt;
-    &lt;action disp="block" any-variant="block" /&gt;
-    &lt;action disp="activate" all-variants="allocate"
+    &lt;action disp="blocked" any-variant="blocked" /&gt;
+    &lt;action disp="activated" all-variants="allocatable"
             not-match="non-preferred" /&gt;
   &lt;/rules&gt;
 &lt;/lgr&gt;</artwork>
@@ -2349,49 +2349,49 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <artwork><![CDATA[    <data>
     <char cp="4E7E">
     <var cp="4E7E" type="both" comment="identity" />
-    <var cp="4E81" type="block" />
+    <var cp="4E81" type="blocked" />
     <var cp="5E72" type="simp" />
-    <var cp="5E79" type="block" />
-    <var cp="69A6" type="block" />
-    <var cp="6F27" type="block" />
+    <var cp="5E79" type="blocked" />
+    <var cp="69A6" type="blocked" />
+    <var cp="6F27" type="blocked" />
     </char>
     <char cp="4E81">
     <var cp="4E7E" type="trad" />
     <var cp="5E72" type="simp" />
-    <var cp="5E79" type="block" />
-    <var cp="69A6" type="block" />
-    <var cp="6F27" type="block" />
+    <var cp="5E79" type="blocked" />
+    <var cp="69A6" type="blocked" />
+    <var cp="6F27" type="blocked" />
     </char>
     <char cp="5E72">
     <var cp="4E7E" type="trad"/>
-    <var cp="4E81" type="block"/>
+    <var cp="4E81" type="blocked"/>
     <var cp="5E72" type="both" comment="identity"/>
     <var cp="5E79" type="trad"/>
-    <var cp="69A6" type="block"/>
-    <var cp="6F27" type="block"/>
+    <var cp="69A6" type="blocked"/>
+    <var cp="6F27" type="blocked"/>
     </char>
     <char cp="5E79">
-    <var cp="4E7E" type="block"/>
-    <var cp="4E81" type="block"/>
+    <var cp="4E7E" type="blocked"/>
+    <var cp="4E81" type="blocked"/>
     <var cp="5E72" type="simp"/>
     <var cp="5E79" type="trad" comment="identity"/>
-    <var cp="69A6" type="block"/>
-    <var cp="6F27" type="block"/>
+    <var cp="69A6" type="blocked"/>
+    <var cp="6F27" type="blocked"/>
     </char>
     <char cp="69A6">
-    <var cp="4E7E" type="block"/>
-    <var cp="4E81" type="block"/>
+    <var cp="4E7E" type="blocked"/>
+    <var cp="4E81" type="blocked"/>
     <var cp="5E72" type="simp"/>
-    <var cp="5E79" type="block"/>
+    <var cp="5E79" type="blocked"/>
     <var cp="69A6" type="trad" comment="identity"/>
-    <var cp="6F27" type="block"/>
+    <var cp="6F27" type="blocked"/>
     </char>
     <char cp="6F27">
     <var cp="4E7E" type="simp"/>
-    <var cp="4E81" type="block"/>
-    <var cp="5E72" type="block"/>
-    <var cp="5E79" type="block"/>
-    <var cp="69A6" type="block"/>
+    <var cp="4E81" type="blocked"/>
+    <var cp="5E72" type="blocked"/>
+    <var cp="5E79" type="blocked"/>
+    <var cp="69A6" type="blocked"/>
     <var cp="6F27" type="trad" comment="identity"/>
     </char>
   </data>]]></artwork>
@@ -2399,7 +2399,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             </t>
 
             <t>Here the simplified variants have been given a type of "simp", the
-                traditional variants one of "trad" and all other ones are given "block". </t>
+                traditional variants one of "trad" and all other ones are given "blocked". </t>
             <t>Because some variant mappings show in more than one column, while the
                XML format allows only a single type value, they have been given the
                type of "both".</t>
@@ -2422,7 +2422,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                 </figure>
             </t>
             <t>However, if  allocatable labels were generated simply by a straight permutation
-                of all variants with type other than type="block" and without regard to the
+                of all variants with type other than type="blocked" and without regard to the
                 simplified / traditional variants, we would end up with an extra allocatable
                 label of "U+5E72 U+4E7E". This label is comprised of a both Simplified Chinese
                 character and a Traditional Chinese code point and therefore shouldn't be
@@ -2430,11 +2430,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>To more fully resolve the dispositions requires several actions to be defined as
                 described in <xref target="rfc3743_example" /> which will override the default
                 actions from <xref target="default_actions" />. After blocking all labels that
-                contain a variant with type "block", these actions will allocate labels based
+                contain a variant with type "blocked", these actions will allocate labels based
                 on the following variant types: "simp", "trad" and "both". Note that
                 these variant types do not directly relate to dispositions for the variant label,
                 but that the actions will resolve them to the standard dispositions on labels,
-                to with "block" and "allocate".</t>
+                to with "blocked" and "allocatable".</t>
             <t>To resolve label dispositions requires five actions to be defined (in the rules
                 section of this document) these actions apply in order and the first one
                 triggered, defines the disposition for the label. The actions are:
@@ -2452,11 +2452,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>The rules declarations would be represented as:</t>
 <t><figure><artwork><![CDATA[  <rules>
     <!--Action elements - order defines precedence-->
-    <action disp="block"     any-variant="block" />
-    <action disp="allocate"  only-variants="simp both" />
-    <action disp="allocate"  only-variants="trad both" />
-    <action disp="block"     any-variant="simp trad" />
-    <action disp="allocate"  comment="catch-all" />
+    <action disp="blocked"      any-variant="blocked" />
+    <action disp="allocatable"  only-variants="simp both" />
+    <action disp="allocatable"  only-variants="trad both" />
+    <action disp="blocked"      any-variant="simp trad" />
+    <action disp="allocatable"  comment="catch-all" />
   </rules>]]></artwork></figure></t>
 
             <t>Up to now, variants with type "both" have occurred only associated with reflexive
@@ -2469,17 +2469,17 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>The corresponding XML would be:</t>
  <t><figure><artwork><![CDATA[    <char cp="62E0">
     <var cp="636E" type="both" comment="both, but not reflexive" />
-    <var cp="64DA" type="block" />
+    <var cp="64DA" type="blocked" />
     </char>
     <char cp="636E">
     <var cp="636E" type="simp" comment="reflexive, but not both" />
     <var cp="64DA" type="trad" />
-    <var cp="62E0" type="block" />
+    <var cp="62E0" type="blocked" />
     </char>
     <char cp="64DA">
     <var cp="636E" type="simp" />
     <var cp="64DA" type="trad" comment="reflexive" />
-    <var cp="62E0" type="block" />
+    <var cp="62E0" type="blocked" />
     </char>]]></artwork></figure></t>
 
             <t>To make such variant sets work requires a way to selectively trigger an
@@ -2491,11 +2491,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>With the dispositions prepared in this way, only a slight modification to
                 the actions is needed to yield the correct set of allocatable labels:</t>
 
- <t><figure><artwork><![CDATA[  <action disp="block" any-variant="block" />
-  <action disp="allocate" only-variants="simp r-simp both r-both" />
-  <action disp="allocate" only-variants="trad r-trad both r-both" />
-  <action disp="block" all-variants="simp trad both" />
-  <action disp="allocate" />
+ <t><figure><artwork><![CDATA[  <action disp="blocked" any-variant="blocked" />
+  <action disp="allocatable" only-variants="simp r-simp both r-both" />
+  <action disp="allocatable" only-variants="trad r-trad both r-both" />
+  <action disp="blocked" all-variants="simp trad both" />
+  <action disp="allocatable" />
 ]]></artwork></figure></t>
 
             <t>The first three actions get triggered by the same labels as before.</t>
@@ -2753,6 +2753,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                       <t hangText="draft-ietf-lager-specification-01">
+                            Add information on contextual conditions. Describe potential IANA
+                            considerations. Change terminology used for dispositions.
                       </t>
                     </list>
                 </t>
