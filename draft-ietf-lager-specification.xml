@@ -287,7 +287,7 @@
                     <t>If the LGR covers a specific set of multiple languages or scripts, the
                         "language" element can be repeated. However, for cases of a script-specific
                         LGR exhibiting insignificant admixture of code points from other scripts, it
-                        is RECOMMENDED to the use a single "language" element identifying the
+                        is RECOMMENDED to use a single "language" element identifying the
                         predominant script. In the exceptional case of a multi-script LGR where no
                         script is predominant, use Zyyy (Common): </t>
                     <figure>
