@@ -88,6 +88,8 @@ range = element range {
     attribute first-cp { code-point },
     attribute last-cp { code-point },
     attribute comment { text }?,
+    attribute when { rule-ref }?,
+    attribute not-when { rule-ref }?,
     attribute tag { tags }?,
     attribute ref { text }?
 }
