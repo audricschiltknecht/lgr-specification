@@ -1677,20 +1677,20 @@
         <var cp="0078" type="allocatable" />
     </char>
     . . .
-    <action disp="blocked" any-variants="blocked" />
+    <action disp="blocked" any-variant="blocked" />
     <action disp="allocatable" only-variants="allocatable" />
-    <action disp="some-type" any-variants="allocatable" />    ]]></artwork></figure></t>
+    <action disp="some-type" any-variant="allocatable" />    ]]></artwork></figure></t>
                     <t>In the example above, the label "xx" would have variant labels "xx", "xy",
                         "yx" and "yy". The first action would result in blocking any variant label
                         containing "y", because the variant mapping from "x" to "y" is of type
-                        "blocked", triggering the "any-variants" condition. Because in this example
+                        "blocked", triggering the "any-variant" condition. Because in this example
                         "x" has a reflexive variant mapping to itself of type "allocatable" the
                         original label "xx" has a reflexive variant "xx" that would trigger the
                         "only_variants" condition on the second action. </t>
 
                     <t>A label "yy" would have the variants "xy", "yx" and "xx". Because the variant
                         mapping from "y" to "x" is of type "allocatable" and a mapping from "y" to
-                        "y" is not defined, the labels "xy" and "yx" trigger the "any-variants"
+                        "y" is not defined, the labels "xy" and "yx" trigger the "any-variant"
                         condition on the third label.  The variant "xx", being generated using the
                         mapping from "y" to "x" of type "allocatable", would trigger the "only-variants"
                         condition on the section action. As there is no reflexive variant "yy", the
@@ -1704,7 +1704,7 @@
                         on the variant type values given by the "any-variant", "all-variants", or
                         "only-variants" attribute.</t>
                     
-                    <t>A useful convention combines the "any-variants" trigger with reflexive
+                    <t>A useful convention combines the "any-variant" trigger with reflexive
                          variant mappings (<xref target="reflexive_mapping"/>). 
                          This convention is used, for example, when multiple LGRs are defined
                          within the same registry and for overlapping repertoire. In some cases,
@@ -1733,7 +1733,7 @@
                     <t>and associating this with an action of the form: </t>
                     <t>
                           <figure>
-                             <artwork><![CDATA[    <action disp="invalid" any-variants="out-of-repertoire-var" />]]></artwork></figure></t>    
+                             <artwork><![CDATA[    <action disp="invalid" any-variant="out-of-repertoire-var" />]]></artwork></figure></t>    
                     <t>it is possible to list the symmetric and transitive variant mappings in the LGR
                     even    where they involve out-of-repertoire code points. By associating the action shown with
                     the special type for these reflexive mappings any original labels containing one or more of the
