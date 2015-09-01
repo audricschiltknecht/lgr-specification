@@ -465,7 +465,7 @@
                 reading or writing the LGR format are free to aggregate
                 sequences of consecutive code points of the same properties into range elements. </t>
             <t>Code points must be expressed in uppercase, hexadecimal, and zero padded to a minimum
-                of 4 digits. In other words, represented according to the standard Unicode convention but
+                of 4 digits. In other words, they are represented according to the standard Unicode convention but
                 without the prefix "U+". The rationale for not allowing other encoding formats,
                 including native Unicode encoding in XML, is explored in <xref target="UAX42"/>. The
                 XML conventions used in this format, including the element and attribute names,
@@ -498,7 +498,7 @@
                 </figure></t>
                 <t>As an alternative to using sequences to define a required context, a "char" or
                     "range" element may specify conditional context using an optional "when"
-                    attribute as described below in <xref target="when"/>. The latter method is more
+                    attribute as described below in <xref target="contexts" />. The latter method is more
                     flexible in that such conditional context is not limited to specific code point
                     in addition to allowing both prohibited as well as required context to be
                     specified. </t>
@@ -508,56 +508,60 @@
                     attributes for conditional inclusion, commenting, cross referencing and
                     character tagging, as described below.</t>
             </section>
-      
-      <section title="Contextual Conditions" anchor="contextual_conditions">
-        <t>A conditional context is specified by a rule that must be satisfied (or alternatively, 
-            must not be satisfied) for a code point at a particular location in a label.</t>
+			
+			<section title="Conditional Contexts" anchor="contexts">
+			  <t>A conditional context is specified by a rule that must be satisfied (or alternatively, 
+			      must not be satisfied) for a code point in a given label, often at a particular location in a label.</t>
 
-       <t>To specify a conditional variant relationship the optional "when" attribute
-          is used. The variant relationship exists when the condition in the "when"
-          attribute is satisfied. Alternatively, a "not-when" attribute may be used 
-          for conditions that must not be satisfied. The value of each "when" or
-          "not-when" attributes is a whole label or parameterized context rule as described
-          below in [TBD].</t>
-           
-        <t>A parameterized context rule (see <xref target="parameterized_context_rule"/>) most
-          directly defines the context surrounding a given code point; unlike a sequrence, the
-          context is not limited to a specific fixed code point, but for example may be a code
-          point that is a member of a certain subset or has a certain Unicode property.</t>
-          
-          <t>Given a suitable definition of a parameterized context rule this example specifies
-          that a ZERO-WIDTH JOINER is restricted to immediately follow a virama:
-          <figure>
-              <artwork><![CDATA[    <char cp="200D" when="follows-virama" />]]>
-              </artwork>
-          </figure>
-          For a complete example, see <xref target="example_tables" />.
-          </t>
-          
-        <t>In contrast, a whole label rule (see <xref target="whole_label"/>) specifies a condition 
-          to be met by the entire label, for example that it must contain at least one code point
-          from a given script anywhere in the label.  In the follwoing example no digit from either
-          range must occur in a label that mixes digits from both ranges:
-           <figure>
+			 <t>To specify a conditional context a "when" or "not-when" attribute
+                    may be used. The value of each "when" or	"not-when" attributes is a whole label or
+					parameterized context rule as described below in <xref target="whole_label"/>.
+					The content condition is met when the rule specified in the "when"
+                    attribute is matched. Alternatively, a "not-when" attribute may be used 
+					for a rule that must not be matched.  It is an error to reference a rule that is
+					not actually defined in the "rules" element.</t>
+					 
+				<t>A parameterized context rule	(see <xref target="parameterized_context_rule"/>) 
+				  defines the context immediately surrounding a given code point; unlike a sequence, the context
+				  is not limited to a specific fixed code point, but for example may be a code point that is a member
+				  of a certain subset or has a certain Unicode property.</t>
+				  
+				  <t>Given a suitable definition of a parameterized context rule named "follows-virama" this 
+				    example specifies that a ZERO-WIDTH JOINER (U+200D) is restricted 
+					to immediately follow any of several code points classified as virama:</t>
+					<t>
+					<figure>
+                         <artwork><![CDATA[    <char cp="200D" when="follows-virama" />]]></artwork>
+	               </figure>
+				   </t>
+				   <t>
+				   For a complete example, see <xref  target="example_tables" />.
+				  </t>
+				  
+				<t>In contrast, a whole label rule (see <xref target="whole_label"/>) specifies a condition 
+				  to be met by the entire label, for example that it must contain at least one code point
+				  from a given script anywhere in the label.  In the following example no digit from either
+				  range must occur in a label that mixes digits from both ranges:</t>
+				  <t>
+				   <figure>
                             <artwork><![CDATA[    <data>
        <range first-cp="0660" last-cp="0669" not-when="mixed-digits"
               tag="arabic-indic-digits" />
        <range first-cp="06F0" last-cp="06F9" not-when="mixed-digits"
               tag="extended-arabic-indic-digits" />
-    </data>]]>
-    </artwork>
-    </figure>
-          (See <xref target="IDNA2008-example"/> for an example of the "mixed-digits" rule.)</t>
-           
-        <t>The "when" or "not-when" attributes are mutually exclusive. They may be 
-            applied to both "char" and "range" elemets, as well as "var" elements (see
-            <xref target="when"/>).</t>
+    </data>]]></artwork>
+		</figure></t>
+				<t>
+					(See <xref target="IDNA2008_example"/> for an example of the "mixed-digits" rule.)</t>
+					 
+				<t>The "when" or "not-when" attributes are mutually exclusive. They may be 
+				    applied to both "char" and "range" elements in the "data" element, 
+					as well as to "var" elements (see <xref target="conditional_variants"/>).</t>
 
-          <t>If a contextual condition is not satisfied for any code point in a label, the
-            label is invalid, see <xref target="implied_actions"/>. For variants, the conditional
-            context restricts the definition of the variant to the case where the condition is
-            met.</t>
-      </section>
+					<t>If a contextual condition is not satisfied for any code point in a label, the label is invalid, see <xref 
+					target="implied_actions"/>. For variants, the conditional context restricts the definition of the variant
+					to the case where the condition is met. Outside the specified context, a variant is not defined .</t>
+			</section>
 
             <section title="Variants" anchor="variants">
 
@@ -618,7 +622,7 @@
                         MUST have a unique combination of "cp", "when" and "not-when" attributes.
                         It is RECOMMENDED to list the "var" elements in ascending order of their
                         target code point sequence. (For "when" and "not-when" attributes, see
-                        <xref target="when" />).</t>
+                        <xref target="conditional_variants" />).</t>
                 </section>
 
                 <section title="The type attribute" anchor="var_type">
@@ -661,7 +665,7 @@
                     </t>
                     <t>Because variant mappings MUST be unique, it is not possible to define the same
                         variant for the same "char" element with different type attributes (see however
-                        <xref target="when" />).</t>
+                        <xref target="conditional_variants" />).</t>
                 </section>
 
                 <section title="Null Variants">
@@ -744,10 +748,10 @@
                      <xref target="variant_triggers" />. </t>
                 </section>
 
-                <section title="Conditional Variants" anchor="when">
+                <section title="Conditional Variants" anchor="conditional_variants">
                     <t>Fundamentally, variants are mappings between two sequences of code points.
                         However, in some instances for a variant relationship to exist, some context
-                        external to the code point sequence must be considered. For example, a
+                        external to the code point sequence must also be considered. For example, a
                         positional context may determine whether two code point sequences are
                         variants of each other. </t>
 
@@ -757,10 +761,9 @@
                         context cannot be solely derived from the code point by itself, as the code
                         point would be the same for the various forms. </t>
                             
-                    <t>As described in <xref target="contextual_conditions"/> a "when" or "not-when" attribute
-                        may also be specified to any "var" element to define
-                        required or prohibited contextual conditions under which a code point is
-                        valid. </t>        
+                    <t>As described in <xref target="contexts"/> a "when" or "not-when" attribute
+                        may be given for any "var" element to specify
+                        required or prohibited contextual conditions under which the variant defined. </t>        
                         
                     <t>Assuming the "rules" element contains suitably defined rules for
                         "arabic-isolated" and "arabic-final", the following example shows how to
@@ -776,12 +779,12 @@
 ]]></artwork>
                         </figure>
                     </t>
-                    <t>Only a single "when" or "not-when" attribute can be applied to any "var"
-                        element, however, multiple "var" elements using the same mapping, but
-                        different "when" or "not-when" attributes may be specified. In such a case
-                        care must be taken to ensure that for each context at most one of the context
-                        rules for the  "when" or "not-when" attributes is satisfied; otherwise
-                        the results are undefined. </t>
+                    <t>While only a single "when" or "not-when" attribute can be applied to any "var"
+                        element, multiple "var" elements using the same mapping, but
+                        different "when" or "not-when" attributes may be specified, as the combination of
+						mapping and conditional context defines a unique variant. Care must be taken to ensure that
+						for each variant label at most one of the contextual conditions is met for variants 
+						with the same mapping; otherwise the results are undefined. </t>
                         
                     <t>Two contexts may be complementary, as in the following example, which shows
                            ARABIC    LETTER TEH MARBUTA (U+0629) as a variant of ARABIC LETTER ALEF 
@@ -821,7 +824,7 @@
                         
                     <t>Arabic is an example of a script for which such conditional variants
                         have been implemented based on the joining contexts for Arabic code points.  
-            The mechanism defined here supports other forms of conditional variants that may
+						The mechanism defined here supports other forms of conditional variants that may
                         required by other scripts.</t>
                 </section>
                 </section>
@@ -830,7 +833,7 @@
 
                 <t>Two attributes, the "ref" and "comment" attributes, can be used to annotate
                     individual elements in the LGR. They are ignored in machine-processing or
-                    the LGR. The "ref" attribute is intended for formal annotations, and the
+                    the LGR. The "ref" attribute is intended for formal annotations and the
                     "comment" attribute for free form annotation. The latter can be applied
                     more widely.</t>
 
@@ -852,13 +855,13 @@
                     is an error to repeat a reference identifier in the same "ref" attribute.
                     It is RECOMMENDED that identifiers be listed in ascending order. </t>
                 <t>In addition to "char", "range" and "var" elements in the data section, a "ref"
-                    attribute may be present for these elements that appear in the rules section
-                    described below:  actions, literals ("char" inside a rule), as well as
+                    attribute may be present for a number of elements containd in the "rules" 
+					element as described below:  actions, literals ("char" inside a rule), as well as
                     for definitions of rules and classes, but not for named references using
-                    the "by-ref" attribute defined below.  For these elements, the use of the
-                    "by-ref" and "ref" attributes are mutually exclusive. None of the elements
-                    in the metadata take a "ref" attribute; instead use the description
-                    element there.</t>
+                    the "by-ref" attribute defined below.  (The use of the
+                    "by-ref" and "ref" attributes is mutually exclusive.) None of the elements
+                    in the metadata take a "ref" attribute; to provide additional information
+					use the description element instead.</t>
                 </section>
 
                 <section title="The comment Attribute" anchor="comment">
@@ -899,7 +902,7 @@
                 </t>
             </section>
         </section>
-
+		
         <section title="Whole Label and Context Evaluation">
             <section title="Basic Concepts">
                 <t>The code points in a label sometimes need to satisfy context-based rules, for
@@ -993,7 +996,7 @@
                         the tag "lower". Use</t>
                     <t>
                         <figure>
-                            <artwork><![CDATA[    <class name="letter" from-tag="letter">
+                            <artwork><![CDATA[    <class name="letter" from-tag="letter" />
     <class name="lower" from-tag="lower" />
 ]]></artwork>
                         </figure>
@@ -1075,8 +1078,8 @@
                         order.
                     </t>
                     <t>In a class definition, ranges of code points are represented by a hexadecimal 
-              start and end value separated by a hyphen. The following declaration is equivalent 
-            to the preceding:
+					    start and end value separated by a hyphen. The following declaration is equivalent 
+						to the preceding:
                     </t>
                     <t><figure>
                         <artwork><![CDATA[    <class name="abcd">0061-0064</class>
@@ -1087,11 +1090,10 @@
                         <artwork><![CDATA[    <class name="abcd">0061 0062-0063 0064</class>
 ]]></artwork>
                     </figure></t>
-          <t>The contents of a class difffer from a repertoire in that the latter may
-          contain sequences as elements, while the former may not. Instead, they closely 
-          resemble character classes as found in regular expressions.</t>
+					<t>The contents of a class differ from a repertoire in that the latter may
+					contain sequences as elements, while the former may not. Instead, they closely 
+					resemble character classes as found in regular expressions.</t>
                 </section>
-
                 <section title="Combined Classes" anchor="combined_classes">
                     <t>Classes may be combined using operators for set complement, union,
                         intersection, difference and symmetric difference (exclusive-or). Because
@@ -1156,20 +1158,22 @@
                         represents the union of classes "xxx" and "yyy". There is no need to wrap
                         this union inside another "class" element, and, in fact, set combination
                         elements MUST NOT be nested inside a "class" element. </t>
+				
                     <t>Lastly, to create a named combined class that can be referenced in other
                         classes or in rules as &lt;class by-ref="xxxyyy"/&gt;, add a "name"
                         attribute to the set combination element, for example &lt;union
                         name="xxxyyy" /&gt; and place it at the top level immediately below
-                        the "rules" element (see <xref target="named_classes" />.</t>
+                        the "rules" element (see <xref target="named_classes" />).</t>
+		
                     <t>
                         <figure>
                             <artwork><![CDATA[ <rules>
-    <union class name="xxxyyy">
+    <union name="xxxyyy">
         <class by-ref="xxx"/>
         <class by-ref="yyy"/>
     </union>
       . . .
-  </ rules>    
+  </rules>    
 ]]></artwork>
                         </figure>
                     </t>
@@ -1180,7 +1184,7 @@
                         is always referenced via an empty "class" element using the "by-ref"
                         attribute containing the name of the class to be referenced. </t>
                 </section>
-            </section>
+          </section> 
 
             <section title="Whole Label and Context Rules" anchor="whole_label">
                 <t>Each rule is comprised of a series of matching operators that must be satisfied
@@ -1220,7 +1224,7 @@
                     <t>This has the effect of setting the policy disposition for a label made up
                         entirely of "preferred" code points to "allocatable". Explicit actions are
                         further discussed in <xref target="actions"/> and the use of rules in
-                        conditional contexts for implied actions is discussed in <xref target="when"
+                        conditional contexts for implied actions is discussed in <xref target="conditional_variants"
                         /> and <xref target="implied_actions"/>. </t>
                 </section>
                 <section title="The Match Operators" anchor="match_operators">
@@ -1316,11 +1320,11 @@
                             named. Anonymous rules and classes or reference to named rules and
                             classes can be nested inside other match operators by reference.</t>
                         <t>To reference a named rule or class inside a rule or match operator
-                            use a rule or "class" element with an optional "by-ref" attribute
+                            use a "rule" or "class" element with an optional "by-ref" attribute
                             containing the name of the referenced element. It is an error to
                             reference a rule or class for which the complete definition has not been
                             seen. In other words, it is explicitly not possible to define recursive rules or
-              class definitions. The "by-ref" attribute cannot appear in the same element as
+							class definitions. The "by-ref" attribute cannot appear in the same element as
                             the "name" attribute, or in an element that has any child elements.</t>
                         <t>Here's an example of a rule requiring that all labels be letters
                             (optionally followed by combining marks) and possibly digits. The
@@ -1329,7 +1333,7 @@
                         <figure>
                             <artwork><![CDATA[    <class name="letter" property="gc:L"/>
     <class name="combining-mark" property="gc:M"/>
-    <class name="digit" property="gc:Nd">
+    <class name="digit" property="gc:Nd" />
     <rule name="letter-grapheme">
        <class by-ref="letter" count="1+"/>
        <class by-ref="combining-mark" count="0+"/>
@@ -1372,7 +1376,7 @@
                 <section title="The any Element">
 
                     <t>The "any" element matches any single code point. It may have a "count"
-                        attribute. For an example see <xref target="IDNA2008-example"/>
+                        attribute. For an example see <xref target="IDNA2008_example"/>
                     </t>
                     <t>Unlike a literal, the "any" element" may not have a "ref" attribute.</t>
                 </section>
@@ -1420,7 +1424,7 @@
 
                 </section>
 
-                <section title="Example rule from IDNA2008" anchor="IDNA2008-example">
+                <section title="Example rule from IDNA2008" anchor="IDNA2008_example">
 
                     <t>This is an example of the whole label evaluation rule from <xref
                             target="RFC5892"/> forbidding the mixture of the Arabic-Indic and
@@ -1464,10 +1468,11 @@
             <section anchor="parameterized_context_rule" title="Parameterized Context or When Rules">
                 <t>A special type of rule provides a context for evaluating the validity of a code
                     point or variant mapping. This rule is invoked by the "when" or "not-when" attributes described
-                    in <xref target="when"/>. An action implied by a context rule always has a
+                    in <xref target="contexts"/>. For "char" and "range" elements, an action implied 
+					by a context rule always has a
                     disposition of "invalid" whenever the rule given by the "when" attribute is not matched (see <xref
                         target="implied_actions"/>). Conversely, a "not-when" attribute results in a
-                    disposition of invalid whenever the rule is matched.</t>
+                    disposition of "invalid" whenever the rule is matched.</t>
 
                 <section title="The anchor Element">
 
@@ -1561,7 +1566,7 @@
 
                 <section title="Omitting the anchor Element" anchor="omitting">
 
-                    <t> If the "anchor" element is omitted, the evaluation of the context rule is
+                    <t>If the "anchor" element is omitted, the evaluation of the context rule is
                         not tied to the position of the code point or sequence associated with the
                         "when" attribute. </t>
                     <t>According to <xref target="RFC5892"/> Katakana middle dot is invalid in any
@@ -1582,7 +1587,8 @@
                         corresponding When Rule requires that at least one code point in the label
                         is in one of these scripts, but the position of that code point is
                         independent of the location of the middle dot and no anchor therefore
-                        required. (Note that the Katakana middle dot itself is of script Common).
+                        required. (Note that the Katakana middle dot itself is of script Common, 
+						that is, "sc:Zyyy").
                     </t>
                 </section>
             </section>
@@ -1601,7 +1607,7 @@
             </t>
 
             <t>If an action is to be triggered on matching a rule, a "match" attribute is used
-                instead. Actions are evaluated in the order that they appear in the XML file, Once
+                instead. Actions are evaluated in the order that they appear in the XML file. Once
                 an action is triggered by a label, the disposition defined in the "disp" attribute
                 is assigned to the label and no other actions are evaluated for that label. </t>
 
@@ -1654,7 +1660,7 @@
                         attribute, while for an "all-variants" or "only-variants" attribute,
                         the variant type for all variant code points must match one or several
                         of the type values specified in the attribute to trigger the action.  There is 
-                        no requirement that the entire liste of variant type values be matched,
+                        no requirement that the entire list of variant type values be matched,
                         as long as all variant code points match at least one of the values.</t>
                         
                         <t>An "only-variants" attribute will trigger the action only if all code
@@ -1668,11 +1674,11 @@
         <var cp="0079" type="blocked" />
     </char>
     <char cp="0079"  comment="y"/>
-        <var cp="0078" type="allocate" />
+        <var cp="0078" type="allocatable" />
     </char>
     . . .
     <action disp="blocked" any-variants="blocked" />
-    <action disp="allocate" only-variants="allocatable" />
+    <action disp="allocatable" only-variants="allocatable" />
     <action disp="some-type" any-variants="allocatable" />    ]]></artwork></figure></t>
                     <t>In the example above, the label "xx" would have variant labels "xx", "xy",
                         "yx" and "yy". The first action would result in blocking any variant label
@@ -1861,7 +1867,7 @@
                         <artwork><![CDATA[    <action disp="invalid" any-variant="invalid"/>
     <action disp="blocked" any-variant="blocked"/>
     <action disp="allocatable" any-variant="allocatable"/>
-    <action disp="activated" all-variants="activated"/>]]></artwork>
+    <action disp="activated" all-variants="activate"/>]]></artwork>
                     </figure>
                 </t>
 
@@ -1875,7 +1881,7 @@
             </section>
         </section>
 
-        <section title="Processing a Label Against an LGR" anchor="processing">
+        <section title="Processing a Label against an LGR" anchor="processing">
 
             <section title="Determining Eligibility for a Label">
 
@@ -1956,27 +1962,29 @@
 
                         <t>For any label, the disposition is given by the value of the "disp"
                             attribute for the first action triggered by the label. An action is
-                            triggered, if any of the following is true:
+                            triggered, if all of the following are true:
 
                         <list style="symbols">
 
-                            <t>the label matches or doesn't match the whole label evaluation
-                                rule, given in the "match" or "not-match" attribute respectively
-                                for that action;</t>
+                            <t>the label matches the whole label evaluation
+                                rule given in the "match"  attribute for that action;</t>
+						   
+						   <t>the label does not match the whole label evaluation
+                                rule given in the "not-match" attribute for that action;</t>
 
-                            <t>any or all of the recorded variant types for a variant label match
-                                the types specified in an "any-variant", "all-variants", or
-                                "only-variants" attribute, for that action, and in case of
-                                "only-variants", the label contains only code points that are the
-                                target of applied variant mappings;</t>
-
-                            <t>the label matches or doesn't match the whole label evaluation rule,
-                                given in the "match" or "not-match" attribute respectively for that
-                                action and any or all of the recorded variant types for a variant
-                                label match the types specified in an "any-variant", "all-variants",
-                                or "only-variants" attribute, respectively, for that action, and in
-                                case of "only-variants" the label contains only code points that
-                                are the target of applied variant mappings; or</t>
+                            <t>any of the recorded variant types for a variant label match
+                                the types given in the "any-variant" attribute for that action;</t>
+								
+							 <t>all of the recorded variant types for a variant label match the
+							     types given in the "all-variants" or "only-variants" attribute given for that action;</t>
+							
+							 <t>in case of an "only-variants" attribute, the label contains only code
+							    points that are the target of applied variant mappings;</t>
+						</list>		
+						
+							or
+							
+					    <list  style="symbols">
 
                             <t>the action does not contain any "match", "not-match", "any-variant",
                                 "all-variants", or "only-variants" attributes: catch-all.</t>
@@ -1993,7 +2001,7 @@
                         <t>For any remaining label, set the disposition to "allocatable". </t>
                     </list>
                 </t>
-            </section>
+             </section>
 
 
         </section>
@@ -2026,7 +2034,7 @@
         <section title="IANA Considerations">
             <t>This document requests the following actions from IANA:</t>
             <section title="Media Type Registration">
-                <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
+              <t>[TODO: Add Media Type registration details per <xref target="RFC7303"/>]</t>
             </section>
             <section title="URN Registration" anchor="urn_reg">
                 <t>This document uses a URN to describe the XML namespace in accordance
@@ -2059,7 +2067,7 @@
                 &rfc5646;
                 &rfc5564;
                 &rfc5892;
-                &rfc7303;
+                &rfc7303; 
         <reference anchor="Unicode-Stability">
                 <front>
                     <title>Unicode Encoding Stability Policy, Property Value Stability</title>
@@ -2182,7 +2190,7 @@
     &lt;version comment="initial version"&gt;1&lt;/version&gt;
     &lt;date&gt;2010-01-01&lt;/date&gt;
     &lt;language&gt;sv&lt;/language&gt;
-    &lt;scope type="domain"&gt;example&lt;/scope&gt;
+    &lt;scope type="domain"&gt;example.com&lt;/scope&gt;
     &lt;validity-start&gt;2010-01-01&lt;/validity-start&gt;
     &lt;validity-end&gt;2013-12-31&lt;/validity-end&gt;
     &lt;description type="text/html"&gt;
@@ -2291,7 +2299,7 @@
     &lt;action disp="consonants" 
             match="three-or-more-consonants" /&gt;
     &lt;action disp="blocked" any-variant="blocked" /&gt;
-    &lt;action disp="activated" all-variants="allocatable"
+    &lt;action disp="allocatable" all-variants="allocatable"
             not-match="non-preferred" /&gt;
   &lt;/rules&gt;
 &lt;/lgr&gt;</artwork>
@@ -2430,7 +2438,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>To more fully resolve the dispositions requires several actions to be defined as
                 described in <xref target="rfc3743_example" /> which will override the default
                 actions from <xref target="default_actions" />. After blocking all labels that
-                contain a variant with type "blocked", these actions will allocate labels based
+                contain a variant with type "blocked", these actions will set to allocatable labels based
                 on the following variant types: "simp", "trad" and "both". Note that
                 these variant types do not directly relate to dispositions for the variant label,
                 but that the actions will resolve them to the standard dispositions on labels,
@@ -2452,10 +2460,10 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>The rules declarations would be represented as:</t>
 <t><figure><artwork><![CDATA[  <rules>
     <!--Action elements - order defines precedence-->
-    <action disp="blocked"      any-variant="blocked" />
+    <action disp="blocked"     any-variant="blocked" />
     <action disp="allocatable"  only-variants="simp both" />
     <action disp="allocatable"  only-variants="trad both" />
-    <action disp="blocked"      any-variant="simp trad" />
+    <action disp="blocked"     any-variant="simp trad" />
     <action disp="allocatable"  comment="catch-all" />
   </rules>]]></artwork></figure></t>
 
@@ -2491,11 +2499,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>With the dispositions prepared in this way, only a slight modification to
                 the actions is needed to yield the correct set of allocatable labels:</t>
 
- <t><figure><artwork><![CDATA[  <action disp="blocked" any-variant="blocked" />
-  <action disp="allocatable" only-variants="simp r-simp both r-both" />
-  <action disp="allocatable" only-variants="trad r-trad both r-both" />
-  <action disp="blocked" all-variants="simp trad both" />
-  <action disp="allocatable" />
+ <t><figure><artwork><![CDATA[<action disp="blocked" any-variant="blocked" />
+<action disp="allocatable" only-variants="simp r-simp both r-both" />
+<action disp="allocatable" only-variants="trad r-trad both r-both" />
+<action disp="blocked" all-variants="simp trad both" />
+<action disp="allocatable" />
 ]]></artwork></figure></t>
 
             <t>The first three actions get triggered by the same labels as before.</t>
@@ -2547,9 +2555,9 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <t hangText="|"> separates items, out of which only one can be present</t>
                 </list>
             </t>
-            <t> By using the Unicode property "InSC" or "Indic_Syllable_Category" which corresponds
+            <t> By using the Unicode property "InSC" or "Indic_Syllabic_Category" which corresponds
                 rather directly to the classification of characters in the BNF above, we can
-                directly translate the BNF into a set of WLE rules matching the definition of an
+                translate the BNF into a set of WLE rules matching the definition of an
                 akshara.</t>
 
             <t>
@@ -2652,7 +2660,6 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <section title="Known Issues and Future Work">
                 <t>These are being tracked at http://trac.tools.ietf.org/wg/lager/trac/report/1</t>
             </section>
-
             <section title="Change History">
                 <t>
                     <list style="hanging" hangIndent="5">
@@ -2749,13 +2756,14 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-00">
                             Update to reflect adoption as
-                            a work item by the IETF LAGER working group.</t>
+                            a work item by the IETF LAGER working group.</t> 
                     </list>
                     <list style="hanging" hangIndent="5">
-                      <t hangText="draft-ietf-lager-specification-01">
-                            Add information on contextual conditions. Describe potential IANA
-                            considerations. Change terminology used for dispositions.
-                      </t>
+                         <t hangText="draft-ietf-lager-specification-01">
+                              Update to reflect decisions in first interim meeting of  IETF LAGER working group.
+                              Correcting a number of typos, added section on contextual conditions, clarified l
+							  anguage on how actions are triggered, and changed "block", "allocate" and 
+							  "activate" to "blocked", "allocatable". and "activated" .	 Other minor changes.</t>
                     </list>
                 </t>
             </section>
