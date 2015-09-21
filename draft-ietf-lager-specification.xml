@@ -10,7 +10,7 @@
         <!ENTITY rfc5892 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5892.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-02">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-03">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -309,9 +309,10 @@
 
                     <t>This optional element refers to a scope, such as a domain, to which this
                         policy is applied. The "type" attribute specifies the type of scope being
-                        defined. A type of "domain" means that the scope is a domain that represents
-                        the apex of the DNS zone to which the LGR is applied. The value must be a valid
-                        domain name, and in the case of the DNS root zone, should be represented as ".".
+                        defined. A type of "domain" means that the scope is a domain that represents 
+						the apex of the DNS zone to which the LGR is applied. For that type, the content 
+						of the "scope" element MUST be a valid absolute domain name, without a 
+						trailing dot. However, the DNS root zone is represented as ".".
                     </t>
                     <t>
                         <figure>
@@ -320,8 +321,10 @@
                     </t>
 
                     <t>There may be multiple "scope" tags used, for example to reflect a list of domains
-                        to which the LGR is applied. Other types of scope are application defined, with
-                        an explanation in the "description" element RECOMMENDED.</t>
+                        to which the LGR is applied. Types of scope other than "domain" are application-defined. 
+						Such application-defined type values must be in a namespace "apptype" previously 
+						defined in the document. An explanation of the application-defined type in the 
+						"description" element is RECOMMENDED.</t>
 
                 </section>
                 <section title="The description Element">
@@ -535,7 +538,7 @@
 	               </figure>
 				   </t>
 				   <t>
-				   For a complete example, see <xref  target="example_tables" />.
+				   For a complete example, see <xref target="example_tables" />.
 				  </t>
 				  
 				<t>In contrast, a whole label rule (see <xref target="whole_label"/>) specifies a condition 
@@ -572,7 +575,7 @@
                     of policy, and varies for each implementation. The following examples are
                     intended to demonstrate the syntax; they are not necessarily typical. </t>
 
-                <section title="Basic Variants">
+                <section title="Basic Variants" anchor="basic_variants">
                     <t>Variant code points are specified using one of more "var" elements as
                         children of a "char" element. The target mapping is specified using the "cp"
                         attribute. Other, optional attributes for the "var" element are described
@@ -598,7 +601,15 @@
                         </figure>
                     </t>
                     <t>The source and target of a variant mapping may both be sequences, but not
-                        ranges.</t>
+                        ranges. </t>
+						
+					<t>If the source of one mapping is a prefix sequence of the source for another, 
+						both variant mappings will be considered at the same location in the input label
+						when generating permuted variant labels. If poorly designed, an LGR containing 
+						such an instance of a prefix relation could generate multiple instances of the same 
+						variant label for the same original label, but with potentially different dispositions.
+						Any duplicate variant labels encountered MUST be treated as an error (see
+						<xref target="duplicate_variants" />).</t>
                         
                     <t>The "var" element specifies variant mappings in only one direction, even
                         though the variant relation is usually considered symmetric, that is, if A
@@ -781,13 +792,18 @@
                     </t>
                     <t>While only a single "when" or "not-when" attribute can be applied to any "var"
                         element, multiple "var" elements using the same mapping, but
-                        different "when" or "not-when" attributes may be specified, as the combination of
-						mapping and conditional context defines a unique variant. Care must be taken to ensure that
+                        different "when" or "not-when" attributes may be specified. The combination of
+						mapping and conditional context defines a unique variant. </t>
+						
+						<t>Care must be taken to ensure that
 						for each variant label at most one of the contextual conditions is met for variants 
-						with the same mapping; otherwise the results are undefined. </t>
-                        
-                    <t>Two contexts may be complementary, as in the following example, which shows
-                           ARABIC    LETTER TEH MARBUTA (U+0629) as a variant of ARABIC LETTER ALEF 
+						with the same mapping; otherwise duplicate variant labels would be created for the
+						same input lablel. 	Any such duplicate variant labels MUST be treated as an error,  see 
+						<xref target="duplicate_variants" />.
+						</t>
+                   
+                   <t>Two contexts may be complementary, as in the following example, which shows
+                           ARABIC LETTER TEH MARBUTA (U+0629) as a variant of ARABIC LETTER ALEF 
                            MAKSURA (U+0649), but with two different types. </t>
                     <t>
                         <figure>
@@ -1767,7 +1783,7 @@
                 </t>
                 <t>The first action matches any variant label for which at least one of the code
                     point variants is of type "blocked". The second matches any variant label for
-                    which all of the code point  variants are of type "simplified" or "both",
+                    which all of the code point variants are of type "simplified" or "both",
                     in other words an all-simplified label. The third matches any label for which
                     all variants are of type "traditional" or "both", that is all traditional. These
                     two actions are not triggered by any variant labels containing some original
@@ -1911,6 +1927,15 @@
                     For such LGRs, the ordinary iteration over code points would generally only
                     exclude a subset of invalid labels, but it could be used effectively as a
                     pre-screening.</t>
+					
+				<t>To check the validity of a label with reflexive mappings, it is not necessary
+				    to generate all variant labels. Only a single variant needs to be created,
+					where for each code point, any reflexive variants are applied, and the label
+					disposition is evaluated. A disposition of "invalid" results in the label being not
+					eligible. (In the exceptional case where context rules are present on reflexive 
+					mappings, multiple reflexive variants may be defined, but for each original 
+					label, at most one of these can be valid at each code position. However,
+					see <xref target="duplicate_variants" />).</t>
 
             </section>
 
@@ -1948,6 +1973,8 @@
 
                     </list>
                 </t>
+				<t>The number of potential permutations can be very large. In practice, implementations
+				    would use suitable optimizations to avoid having to actually create all permutations.</t>
 
             </section>
 
@@ -1984,7 +2011,7 @@
 						
 							or
 							
-					    <list  style="symbols">
+					    <list style="symbols">
 
                             <t>the action does not contain any "match", "not-match", "any-variant",
                                 "all-variants", or "only-variants" attributes: catch-all.</t>
@@ -2002,8 +2029,66 @@
                     </list>
                 </t>
              </section>
+			 
+			 <section title="Duplicate Variant Labels" anchor="duplicate_variants" >
+			 <t>For a poorly designed LGR, it is possible to generate duplicate variant labels from 
+			 the same input label, but with different, and potentially conflicting dispositions. Implementations
+			 MUST treat any duplicate variant labels encountered as an error, irrespective of their dispositions.
+			 </t>
+			 <t>This situation can arise in two ways. One is described in <xref target="conditional_variants" /> 
+			 and involves defining the same variant mapping with two context rules that are formally distinct,
+			 but nevertheless overlap so that they are not mutually exclusive for the same label.</t>
+			 
+			 <t>The other case involves variants defined for sequences, where one sequence is a prefix of another 
+			 (see <xref target="basic_variants"/>).
+			 The following shows such an example resulting in conflicting reflexive variants:</t>
+			 <t>
+			 <figure><artwork><![CDATA[  <char cp="0061">
+    <var cp="0061" type="allocatable"/>
+  </char>
+  <char cp="0062"/>
+  <char cp="0061 0062">
+    <var cp="0061 0062" type="blocked"/>
+  </char> ]]></artwork></figure>
+			  </t>
+			  <t>A label "ab" would generate the variant labels "{a}{b}" and "{ab}" where the curly braces 
+			    show the sequence boundaries as they were applied during variant mapping. The result
+			    is a duplicate variant label "ab", one based on a variant of type "allocatable" plus an original code point "b"
+			    that has no variant, and another one based on a single variant of type "blocked", thus
+				creating two variant labels with conflicting dispositions.
+			    </t>
+	
+			  <t>In the general case it is difficult to impossible to prove by mechanical inspection of the 
+			     LGR that duplicate variant labels will never occur, so implementations have to be
+				 prepared to detect this error during variant label generation. The condition is easily
+				 avoided by careful design of context rules and special attention to the relation among
+				 code point sequences with variants.</t>
+				 	 
+			 </section>
+			 
+			 <section title="Checking Labels for Collision" anchor="collision" >
+			    <t>The obvious method for checking collision between labels is to generate the
+			      fully permuted set of variants for one of them and see whether it contains the
+			      other label as a member. As discussed above, this can be prohibitve, and is not 
+			      necessary.</t>
+			 
+			   <t>Because of symmetry and transitivity, all variant mappings form disjoint sets
+			     in which each of them is a variant of all other members. As a consequence,
+			     the set of variant labels likewise forms disjoint subsets, based on which set of
+			     mappings was used.</t>
 
+			  <t>Instead of generating all permutations, that is, use each variant mapping in each
+			    set, it is sufficient to substitute an "index" mapping, in effect identifying the set 
+			    of variant code points. Such an index mapping could be, for example, the variant 
+		     	mapping for which the target code point (or sequence) comes first n some sorting 
+			    order.</t>
 
+              <t>To check collision then means generating a single variant label from the original, 
+                by substituting the "index" value as the target for mapping from any code
+                point. This results in an "index label".  Two labels collide whenever the index labels 
+			    for them are the same.</t>
+			 </section>
+			 
         </section>
 
         <section title="Conversion to and from Other Formats">
@@ -2054,6 +2139,15 @@
                 system is relying on the rules being applied, the system might fail if the rules
                 are not applied in a predictable fashion. This could cause security problems for
                 the querying system.</t>
+			<t>A naive implementation attempting to generate all variant labels for a given label
+			    could lead to the possibility of exhausting the resources on the machine running the LGR
+                processor, potentially causing a DoS on the server. For many operations, brute force
+				generation can be avoided by optimization, and if needed, the number of permuted 
+				labels can be estimated more cheaply ahead of time.</t>
+			<t>The implementation of Whole Label Evaluation rules, using certain backtracking
+			    algorithms, can take exponential time for pathological rules or labels and exhaust 
+				stack resources.  This can be mitigated by proper implementation and enforcing the
+				restrictions on permissible label length.</t>
         </section>
 
     </middle>
@@ -2429,7 +2523,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
     Traditional label:  U+4E7E U+4E7E]]></artwork>
                 </figure>
             </t>
-            <t>However, if  allocatable labels were generated simply by a straight permutation
+            <t>However, if allocatable labels were generated simply by a straight permutation
                 of all variants with type other than type="blocked" and without regard to the
                 simplified / traditional variants, we would end up with an extra allocatable
                 label of "U+5E72 U+4E7E". This label is comprised of a both Simplified Chinese
@@ -2651,7 +2745,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                 registrations <xref target="RFC5564"/> was published by the Arabic-language
                 community. </t>
             <t>Contributions that have shaped this document have been provided by Francisco Arias,
-                Mark Davis, Paul Hoffman, Nicholas Ostler, Thomas Roessler, Steve Sheng, Michel
+                Mark Davis, Martin Duerst, Paul Hoffman, Alexander Mayrhofer, Nicholas Ostler, 
+				Thomas Roessler, Audric Schiltknecht, Steve Sheng, Michel
                 Suignard, Andrew Sullivan, Wil Tan and John Yunker.</t>
         </section>
         <section title="Editorial Notes">
@@ -2760,10 +2855,21 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                          <t hangText="draft-ietf-lager-specification-01">
-                              Update to reflect decisions in first interim meeting of  IETF LAGER working group.
+                              Update to reflect decisions in first interim meeting of IETF LAGER working group.
                               Correcting a number of typos, added section on contextual conditions, clarified l
 							  anguage on how actions are triggered, and changed "block", "allocate" and 
 							  "activate" to "blocked", "allocatable". and "activated" .	 Other minor changes.</t>
+                    </list>
+					<list style="hanging" hangIndent="5">
+                         <t hangText="draft-ietf-lager-specification-02">
+                              Minor changes.</t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                         <t hangText="draft-ietf-lager-specification-03">
+                              Update to fix a typo in the schema, and clarify the use of reflexive variants
+							  in checking label validity.	 Added security consideration for naive implementations of 
+							  permuted labels and WLE rules. Added discussion of error conditions under which
+							  duplicate variant labels might be created. Other minor changes.</t>
                     </list>
                 </t>
             </section>
