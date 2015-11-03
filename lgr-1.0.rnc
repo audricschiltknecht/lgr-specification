@@ -2,7 +2,7 @@
 # LGR XML Schema 1.0
 #
 
-default namespace = "http://www.iana.org/lgr/0.1"
+default namespace = "urn:ietf:params:xml:ns:lgr-1.0"
 
 #
 # SIMPLE TYPES

@@ -10,7 +10,7 @@
         <!ENTITY rfc5892 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5892.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-03">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-04">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
