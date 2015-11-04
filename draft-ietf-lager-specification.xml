@@ -2918,7 +2918,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-05">
-                              [TODO]
+                              Add IANA Considerations for media type registration, URN registration and
+                              instantiating a dispositions registry.
                         </t>
                     </list>
                 </t>
