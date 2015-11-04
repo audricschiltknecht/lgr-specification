@@ -10,7 +10,7 @@
         <!ENTITY rfc5892 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5892.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-04">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-05">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -2870,6 +2870,16 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
 							  in checking label validity.	 Added security consideration for naive implementations of 
 							  permuted labels and WLE rules. Added discussion of error conditions under which
 							  duplicate variant labels might be created. Other minor changes.</t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-04">
+                              Updated XML namespace in the RelaxNG schema.
+                        </t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-05">
+                              [TODO]
+                        </t>
                     </list>
                 </t>
             </section>
