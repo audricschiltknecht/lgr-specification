@@ -2119,6 +2119,9 @@
         <section title="IANA Considerations">
             <t>This document requests the following actions from IANA:</t>
             <section title="Media Type Registration">
+                <t>The media type "application/lgr+xml" should be registered to denote
+                transmission of label generation rulesets that are compliant with this
+                specification, in accordance with <xref target="RFC6838"/>.</t>
                 <t>Type name: application</t>
                 <t>Subtype name: lgr+xml</t>
                 <t>Required parameters: None.</t>
@@ -2138,7 +2141,7 @@
                 <t>Change Controller: World Wide Web Consortium (W3C)</t>
             </section>
             <section title="URN Registration" anchor="urn_reg">
-                <t>This document uses a URN to describe the XML namespace in accordance
+                <t>This specification uses a URN to describe the XML namespace, in accordance
                    with <xref target="RFC3688"/>.</t>
                 <t>URI: urn:ietf:params:xml:ns:lgr-1.0</t>
                 <t>Registrant Contact: See the Authors of this document.</t>
@@ -2146,18 +2149,18 @@
             </section>
             <section title="Disposition Registry">
                 <t>This document establishes a vocabulary of "Label Generation Ruleset Dispositions"
-                which should be reflected as an IANA registry. This registry should be divided into
+                which should be reflected as a new IANA registry. This registry should be divided into
                 two sub-registries:
 
-                <list>
+                <list style="symbols">
                     <t>Standard Dispositions - This registry shall list dispositions that have been
                     defined in Standards Track documents. The initial set of registrations shall
                     be the four dispositions in this document described in
                     <xref target="recommended_disposition_values"/>.</t>
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered on a first-come first-served basis by third parties with the IANA.
-                    Such dispositions must take the form "applicant_id:disposition" where the
-                    applicant_id is a prefix the uniquely identifies the private user of the
+                    Such dispositions must take the form "entity:disposition" where the
+                    entity is a prefix the uniquely identifies the private user of the
                     namespace. For example, "acme:reserved" could be a private extension used by the
                     organisation ACME to denote a disposition relating to reserved labels. These
                     extensions are not intended to be interoperable, but registration is designed
@@ -2166,10 +2169,11 @@
                     organization be defined as Standard Dispositions.</t>
                 </list>
                 </t>
-                <t>All private dispositions MUST be registered with the prefix-colon to distinguish
-                them from standard dispositions.</t>
+                <t>All private dispositions MUST be registered using the prefix-colon notation
+                    to distinguish them from standard dispositions.</t>
                 <t>The IANA registry should provide data on the name of the disposition, the
-                intended purposes, and the registrant or defining specification for the disposition.</t>
+                    intended purposes, and the registrant or defining specification for the
+                    disposition.</t>
             </section>
         </section>
 
