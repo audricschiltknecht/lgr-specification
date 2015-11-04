@@ -2151,22 +2151,22 @@
 
                 <list>
                     <t>Standard Dispositions - This registry shall list dispositions that have been
-                    definined in Standards Track documents. The initial set of registrations shall
+                    defined in Standards Track documents. The initial set of registrations shall
                     be the four dispositions in this document described in
                     <xref target="recommended_disposition_values"/>.</t>
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered on a first-come first-served basis by third parties with the IANA.
                     Such dispositions must take the form "applicant_id:disposition" where the
                     applicant_id is a prefix the uniquely identifies the private user of the
-                    namespace. For example, "acme:delete" could be a private extension used by the
-                    organisation ACME to denote a disposition relating to deleting domains. These
+                    namespace. For example, "acme:reserved" could be a private extension used by the
+                    organisation ACME to denote a disposition relating to reserved labels. These
                     extensions are not intended to be interoperable, but registration is designed
                     to minimise potential conflicts. It is strongly recommended any new dispositions
                     that require interoperability and have applicability beyond a single
                     organization be defined as Standard Dispositions.</t>
                 </list>
                 </t>
-                <t>All private dispositions must be registered with the prefix-colon to distinguish
+                <t>All private dispositions MUST be registered with the prefix-colon to distinguish
                 them from standard dispositions.</t>
                 <t>The IANA registry should provide data on the name of the disposition, the
                 intended purposes, and the registrant or defining specification for the disposition.</t>
