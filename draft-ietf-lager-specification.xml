@@ -6,6 +6,7 @@
         <!ENTITY rfc3743 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.3743.xml">
         <!ENTITY rfc5646 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5646.xml">
         <!ENTITY rfc4290 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4290.xml">
+        <!ENTITY rfc5226 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5226.xml">
         <!ENTITY rfc5564 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5564.xml">
         <!ENTITY rfc5892 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5892.xml">
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
@@ -2155,8 +2156,9 @@
 
                 <list style="symbols">
                     <t>Standard Dispositions - This registry shall list dispositions that have been
-                    defined in Standards Track documents. The initial set of registrations shall
-                    be the four dispositions in this document described in
+                    defined in published specifications, i.e. the eligibility for such registrations
+                    shall be Specification Required <xref target="RFC5226"/>. The initial set of
+                    registrations shall be the four dispositions in this document described in
                     <xref target="recommended_disposition_values"/>.</t>
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered on a first-come first-served basis by third parties with the IANA.
@@ -2237,6 +2239,7 @@
           &rfc3688;
           &rfc3743;
           &rfc4290;
+          &rfc5226;
           &rfc5564;
           &rfc6838;
           &rfc7303;
@@ -2928,7 +2931,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                         <t hangText="draft-ietf-lager-specification-05">
                               Add IANA Considerations for media type registration, URN registration and
                               instantiating a dispositions registry. Separate normative and informative
-                              references.
+                              references. Change eligibility required for disposition registration to be
+                              Specification Required, rather than Standards Track.
                         </t>
                     </list>
                 </t>
