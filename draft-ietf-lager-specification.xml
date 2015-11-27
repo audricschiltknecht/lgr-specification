@@ -2198,27 +2198,10 @@
     </middle>
 
     <back>
-        <references>
-                &rfc3339;
-                &rfc3688;
-                &rfc3743;
-                &rfc4290;
-                &rfc5646;
-                &rfc5564;
-                &rfc5892;
-                &rfc6838;
-                &rfc7303; 
-        <reference anchor="Unicode-Stability">
-                <front>
-                    <title>Unicode Encoding Stability Policy, Property Value Stability</title>
-                    <author>
-                        <organization abbrev="Unicode">Unicode Consortium</organization>
-                    </author>
-                    <date/>
-                </front>
-                <format type="HTML"
-                    target="http://www.unicode.org/policies/stability_policy.html#Property_Value"/>
-            </reference>
+        <references title="Normative References">
+            &rfc3339;
+            &rfc5646;
+            &rfc5892;
             <reference anchor="Unicode-Versions">
                 <front>
                     <title>Unicode Version Numbering</title>
@@ -2239,30 +2222,6 @@
                 </front>
                 <format type="HTML" target="http://unicode.org/reports/tr42/"/>
             </reference>
-            <reference anchor="LGR-PROCEDURE">
-                <front>
-                    <title>Procedure to Develop and Maintain the Label Generation Rules for the Root
-                        Zone in Respect of IDNA Labels </title>
-                    <author>
-                        <organization abbrev="ICANN">Internet Corporation for Assigned Names and
-                            Numbers</organization>
-                    </author>
-                    <date/><!--    March, 2013</date> -->
-                </front>
-                <format type="PDF"
-                    target="http://www.icann.org/en/resources/idn/draft-lgr-procedure-07dec12-en.pdf"
-                />
-            </reference>
-            <reference anchor="TDIL-HINDI">
-                <front>
-                    <title>Devanagari Script Behaviour for Hindi </title>
-                    <author>
-                        <organization abbrev="TDIL">Technology Development for Indian Languages
-                            (TDIL) Programme</organization>
-                    </author>
-                    <date/><!-- October 2013</date> -->
-                </front>
-            </reference>
             <reference anchor="XML">
                 <front>
                     <title>Extensible Markup Language (XML) 1.0</title>
@@ -2273,25 +2232,68 @@
                 </front>
                 <format type="HTML" target="http://www.w3.org/TR/REC-xml/"/>
             </reference>
-            <reference anchor="WLE-RULES">
-                <front>
-                    <title>WLE Rules</title>
-                    <author>
-                        <organization abbrev="ICANN">Internet Corporation for Assigned Names and Numbers</organization>
-                    </author>
-                    <date/><!-- April, 2015 -->
-                </front>
-                <format type="PDF" target="https://community.icann.org/download/attachments/43989034/WLE-Rules.pdf" />
-            </reference>
-            <reference anchor="ASIA-TABLE">
-                <front>
-                    <title>.ASIA ZH IDN Language Table</title>
-                    <author>
-                        <organization>DotAsia Organisation</organization>
-                    </author>
-                    <date/><!-- March, 2011 -->
-                </front>
-            </reference>
+        </references>
+        <references title="Informative References">
+          &rfc3688;
+          &rfc3743;
+          &rfc4290;
+          &rfc5564;
+          &rfc6838;
+          &rfc7303;
+          <reference anchor="Unicode-Stability">
+              <front>
+                  <title>Unicode Encoding Stability Policy, Property Value Stability</title>
+                  <author>
+                      <organization abbrev="Unicode">Unicode Consortium</organization>
+                  </author>
+                  <date/>
+              </front>
+              <format type="HTML"
+                  target="http://www.unicode.org/policies/stability_policy.html#Property_Value"/>
+          </reference>
+          <reference anchor="WLE-RULES">
+              <front>
+                  <title>WLE Rules</title>
+                  <author>
+                      <organization abbrev="ICANN">Internet Corporation for Assigned Names and Numbers</organization>
+                  </author>
+                  <date/><!-- April, 2015 -->
+              </front>
+              <format type="PDF" target="https://community.icann.org/download/attachments/43989034/WLE-Rules.pdf" />
+          </reference>
+          <reference anchor="ASIA-TABLE">
+              <front>
+                  <title>.ASIA ZH IDN Language Table</title>
+                  <author>
+                      <organization>DotAsia Organisation</organization>
+                  </author>
+                  <date/><!-- March, 2011 -->
+              </front>
+          </reference>
+          <reference anchor="LGR-PROCEDURE">
+              <front>
+                  <title>Procedure to Develop and Maintain the Label Generation Rules for the Root
+                      Zone in Respect of IDNA Labels </title>
+                  <author>
+                      <organization abbrev="ICANN">Internet Corporation for Assigned Names and
+                          Numbers</organization>
+                  </author>
+                  <date/><!--    March, 2013</date> -->
+              </front>
+              <format type="PDF"
+                  target="http://www.icann.org/en/resources/idn/draft-lgr-procedure-07dec12-en.pdf"
+              />
+          </reference>
+          <reference anchor="TDIL-HINDI">
+              <front>
+                  <title>Devanagari Script Behaviour for Hindi </title>
+                  <author>
+                      <organization abbrev="TDIL">Technology Development for Indian Languages
+                          (TDIL) Programme</organization>
+                  </author>
+                  <date/><!-- October 2013</date> -->
+              </front>
+          </reference>
         </references>
 
         <section title="Example Tables" anchor="example_tables">
@@ -2925,7 +2927,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-05">
                               Add IANA Considerations for media type registration, URN registration and
-                              instantiating a dispositions registry.
+                              instantiating a dispositions registry. Separate normative and informative
+                              references.
                         </t>
                     </list>
                 </t>
