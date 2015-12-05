@@ -2161,7 +2161,7 @@
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered on a first-come first-served basis by third parties with the IANA.
                     Such dispositions must take the form "entity:disposition" where the
-                    entity is a prefix the uniquely identifies the private user of the
+                    entity is a prefix that uniquely identifies the private user of the
                     namespace. For example, "acme:reserved" could be a private extension used by the
                     organisation ACME to denote a disposition relating to reserved labels. These
                     extensions are not intended to be interoperable, but registration is designed
