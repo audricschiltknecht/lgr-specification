@@ -2161,7 +2161,7 @@
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered on a first-come first-served basis by third parties with the IANA.
                     Such dispositions must take the form "entity:disposition" where the
-                    entity is a prefix that uniquely identifies the private user of the
+                    entity is a prefix the uniquely identifies the private user of the
                     namespace. For example, "acme:reserved" could be a private extension used by the
                     organisation ACME to denote a disposition relating to reserved labels. These
                     extensions are not intended to be interoperable, but registration is designed
@@ -2198,14 +2198,10 @@
     </middle>
 
     <back>
-        <references>
+        <references title="Normative References">
                 &rfc3339;
                 &rfc3688;
-                &rfc3743;
-                &rfc4290;
                 &rfc5646;
-                &rfc5564;
-                &rfc5892;
                 &rfc6838;
                 &rfc7303; 
         <reference anchor="Unicode-Stability">
@@ -2239,6 +2235,22 @@
                 </front>
                 <format type="HTML" target="http://unicode.org/reports/tr42/"/>
             </reference>
+            <reference anchor="XML">
+                <front>
+                    <title>Extensible Markup Language (XML) 1.0</title>
+                    <author>
+                        <organization abbrev="W3C">World Wide Web Consortium</organization>
+                    </author>
+                    <date/>
+                </front>
+                <format type="HTML" target="http://www.w3.org/TR/REC-xml/"/>
+            </reference>
+         </references>
+         <references title="Informative References" >
+                &rfc4290;
+                &rfc5564;
+                &rfc5892;
+                &rfc3743;
             <reference anchor="LGR-PROCEDURE">
                 <front>
                     <title>Procedure to Develop and Maintain the Label Generation Rules for the Root
@@ -2263,16 +2275,6 @@
                     <date/><!-- October 2013</date> -->
                 </front>
             </reference>
-            <reference anchor="XML">
-                <front>
-                    <title>Extensible Markup Language (XML) 1.0</title>
-                    <author>
-                        <organization abbrev="W3C">World Wide Web Consortium</organization>
-                    </author>
-                    <date/>
-                </front>
-                <format type="HTML" target="http://www.w3.org/TR/REC-xml/"/>
-            </reference>
             <reference anchor="WLE-RULES">
                 <front>
                     <title>WLE Rules</title>
@@ -2293,7 +2295,7 @@
                 </front>
             </reference>
         </references>
-
+		
         <section title="Example Tables" anchor="example_tables">
             <t>The following presents a minimal LGR table defining the lower case LDH
                 (letter-digit-hyphen) repertoire and containing no rules or metadata elements.
@@ -2925,7 +2927,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-05">
                               Add IANA Considerations for media type registration, URN registration and
-                              instantiating a dispositions registry.
+                              instantiating a dispositions registry. Split references into informative and normative.
                         </t>
                     </list>
                 </t>
