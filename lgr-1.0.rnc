@@ -35,10 +35,22 @@ code-point-set-shorthand = xsd:token {
               ~ "( ([0-9A-F]{4,6}|[0-9A-F]{4,6}-[0-9A-F]{4,6}))*"
 }
 
-## dates are used in information fields in the meta section.
-date = xsd:token {
+## dates are used in information fields in the meta 
+## section ("YYYY-MM-DD")
+date-pattern = xsd:token {
     pattern = "\d{4}-\d\d-\d\d"
 }
+
+## variant type
+## the variant type MUST be non-emtpy and MUST NOT
+## start with a "_", using xsd:NMTOKEN here because
+## we need space-separated lists of them
+variant-type = xsd:NMTOKEN;
+
+## variant type list for action triggers
+## the list MUST not be empty and entries MUST NOT
+## start with a "_"
+variiant-type-list = xsd:NMTOKENS;
 
 ## reference to a rule name (used in "when" and "not-when" attributes,
 ## as well as the "by-ref" attribute of the "rule" element.)
@@ -68,6 +80,15 @@ count-pattern = xsd:token {
     pattern = "\d+(\+|:\d+)?"
 }
 
+## ref attribute pattern 
+## space separated list of id attribute valiues for 
+## reference elements. These reference ids
+## must be declared in a reference element
+## before they can be used in a ref attribute
+ref-pattern = xsd:token {
+    pattern = "[-_.:0-9A-Z]+( [-_.:0-9A-Z]+)*"
+}
+
 #
 # STRUCTURES
 #
@@ -79,8 +100,8 @@ char = element char {
     attribute when { rule-ref }?,
     attribute not-when { rule-ref }?,
     attribute tag { tags }?,
-    attribute ref { text }?,
-    variant*
+    attribute ref { ref-pattern }?,
+      variant*
 }
 
 ## Representation of a range of code points
@@ -91,32 +112,17 @@ range = element range {
     attribute when { rule-ref }?,
     attribute not-when { rule-ref }?,
     attribute tag { tags }?,
-    attribute ref { text }?
+    attribute ref { ref-pattern }?
 }
-
-## Representation of a single code point (no sequences allowed, and no
-## tag attribute allowed). This is used when defining the set of
-## characters that constitute a class.
-char-simple = element char {
-    attribute cp { code-point }
-}
-
-## Representation of a range of code points, for use in defining the
-## set of characters that constitute a class.
-range-simple = element range {
-    attribute first-cp { code-point },
-    attribute last-cp { code-point }
-}
-
 
 ## Representation of a variant code point or sequence
 variant = element var {
     attribute cp { code-point-literal },
-    attribute type { text }?,
+    attribute type { xsd:NMTOKEN }?,
     attribute when { rule-ref }?,
     attribute not-when { rule-ref }?,
     attribute comment { text }?,
-    attribute ref { text }?
+    attribute ref { ref-pattern }?
 }
 
 
@@ -136,24 +142,23 @@ class-invocation = element class {
 }
 
 ## defines a new class (set of code points) using Unicode property or
-## code point literals
+## code points of the same tag value or code point literals
 class-declaration = element class {
     # "name" attribute MUST be present if this is a "top-level" class
     # declaration, i.e. appearing directly under the "rules" element.
     # Otherwise, it MUST be absent.
     attribute name { identifier }?,
-    # If used as a matcher (appearing in a "rule" element), the "count"
+    # If used as a matcher (appearing in a "rule" element, but not
+    # when nested inside a set operator or class), the "count"
     # attribute may be present. Otherwise, it MUST be absent.
     attribute count { count-pattern }?,
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     (
       # define the class by property (e.g. property="sc:Latn"), OR
-      attribute property { text }
+      attribute property { xsd:NMTOKEN }
       # define the class by tagged code points, OR
       | attribute from-tag { tag-ref }
-      # list of single code points and ranges, OR
-      | (char-simple | range-simple)+
       # text node to allow for shorthand notation e.g. "0061 0062-0063"
       | code-point-set-shorthand
     )
@@ -175,9 +180,10 @@ class-or-set-operator-declaration =
 complement-operator = element complement {
     attribute name { identifier }?,
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     # "count" attribute MUST only be used when this set-operator is
-    # used as a matcher (i.e. nested in a <rule> element)
+    # used as a matcher (i.e. nested in a <rule> element but not 
+    # inside a set-operator or class)
     attribute count { count-pattern }?,
     class-or-set-operator-nested
 }
@@ -185,9 +191,10 @@ complement-operator = element complement {
 union-operator = element union {
     attribute name { identifier }?,
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     # "count" attribute MUST only be used when this set-operator is
-    # used as a matcher (i.e. nested in a <rule> element)
+    # used as a matcher (i.e. nested in a <rule> element but not 
+    # inside a set-operator or class)
     attribute count { count-pattern }?,
     class-or-set-operator-nested,
     # needs two or more child elements
@@ -197,9 +204,10 @@ union-operator = element union {
 intersection-operator = element intersection {
     attribute name { identifier }?,
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     # "count" attribute MUST only be used when this set-operator is
-    # used as a matcher (i.e. nested in a <rule> element)
+    # used as a matcher (i.e. nested in a <rule> element but not 
+    # inside a set-operator or class)
     attribute count { count-pattern }?,
     class-or-set-operator-nested,
     class-or-set-operator-nested
@@ -208,9 +216,10 @@ intersection-operator = element intersection {
 difference-operator = element difference {
     attribute name { identifier }?,
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     # "count" attribute MUST only be used when this set-operator is
-    # used as a matcher (i.e. nested in a <rule> element)
+    # used as a matcher (i.e. nested in a <rule> element but not 
+    # inside a set-operator or class)
     attribute count { count-pattern }?,
     class-or-set-operator-nested,
     class-or-set-operator-nested
@@ -219,9 +228,10 @@ difference-operator = element difference {
 symmetric-difference-operator = element symmetric-difference {
     attribute name { identifier }?,
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     # "count" attribute MUST only be used when this set-operator is
-    # used as a matcher (i.e. nested in a <rule> element)
+    # used as a matcher (i.e. nested in a <rule> element but not
+    # inside a set-operator or class)
     attribute count { count-pattern }?,
     class-or-set-operator-nested,
     class-or-set-operator-nested
@@ -244,6 +254,9 @@ any-matcher = element any {
 }
 
 choice-matcher = element choice {
+    ## "count attribute MUST only be used when the choice-matcher contains
+    ## no nested "start", "end", "anchor", "look-behind" or "look-ahead"
+    ## operators and no nested rule-matchers containing any of these elements
     attribute count { count-pattern }?,
     attribute comment { text }?,
     # two or more match operators
@@ -259,7 +272,7 @@ char-matcher =
     # attribute may be present. Otherwise, it MUST be absent.
     attribute count { count-pattern }?,
     attribute comment { text }?,
-    attribute ref { text }?
+    attribute ref { ref-pattern }?
 }
 
 start-matcher = element start {
@@ -316,7 +329,7 @@ match-operators = match-operators-non-pos | match-operators-pos
 rule-declaration-top = element rule {
     attribute name { identifier },
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     match-operators
 }
 
@@ -324,9 +337,12 @@ rule-declaration-top = element rule {
 ## match operators itself)
 rule-matcher =
   element rule {
+    ## "count attribute MUST only be used when the rule-matcher contains
+    ## no nested "start", "end", "anchor", "look-behind" or "look-ahead"
+     ## operators and no nested rule-matchers containing any of these elements
     attribute count { count-pattern }?,
     attribute comment { text }?,
-    attribute ref { text }?,
+    attribute ref { ref-pattern }?,
     (attribute by-ref { rule-ref } | match-operators)
   }
 
@@ -337,19 +353,19 @@ rule-matcher =
 
 action-declaration = element action {
     attribute comment { text }?,
-    attribute ref { text }?,
-    attribute disp { text },
-    ( attribute match { text } | attribute not-match { text } )?,
-    ( attribute any-variant { text }
-      | attribute all-variants { text }
-      | attribute only-variants { text } )?
+    attribute ref { ref-pattern }?,
+    # dispositions are often named after variant types or vice versa
+    attribute disp { variant-type },
+    ( attribute match { rule-ref } | attribute not-match { rule-ref } )?,
+    ( attribute any-variant { variant-type-list }
+      | attribute all-variants { variant-type-list }
+      | attribute only-variants { variant-type-list } )?
 }
 
 # DOCUMENT STRUCTURE
 
 start = lgr
 lgr = element lgr {
-    attribute id { text }?,
     meta-section?,
     data-section,
     rules-section?
@@ -360,37 +376,41 @@ lgr = element lgr {
 ## generation ruleset that generally does not affect machine processing
 ## (except for unicode-version).
 ## However, if any "class-declaration" uses the "property" attribute,
-## one or more unicode-version MUST be present.
+## a unicode-version MUST be present.
 meta-section = element meta {
     element version {
         attribute comment { text }?,
         text
     }?
-    & element date {
-        xsd:token {
-            pattern = "\d{4}-\d{2}-\d{2}"
-        }
-    }?
+    & element date { date-pattern }?
     & element language { language-tag }*
     & element scope {
         # type may by "domain" or an application-defined value
         attribute type { xsd:NCName },
         scope-value
     }*
-    & element validity-start { text }?
-    & element validity-end { text }?
+    & element validity-start { date-pattern }?
+    & element validity-end { date-pattern }?
     & element unicode-version {
         xsd:token {
             pattern = "\d+\.\d+\.\d+"
         }
     }?
     & element description {
+        # this SHOULD be a valid MIME type
         attribute type { text }?,
         text
     }?
     & element references {
         element reference {
-            attribute id { text },
+            attribute id { 
+             xsd:token {
+              # limit id attribute to uppercase letters, digits 
+              # and a few punctuation marks; use of integers 
+              # is RECOMMENDED
+               pattern = "[-_.:0-9A-Z]*";
+               minLength = "1"
+            },
             attribute comment { text }?,
             text
         }*
