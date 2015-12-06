@@ -399,7 +399,9 @@
                        for rules.</t>
                     <t>References are specified in an optional "references" element contains any
                         number of "reference" elements, each with a unique "id" attribute. It is
-                        RECOMMENDED that the "id" attribute be a zero-based integer. The value of
+                        RECOMMENDED that the "id" attribute be a zero-based integer, however,
+                        in addition to digits 0-9, it MAY contain uppercase letters A-Z, as well as
+                        period, hyphen, colon or underscore.  The value of
                         each "reference" element SHOULD be the citation of a standard, dictionary or
                         other specification in any suitable format. In addition to an "id"
                         attribute, a "reference" element may have a "comment" attribute for an
@@ -422,12 +424,12 @@
     </data>]]></artwork>
                         </figure>
                     </t>
-                    <t> A reference is associated with an element by using an optional "ref" attribute
-                        (see <xref target="ref"/>).  The use of "ref" attributes is limited to certain
+                    <t> A reference is associated with an element by using its id as part of an optional "ref" attribute
+                        (see <xref target="ref"/>).  The "ref" attribute may be used with many
                         kinds of elements in the "data" or "rules" sections of the LGR, most notably
-                        those defining code points and rules. A "ref" attribute may neither occur on elements
-                        that are named references to character classes and rules nor on certain other
-                        element types. See description of these elements below.</t>
+                        those defining code points, variants and rules. However, a "ref" attribute may not occur on certain
+                        kinds of elements, including references to nameed character classes or rules. 
+                        See description of these elements below.</t>
                 </section>
             </section>
         </section>
@@ -874,7 +876,8 @@
                 <t>In addition to "char", "range" and "var" elements in the data section, a "ref"
                     attribute may be present for a number of elements types contained in the "rules" 
                     element as described below:  actions, literals ("char" inside a rule), as well as
-                    for definitions of rules and classes, but not for named references using
+                    for definitions of rules and classes, but not for references to named character
+                    classes or rules using
                     the "by-ref" attribute defined below.  (The use of the
                     "by-ref" and "ref" attributes is mutually exclusive.) None of the elements
                     in the metadata take a "ref" attribute; to provide additional information
@@ -1327,8 +1330,8 @@
                         is declared in place or used by reference.</t>
 
                    <t>However, the "count" attribute MAY be applied to any other instances of either an anonymous 
-				       "rule" element or of a "choice" element, including those instances nested inside other match operators.
-					    It MAY also be applied to the elements "any" and "char", when used as match operators.</t>
+                     "rule" element or of a "choice" element, including those instances nested inside other match operators.
+                    It MAY also be applied to the elements "any" and "char", when used as match operators.</t>
                 </section>
 
                 <section title="The name and by-ref Attributes">
@@ -2928,7 +2931,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-05">
                               Add IANA Considerations for media type registration, URN registration and
-                              instantiating a dispositions registry. Split refernces in to normative and informative.
+                              instantiating a dispositions registry. Split references into normative and informative.
+							  Describe a tighter restriction on permissible values for "ref" attributes. Clarify when
+							  "count" attributes are permitted. Typos fixed. Checked the schema against the
+							  specification and made corrections as well as replaced the "text" datatype with
+							  less permissive types for most attributes.
                         </t>
                     </list>
                 </t>
