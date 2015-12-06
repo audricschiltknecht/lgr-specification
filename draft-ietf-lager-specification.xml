@@ -799,7 +799,7 @@
                         <t>Care must be taken to ensure that
                         for each variant label at most one of the contextual conditions is met for variants
                         with the same mapping; otherwise duplicate variant labels would be created for the
-                        same input lablel. Any such duplicate variant labels MUST be treated as an error,  see
+                        same input label. Any such duplicate variant labels MUST be treated as an error,  see
                         <xref target="duplicate_variants" />.
                         </t>
                    
@@ -851,7 +851,7 @@
                 <t>Two attributes, the "ref" and "comment" attributes, can be used to annotate
                     individual elements in the LGR. They are ignored in machine-processing or
                     the LGR. The "ref" attribute is intended for formal annotations and the
-                    "comment" attribute for free form annotation. The latter can be applied
+                    "comment" attribute for free form annotations. The latter can be applied
                     more widely.</t>
 
                 <section title="The ref Attribute" anchor="ref">
@@ -872,13 +872,13 @@
                     is an error to repeat a reference identifier in the same "ref" attribute.
                     It is RECOMMENDED that identifiers be listed in ascending order. </t>
                 <t>In addition to "char", "range" and "var" elements in the data section, a "ref"
-                    attribute may be present for a number of elements containd in the "rules" 
+                    attribute may be present for a number of elements types contained in the "rules" 
                     element as described below:  actions, literals ("char" inside a rule), as well as
                     for definitions of rules and classes, but not for named references using
                     the "by-ref" attribute defined below.  (The use of the
                     "by-ref" and "ref" attributes is mutually exclusive.) None of the elements
                     in the metadata take a "ref" attribute; to provide additional information
-                    use the description element instead.</t>
+                    use the "description" element instead.</t>
                 </section>
 
                 <section title="The comment Attribute" anchor="comment">
@@ -2070,7 +2070,7 @@
              <section title="Checking Labels for Collision" anchor="collision" >
                 <t>The obvious method for checking collision between labels is to generate the
                   fully permuted set of variants for one of them and see whether it contains the
-                  other label as a member. As discussed above, this can be prohibitve, and is not
+                  other label as a member. As discussed above, this can be prohibitive, and is not
                   necessary.</t>
 
                <t>Because of symmetry and transitivity, all variant mappings form disjoint sets
@@ -2165,7 +2165,7 @@
                     namespace. For example, "acme:reserved" could be a private extension used by the
                     organisation ACME to denote a disposition relating to reserved labels. These
                     extensions are not intended to be interoperable, but registration is designed
-                    to minimise potential conflicts. It is strongly recommended any new dispositions
+                    to minimize potential conflicts. It is strongly recommended any new dispositions
                     that require interoperability and have applicability beyond a single
                     organization be defined as Standard Dispositions.</t>
                 </list>
@@ -2295,7 +2295,7 @@
                 </front>
             </reference>
         </references>
-		
+
         <section title="Example Tables" anchor="example_tables">
             <t>The following presents a minimal LGR table defining the lower case LDH
                 (letter-digit-hyphen) repertoire and containing no rules or metadata elements.
@@ -2656,7 +2656,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                 variant mappings or a reflexive mapping) would be affected. These are
                 the original labels and they are allocated in the last action.</t>
 
-            <t>Using this scheme of assinging types to ordinary and reflexive variants,
+            <t>Using this scheme of assigning types to ordinary and reflexive variants,
                 all RFC 3743-style tables can be converted to XML. By defining a set of
                 actions as outlined above, the LGR will yield the correct set of
                 allocatable variants:  all variants consisting completely of variant
@@ -2672,7 +2672,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                 designed to enforce this restriction. </t>
             <t>An example of a BNF from for an akshara which has been published in
                 “Devanagari Script Behavior for Hindi" <xref target="TDIL-HINDI"/>. The rules for
-                ther languages and scripts used in India are expected to be generally similar.</t>
+                other languages and scripts used in India are expected to be generally similar.</t>
                 
                 <t>For Hindi, the BNF has the form:</t>
 
@@ -2851,7 +2851,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                             "by-ref" attribute for referencing named classes and rules. Change "not"
                             to "complement". Remove "match" attribute on rules as redundant if
                             "start" and "end" are supported. Rename "match" element to "anchor" as
-                            better fitting it's function and removing confusion with both the
+                            better fitting its function and removing confusion with both the
                             "match" attribute on actions as well as the generic term Match Operator.
                             Augmented the examples relevant to <xref target="RFC3743"/>.</t>
                     </list>
