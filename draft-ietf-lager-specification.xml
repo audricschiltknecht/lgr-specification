@@ -856,7 +856,7 @@
 
                 <section title="The ref Attribute" anchor="ref">
                 <t>Reference information may optionally be specified by a "ref" attribute, consisting of a space
-                    delimited sequence of reference identifiers.
+                    delimited sequence of reference identifiers (see <xref target="references" />).
                 </t>
                 <t><figure>
                         <artwork><![CDATA[    <char cp="522A" ref="0">
@@ -1314,20 +1314,21 @@
                         matched as many times as possible, but not so often as to prevent a match of
                         the remainder of the rule. </t>
 
-                    <t>The "count" attribute MUST NOT be applied to match operators of type "start",
-                        "end", "anchor", "look-ahead" and "look-behind" or to any operators, such as
-                        "rule" or "choice" that contain them, whether the latter are declared in
-                        place or used by reference. The "count" attribute may be applied to "class"
-                        and "rule" elements only if they do not have a "name" attribute, that is, to
-                        anonymous rules and classes or any invocation of predefined rules or classes
-                        by reference. </t>
-                    <t>The optional "count" attribute MAY be applied to match operators of type "any",
-                        "char" and "class", as well as to match operators "choice" and "rule", as
-                        long as they contain none of the operators "start", "end", "anchor",
-                        "look-ahead" and "look-behind" as direct or indirect child elements. The
-                        same requirement applies recursively to any "rule" element referenced inside
-                        a "choice" or "rule" with a "count" attribute. The "count" attribute cannot
-                        appear in the same element as a "name" attribute.</t>
+                    <t>The optional "count" attribute MUST NOT be applied to any element that contains a "name"
+                        attribute, but MAY be applied to operators such as "class" that declare
+                        anonymous classes (including combined classes) or invoke any predefined classes
+                        by reference. The count attribute MUST not be applied to any "class" element,
+                       or element defining a combined class, when it is nested inside a combined class.</t>
+
+                   <t>The count attribute MUST NOT be applied to match operators of type "start",
+                        "end", "anchor", "look-ahead" or "look-behind" or to any operators, such as
+                        "rule" or "choice" that contain a nested instance of them. This limitation applies
+                        recursively, and irrespective of whether a rule element containing these nested instances
+                        is declared in place or used by reference.</t>
+
+                   <t>However, the "count" attribute MAY be applied to any other instances of either an anonymous 
+				       "rule" element or of a "choice" element, including those instances nested inside other match operators.
+					    It MAY also be applied to the elements "any" and "char", when used as match operators.</t>
                 </section>
 
                 <section title="The name and by-ref Attributes">
@@ -2161,7 +2162,7 @@
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered on a first-come first-served basis by third parties with the IANA.
                     Such dispositions must take the form "entity:disposition" where the
-                    entity is a prefix the uniquely identifies the private user of the
+                    entity is a prefix that uniquely identifies the private user of the
                     namespace. For example, "acme:reserved" could be a private extension used by the
                     organisation ACME to denote a disposition relating to reserved labels. These
                     extensions are not intended to be interoperable, but registration is designed
@@ -2927,7 +2928,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-05">
                               Add IANA Considerations for media type registration, URN registration and
-                              instantiating a dispositions registry. Split references into informative and normative.
+                              instantiating a dispositions registry. Split refernces in to normative and informative.
                         </t>
                     </list>
                 </t>
