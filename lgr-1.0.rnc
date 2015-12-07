@@ -45,12 +45,12 @@ date-pattern = xsd:token {
 ## the variant type MUST be non-emtpy and MUST NOT
 ## start with a "_", using xsd:NMTOKEN here because
 ## we need space-separated lists of them
-variant-type = xsd:NMTOKEN;
+variant-type = xsd:NMTOKEN
 
 ## variant type list for action triggers
 ## the list MUST not be empty and entries MUST NOT
 ## start with a "_"
-variiant-type-list = xsd:NMTOKENS;
+variant-type-list = xsd:NMTOKENS
 
 ## reference to a rule name (used in "when" and "not-when" attributes,
 ## as well as the "by-ref" attribute of the "rule" element.)
@@ -86,7 +86,7 @@ count-pattern = xsd:token {
 ## must be declared in a reference element
 ## before they can be used in a ref attribute
 ref-pattern = xsd:token {
-    pattern = "[-_.:0-9A-Z]+( [-_.:0-9A-Z]+)*"
+    pattern = "[\-_.:0-9A-Z]+( [\-_.:0-9A-Z]+)*"
 }
 
 #
@@ -408,13 +408,14 @@ meta-section = element meta {
               # limit id attribute to uppercase letters, digits 
               # and a few punctuation marks; use of integers 
               # is RECOMMENDED
-               pattern = "[-_.:0-9A-Z]*";
+               pattern = "[\-_.:0-9A-Z]*"
                minLength = "1"
-            },
-            attribute comment { text }?,
-            text
-        }*
-    }?
+             },
+             attribute comment { text }?,
+             text
+            }*
+        }?
+    }
 }
 
 data-section = element data { (char | range)+ }
