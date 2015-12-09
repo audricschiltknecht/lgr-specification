@@ -12,7 +12,7 @@
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-05">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-06">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -2934,10 +2934,14 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                         <t hangText="draft-ietf-lager-specification-05">
                               Add IANA Considerations for media type registration, URN registration and
                               instantiating a dispositions registry. Split references into normative and informative.
-							  Describe a tighter restriction on permissible values for "ref" attributes. Clarify when
-							  "count" attributes are permitted. Typos fixed. Checked the schema against the
-							  specification and made corrections as well as replaced the "text" datatype with
-							  less permissive types for most attributes.
+                              Describe a tighter restriction on permissible values for "ref" attributes. Clarify when
+                              "count" attributes are permitted. Typos fixed. Checked the schema against the
+                              specification and made corrections as well as replaced the "text" datatype with
+                              less permissive types for most attributes.
+                        </t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-06">
                         </t>
                     </list>
                 </t>
