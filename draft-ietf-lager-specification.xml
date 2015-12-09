@@ -2253,10 +2253,11 @@
             </reference>
          </references>
          <references title="Informative References" >
+                &rfc3743;
                 &rfc4290;
+                &rfc5226;
                 &rfc5564;
                 &rfc5892;
-                &rfc3743;
             <reference anchor="LGR-PROCEDURE">
                 <front>
                     <title>Procedure to Develop and Maintain the Label Generation Rules for the Root
@@ -2942,6 +2943,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-06">
+                              Change eligibility required for disposition registration to be
+                              Specification Required, rather than Standards Track.
                         </t>
                     </list>
                 </t>
