@@ -403,19 +403,19 @@ meta-section = element meta {
     }?
     & element references {
         element reference {
-            attribute id { 
-             xsd:token {
-              # limit id attribute to uppercase letters, digits 
-              # and a few punctuation marks; use of integers 
-              # is RECOMMENDED
-               pattern = "[\-_.:0-9A-Z]*"
-               minLength = "1"
+            attribute id {
+                xsd:token {
+                    # limit id attribute to uppercase letters, digits 
+                    # and a few punctuation marks; use of integers 
+                    # is RECOMMENDED
+                    pattern = "[\-_.:0-9A-Z]*"
+                    minLength = "1"
+                }
              },
              attribute comment { text }?,
              text
-            }*
-        }?
-    }
+        }*
+    }?
 }
 
 data-section = element data { (char | range)+ }
