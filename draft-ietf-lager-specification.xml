@@ -2144,7 +2144,7 @@
                 <t>Object Identifiers: None.</t>
                 <t>Intended Usage: Common</t>
                 <t>Personal and email address for further information: See the Authors of this document.</t>
-                <t>Change Controller: World Wide Web Consortium (W3C)</t>
+                <t>Change Controller: [TBC]</t>
             </section>
             <section title="URN Registration" anchor="urn_reg">
                 <t>This specification uses a URN to describe the XML namespace, in accordance
