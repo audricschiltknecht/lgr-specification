@@ -254,9 +254,10 @@ any-matcher = element any {
 }
 
 choice-matcher = element choice {
-    ## "count attribute MUST only be used when the choice-matcher contains
-    ## no nested "start", "end", "anchor", "look-behind" or "look-ahead"
-    ## operators and no nested rule-matchers containing any of these elements
+    ## "count attribute MUST only be used when the choice-matcher
+    ## contains no nested "start", "end", "anchor", "look-behind"
+    ## or "look-ahead" operators and no nested rule-matchers
+    ## containing any of these elements
     attribute count { count-pattern }?,
     attribute comment { text }?,
     # two or more match operators
@@ -339,7 +340,8 @@ rule-matcher =
   element rule {
     ## "count attribute MUST only be used when the rule-matcher contains
     ## no nested "start", "end", "anchor", "look-behind" or "look-ahead"
-     ## operators and no nested rule-matchers containing any of these elements
+    ## operators and no nested rule-matchers containing any of these
+    ## elements
     attribute count { count-pattern }?,
     attribute comment { text }?,
     attribute ref { ref-pattern }?,
@@ -356,7 +358,8 @@ action-declaration = element action {
     attribute ref { ref-pattern }?,
     # dispositions are often named after variant types or vice versa
     attribute disp { variant-type },
-    ( attribute match { rule-ref } | attribute not-match { rule-ref } )?,
+    ( attribute match { rule-ref }
+      | attribute not-match { rule-ref } )?,
     ( attribute any-variant { variant-type-list }
       | attribute all-variants { variant-type-list }
       | attribute only-variants { variant-type-list } )?
