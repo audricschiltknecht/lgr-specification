@@ -12,7 +12,7 @@
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-06">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-07">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -377,12 +377,12 @@
                         does not have access to character property data of the requisite version, it
                         MUST NOT perform any operations relating to whole-label evaluation relying
                         on Unicode properties (<xref target="property"/>).</t>
-                    <t> The value of a given Unicode property in <xref target="UAX42"/> may change
-                        between versions, unless such change has been explicitly disallowed in <xref
+                    <t> The value of a given Unicode property in may change
+                        between versions of the Unicode Character Database <xref target="UAX44"/>,
+             unless such change has been explicitly disallowed in <xref
                             target="Unicode-Stability"/>. It is RECOMMENDED to only reference properties
                         defined as stable or immutable. As an alternative to referencing the property,
                         the information can be presented explicitly in the LGR.</t>
-
                     <t>
                         <figure>
                             <artwork><![CDATA[    <unicode-version>6.2.0</unicode-version>
@@ -475,7 +475,7 @@
                 of 4 digits. In other words, they are represented according to the standard Unicode convention but
                 without the prefix "U+". The rationale for not allowing other encoding formats,
                 including native Unicode encoding in XML, is explored in <xref target="UAX42"/>. The
-                XML conventions used in this format, including the element and attribute names,
+                XML conventions used in this format, such as element and attribute names,
                 mirror this document where practical and reasonable to do so. It is RECOMMENDED to
                 list all "char" elements in ascending order of the "cp" attribute. </t>
             <t>All "char" elements in the data section MUST have distinct "cp" attributes. The
@@ -966,8 +966,8 @@
                     <list style="symbols">
                         <t>by defining the set via matching a tag in the code point data. All
                             characters with the same "tag" attribute are part of the same class; </t>
-                        <t>by referencing one of the Unicode character properties defined in the
-                            Unicode Character Database <xref target="UAX42"/>; </t>
+                        <t>by referencing a value of one of the Unicode character properties defined in the
+                            Unicode Character Database; </t>
                         <t>by explicitly listing all the code points in the class; or</t>
                         <t>by defining the class as a set combination of any number of other
                             classes. </t>
@@ -980,7 +980,7 @@
                     If the "name" attribute is omitted, the class is anonymous and exists only
                     inside the rule or combined class where it is defined. A named character
                     class is defined independently and can be referenced by name from within
-                    any rules or as part of other character class definitions.  </t>
+                    any rules or as part of other character class definitions.</t>
 
                 <t>
                     <figure>
@@ -1054,15 +1054,26 @@
                     </t>
                     <t>The example above selects all code points for which the Unicode canonical
                         combining class (ccc) value is 9. This value of the ccc is assigned to all
-                        code points that encode viramas. The string "ccc" is the short-alias for the
-                        canonical combining class, as defined in the Unicode Character Database
-                            <xref target="UAX42"/>.</t>
+                        code points that encode viramas. </t>
+
+              <t>Unicode properties values MUST be designated via a composite of the attribute
+               name and value as defined for the property value in <xref target="UAX42" />,
+               separated by a colon. Loose matching of property values and names as described
+             in <xref target="UAX44" /> is not appropriate for an XML schema and is not
+             supported; it is likewise not supported in the XML representation <xref target="UAX42" /> 
+             of the Unicode Character Database itself.</t>
+                    
+          <t>A property-based class may be anonymous, or, when defined as an immediate child
+              of  the "rules" element, it may be named to relate
+             a formal property definition to its usage, such as the use of the value 9 for ccc
+             to designate a virama (or halant) in various scripts.</t>
+             
                     <t>Unicode properties may, in principle, change between versions of the Unicode
                         Standard. However, the values assigned for a given version are fixed. If
                         Unicode Properties are used, a Unicode version MUST be declared in the
                         "unicode-version" element in the header. (Note: some Unicode properties are
                         by definition stable across versions and do not change once assigned (see
-                            <xref target="Unicode-Stability"/>.) </t>
+                            <xref target="Unicode-Stability"/>). </t>
                     <t>It is RECOMMENDED that all implementations processing LGR files provide support
                         for the following minimal set of Unicode properties:
                         <list style="symbols">
@@ -2207,7 +2218,7 @@
         <references title="Normative References">
                 &rfc3339;
                 &rfc5646;
-        <reference anchor="Unicode-Stability">
+        <reference anchor="Unicode-Stability" target="http://www.unicode.org/policies/stability_policy.html#Property_Value">
                 <front>
                     <title>Unicode Encoding Stability Policy, Property Value Stability</title>
                     <author>
@@ -2218,7 +2229,7 @@
                 <format type="HTML"
                     target="http://www.unicode.org/policies/stability_policy.html#Property_Value"/>
             </reference>
-            <reference anchor="Unicode-Versions">
+            <reference anchor="Unicode-Versions" target="http://unicode.org/versions/#Version_Numbering">
                 <front>
                     <title>Unicode Version Numbering</title>
                     <author>
@@ -2258,7 +2269,7 @@
                 &rfc5892;
                 &rfc6838;
                 &rfc7303;
-            <reference anchor="LGR-PROCEDURE">
+            <reference anchor="LGR-PROCEDURE" target="http://www.icann.org/en/resources/idn/draft-lgr-procedure-07dec12-en.pdf">
                 <front>
                     <title>Procedure to Develop and Maintain the Label Generation Rules for the Root
                         Zone in Respect of IDNA Labels </title>
@@ -2282,7 +2293,17 @@
                     <date/><!-- October 2013</date> -->
                 </front>
             </reference>
-            <reference anchor="WLE-RULES">
+            <reference anchor="UAX44" target="http://unicode.org/reports/tr44/">
+                <front>
+                    <title>Unicode Character Database</title>
+                    <author>
+                        <organization abbrev="Unicode">Unicode Consortium</organization>
+                    </author>
+                    <date/>
+                </front>
+                <format type="HTML" target="http://unicode.org/reports/tr44/" />
+            </reference>      
+      <reference anchor="WLE-RULES" target="https://community.icann.org/download/attachments/43989034/WLE-Rules.pdf">
                 <front>
                     <title>WLE Rules</title>
                     <author>
@@ -2946,6 +2967,12 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               Change eligibility required for disposition registration to be
                               Specification Required, rather than Standards Track. Restore schema in
                               appendix. Move registration related procedures to informative references.
+                        </t>
+                    </list>
+          <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-07">
+                              Clarify the way the values of the "property" attribute are constructed
+                from the attribute name and value in <xref target="UAX42" />.
                         </t>
                     </list>
                 </t>
