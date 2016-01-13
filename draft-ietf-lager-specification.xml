@@ -567,7 +567,7 @@
 
                     <t>If a contextual condition is not satisfied for any code point in a label, the label is invalid, see <xref
                     target="implied_actions"/>. For variants, the conditional context restricts the definition of the variant
-                    to the case where the condition is met. Outside the specified context, a variant is not defined .</t>
+                    to the case where the condition is met. Outside the specified context, a variant is not defined.</t>
             </section>
 
             <section title="Variants" anchor="variants">
@@ -1204,7 +1204,7 @@
         <class by-ref="xxx"/>
         <class by-ref="yyy"/>
     </union>
-      . . .
+      ...
   </rules>    
 ]]></artwork>
                         </figure>
@@ -1227,12 +1227,14 @@
                     <t>A matching rule is defined by a "rule" element, the child elements of which
                         are one of the match operators from <xref target="match_operators" />.
                         In evaluating a rule, each child element is matched in order. Rule elements
-                        may be nested.</t>
-                    <t>Rules may optionally be named using a "name" attribute containing a single
+                        may be nested inside each other and inside certain match operators.</t>
+                    <t>A rule that is an immediate child element of the "rules" element MUST be named 
+                        using a "name" attribute containing a single
                         identifier string with no spaces. A named rule may be incorporated into
-                        another rule by reference. If the "name" attribute is omitted, the rule is
-                        anonymous and may not be incorporated by reference into another rule or
-                        referenced by an action or "when" attribute. </t>
+                        another rule by reference as well as referenced by an action, "when" or
+                        "not-when" attribute. 
+                        If the "name" attribute is omitted, the rule is anonymous and may only 
+                        be nested inside another rule or match operator.</t>
 
                     <t>A simple rule to match a label where all characters are members of the class
                         "preferred":</t>
@@ -1359,9 +1361,8 @@
                             seen. In other words, it is explicitly not possible to define recursive rules or
                             class definitions. The "by-ref" attribute cannot appear in the same element as
                             the "name" attribute, or in an element that has any child elements.</t>
-                        <t>Here's an example of a rule requiring that all labels be letters
-                            (optionally followed by combining marks) and possibly digits. The
-                            example shows rules and classes referenced by name.</t>
+                        <t>The example shows several named classes and a named rule referencing
+                           some of them by name.</t>
                     <t>
                         <figure>
                             <artwork><![CDATA[    <class name="letter" property="gc:L"/>
@@ -1383,8 +1384,8 @@
                         <figure>
                             <artwork><![CDATA[    <rule name="ldh">
        <choice count="1+">
-           <class by-ref="letters"/>
-           <class by-ref="digits"/>
+           <class by-ref="letter"/>
+           <class by-ref="digit"/>
            <char cp="002D" comment="literal HYPHEN"/>
        </choice>
     </rule>]]></artwork>
@@ -1408,8 +1409,8 @@
 
                 <section title="The any Element">
 
-                    <t>The "any" element matches any single code point. It may have a "count"
-                        attribute. For an example see <xref target="IDNA2008_example"/>
+                    <t>The "any" element is an empty element that matches any single code point. 
+                        It may have a "count attribute. For an example see <xref target="IDNA2008_example"/>.
                     </t>
                     <t>Unlike a literal, the "any" element" may not have a "ref" attribute.</t>
                 </section>
@@ -1451,7 +1452,8 @@
                         at most one occurrence of each is encountered. Otherwise, the result is an
                         error; as is any case where a "start" or "end" element is not encountered as
                         first or last element to be matched, respectively, in matching a rule. Start
-                        and end elements do not have a "count" or any other attribute. It is an error
+                        and end elements are empty elements that do not have a "count" or any 
+                        other attribute other than "comment". It is an error
                         for any match operator enclosing a nested "start" or "end" element to have a
                         "count" attribute.</t>
 
@@ -1547,7 +1549,8 @@
                         otherwise their "anchor" elements cannot be evaluated. However, it is
                         possible to invoke rules not containing an "anchor" element from a "when" or
                         "not-when" attribute. (See <xref target="omitting"/>) </t>
-
+                    <t>The anchor element is an empty element, with no attributes permitted,
+                    except "comment".</t>
                 </section>
 
                 <section title="The look-behind and look-ahead Elements">
@@ -1555,7 +1558,7 @@
                     <t>Context rules use the "look-behind" and "look-ahead" elements to define
                         context before and after the code point sequence matched by the "anchor"
                         element. If the "anchor" element is omitted, neither the "look-behind" nor
-                        the "look-ahead" element may be present. </t>
+                        the "look-ahead" element may be present in a rule. </t>
                     <t>Here is an example of a rule that defines an "initial" context for an Arabic
                         code point:</t>
                     <t>
@@ -1586,12 +1589,13 @@
     </rule>]]></artwork>
                         </figure>
                     </t>
-                    <t>A "when rule" contains any combination of "look-behind", "anchor" and
+                    <t>A "when rule" (or context rule) is a named rule that contains any
+                         combination of "look-behind", "anchor" and
                         "look-ahead" elements in that order. Each of these elements occurs at most
                         once, except if nested inside a "choice" element in such a way that in
                         matching each alternative at most one occurrence of each is encountered.
                         Otherwise, the result is undefined. None of these elements takes a "count"
-                        attribute, nor does any enclosing match operator. Otherwise, the result is
+                        attribute, nor does any enclosing match operator; otherwise, the result is
                         undefined. If a context rule contains a "look-ahead" or "look-behind" element,
                         it MUST contain an "anchor" element. If, because of a choice element, a
                         required anchor is not actually encountered, the results are undefined. </t>
@@ -1709,7 +1713,7 @@
     <char cp="0079"  comment="y"/>
         <var cp="0078" type="allocatable" />
     </char>
-    . . .
+    ...
     <action disp="blocked" any-variant="blocked" />
     <action disp="allocatable" only-variants="allocatable" />
     <action disp="some-type" any-variant="allocatable" />    ]]></artwork></figure></t>
@@ -1719,7 +1723,7 @@
                         "blocked", triggering the "any-variant" condition. Because in this example
                         "x" has a reflexive variant mapping to itself of type "allocatable" the
                         original label "xx" has a reflexive variant "xx" that would trigger the
-                        "only_variants" condition on the second action. </t>
+                        "only-variants" condition on the second action. </t>
 
                     <t>A label "yy" would have the variants "xy", "yx" and "xx". Because the variant
                         mapping from "y" to "x" is of type "allocatable" and a mapping from "y" to
@@ -1845,7 +1849,8 @@
                             for use. </t>
                         <t hangText="activated">The resulting string should be activated for use.
                             (This is the typical default action if no dispositions are defined and
-                            is known as a "preferred" variant in <xref target="RFC3743"/>) </t>
+                            is known as a preferred variant in <xref target="RFC3743"/>.)</t>
+                        <t hangText="valid">The resultant string is a valid label.</t>
                     </list>
                 </t>
             </section>
@@ -1861,7 +1866,8 @@
 
             <section title="Implied Actions" anchor="implied_actions">
                 <t>The context rules on code points ("not-when" or "when" rules) carry an implied
-                    action with a disposition of "invalid" (not eligible). These rules are
+                    action with a disposition of "invalid" (not eligible) if a "when" context is not
+                    satisfied, or respectively a "not-when" context is matched. These rules are
                     evaluated at the time the code points for a label or its variant labels are
                     checked for validity (see <xref target="processing"/>). In other words, they
                     are evaluated before any of the whole-label evaluation rules and with higher
@@ -1881,16 +1887,16 @@
             <section title="Default Actions" anchor="default_actions">
 
                 <t>As described in <xref target="actions"/> any variant mapping may be given a
-                    "type" attribute. An action containing an "any-variant"
+                    "type" attribute. An action containing an "any-variant", "only-variants",
                     or "all-variants" attribute relates these type values to a resulting
                     disposition for the entire variant label. </t>
 
                 <t>If no actions are defined for the standard disposition values of "invalid",
-                    "blocked", "allocatable" and "activated", then the following default actions exist
-                    that are shown below in their default order of precedence (see <xref
+                    "blocked", "allocatable", "activated", then the following implicitly defined
+                    default actions are evaluated. They are shown below in their default order of precedence (see <xref
                         target="precedence"/>). This default order for evaluating dispositions
                     applies only to labels that triggered no explicitly defined actions and which
-                    are therefore handled by default actions. Default actions have a lower order of
+                    are therefore handled by implicitly defined default actions. Default actions have a lower order of
                     precedence than explicit actions (see <xref target="determining_dispositions"
                     />). </t>
                 <t>The default actions for variant labels are defined as follows:</t>
@@ -1900,15 +1906,18 @@
                         <artwork><![CDATA[    <action disp="invalid" any-variant="invalid"/>
     <action disp="blocked" any-variant="blocked"/>
     <action disp="allocatable" any-variant="allocatable"/>
-    <action disp="activated" all-variants="activate"/>]]></artwork>
+    <action disp="activated" all-variants="activate"/>>]]></artwork>
                     </figure>
                 </t>
 
-                <t>A final default action sets the disposition to "allocatable" for any label matching
-                    the repertoire for which no other action has been triggered (catch-all). </t>
+                <t>A final default action sets the disposition to "valid" for any label matching
+                    the repertoire for which no other action has been triggered. 
+                    This "catch-all" action also matches all remaining variant labels from variants
+                    that do not have a type value.
+                </t>
                 <t>
                     <figure>
-                        <artwork><![CDATA[    <action disp="allocatable" />]]></artwork>
+                        <artwork><![CDATA[    <action disp="valid" comment="catch-all"/>]]></artwork>
                     </figure>
                 </t>
             </section>
@@ -2004,9 +2013,12 @@
 
                     <list style="numbers">
 
-                        <t>For any label, the disposition is given by the value of the "disp"
-                            attribute for the first action triggered by the label. An action is
-                            triggered, if all of the following are true:
+                        <t>For any label that contains code points or sequences not defined in the
+                            repertoire, or does not satisfy the context rules on all of its code points 
+                            and variants, the disposition is "invalid". </t>
+                        <t>For all other labels the disposition 
+                            is given by the value of the "disp" attribute for the first action triggered by
+                            the label. An action is triggered, if all of the following are true:
 
                         <list style="symbols">
 
@@ -2042,7 +2054,7 @@
                             (see <xref target="recommended_disposition_values" />) are ignored.
                         </t>
 
-                        <t>For any remaining label, set the disposition to "allocatable". </t>
+                        <t>For any remaining label, set the disposition to "valid". </t>
                     </list>
                 </t>
              </section>
@@ -2086,7 +2098,7 @@
              <section title="Checking Labels for Collision" anchor="collision" >
                 <t>The obvious method for checking collision between labels is to generate the
                   fully permuted set of variants for one of them and see whether it contains the
-                  other label as a member. As discussed above, this can be prohibitive, and is not
+                  other label as a member. As discussed above, this can be prohibitive and is not
                   necessary.</t>
 
                <t>Because of symmetry and transitivity, all variant mappings form disjoint sets
@@ -2094,13 +2106,13 @@
                  the set of variant labels likewise forms disjoint subsets, based on which set of
                  mappings was used.</t>
 
-              <t>Instead of generating all permutations, that is, use each variant mapping in each
+              <t>Instead of generating all permutations, that is, using each variant mapping in each
                 set, it is sufficient to substitute an "index" mapping, in effect identifying the set
                 of variant code points. Such an index mapping could be, for example, the variant
-                mapping for which the target code point (or sequence) comes first n some sorting
+                mapping for which the target code point (or sequence) comes first in some sorting
                 order.</t>
 
-              <t>To check collision then means generating a single variant label from the original, 
+              <t>To check collision then means generating a single variant label from the original
                 by substituting the "index" value as the target for mapping from any code
                 point. This results in an "index label".  Two labels collide whenever the index labels 
                 for them are the same.</t>
@@ -2173,14 +2185,14 @@
                     <t>Standard Dispositions - This registry shall list dispositions that have been
                     defined in published specifications, i.e. the eligibility for such registrations
                     shall be Specification Required <xref target="RFC5226"/>. The initial set of
-                    registrations shall be the four dispositions in this document described in
+                    registrations shall be the five dispositions in this document described in
                     <xref target="recommended_disposition_values"/>.</t>
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered on a first-come first-served basis by third parties with the IANA.
                     Such dispositions must take the form "entity:disposition" where the
                     entity is a prefix that uniquely identifies the private user of the
                     namespace. For example, "acme:reserved" could be a private extension used by the
-                    organisation ACME to denote a disposition relating to reserved labels. These
+                    organization ACME to denote a disposition relating to reserved labels. These
                     extensions are not intended to be interoperable, but registration is designed
                     to minimize potential conflicts. It is strongly recommended any new dispositions
                     that require interoperability and have applicability beyond a single
@@ -2972,7 +2984,10 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
           <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-07">
                               Clarify the way the values of the "property" attribute are constructed
-                from the attribute name and value in <xref target="UAX42" />.
+                from the attribute name and value in <xref target="UAX42" />. Minor fixes to examples
+                and wording for a few of the match operators.
+                Clarified default action, added new disposition named "valid" and changed "catch-all" action
+                to a disposition of "valid".
                         </t>
                     </list>
                 </t>
