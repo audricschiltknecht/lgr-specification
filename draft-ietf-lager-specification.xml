@@ -8,6 +8,7 @@
         <!ENTITY rfc4290 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.4290.xml">
         <!ENTITY rfc5226 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5226.xml">
         <!ENTITY rfc5564 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5564.xml">
+        <!ENTITY rfc5891 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5891.xml">
         <!ENTITY rfc5892 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.5892.xml">
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
@@ -730,13 +731,14 @@
                         variants, the type associated with a reflexive variant mapping is applied to any
                         of the permuted labels containing the original code point.</t>
                         
-                    <t>In the following example, the code point U+3473 exists both as a variant of U+3447
+                    <t>In the following example, let's assume the goal is to allocate only those labels
+                         that contain a variant that is considered "preferred" in some way.
+                        As defined in the example, he code point U+3473 exists both as a variant of U+3447
                         and as a variant of itself (reflexive mapping). Assuming an original label of
                         "U+3473 U+3447", the permuted variant "U+3473 U+3473" would consist of the reflexive
-                        variant of U+3473 followed by a variant of U+3447. Accordingly, the
-                        types for both of the variant mappings used to generate that particular
-                        permutation would have the value "preferred" given the following definitions
-                        of variant mappings:</t>
+                        variant of U+3473 followed by a variant of U+3447. Given the variant mappings  as
+                        defined here, the types for both of the variant mappings used to generate that particular
+                        permutation would have the value "preferred":</t>
                     <t><figure>
                         <artwork><![CDATA[     <char cp="3447" ref="0">
       <var cp="3473" type="preferred" ref="1 3" />
@@ -1228,21 +1230,14 @@
                         are one of the match operators from <xref target="match_operators" />.
                         In evaluating a rule, each child element is matched in order. Rule elements
                         may be nested inside each other and inside certain match operators.</t>
-                    <t>A rule that is an immediate child element of the "rules" element MUST be named 
-                        using a "name" attribute containing a single
-                        identifier string with no spaces. A named rule may be incorporated into
-                        another rule by reference as well as referenced by an action, "when" or
-                        "not-when" attribute. 
-                        If the "name" attribute is omitted, the rule is anonymous and may only 
-                        be nested inside another rule or match operator.</t>
 
-                    <t>A simple rule to match a label where all characters are members of the class
-                        "preferred":</t>
+                    <t>A simple rule to match a label where all characters are members of some class
+                     called "preferred-codepoint":</t>
                     <t>
                         <figure>
-                            <artwork><![CDATA[    <rule name="preferred">
+                            <artwork><![CDATA[    <rule name="preferred-label">
         <start />
-        <class by-ref="preferred" count="1+"/>
+        <class by-ref="preferred-codepoint" count="1+"/>
         <end />
     </rule>]]></artwork>
                         </figure>
@@ -1252,15 +1247,22 @@
                         rule shown above would be: </t>
                     <t>
                         <figure>
-                            <artwork><![CDATA[    <action disp="allocatable" match="preferred" />]]></artwork>
+                            <artwork><![CDATA[    <action disp="allocatable" match="preferred-label" />]]></artwork>
                         </figure>
                     </t>
-                    <t>This has the effect of setting the policy disposition for a label made up
-                        entirely of "preferred" code points to "allocatable". Explicit actions are
-                        further discussed in <xref target="actions"/> and the use of rules in
-                        conditional contexts for implied actions is discussed in <xref target="conditional_variants"
-                        /> and <xref target="implied_actions"/>. </t>
-                </section>
+                    <t>The rule in this example would have the effect of setting the policy disposition for a 
+                        label made up entirely of preferred code points to "allocatable". Explicit actions are
+                        further discussed in <xref target="actions"/> and implicit actions in <xref target="implied_actions"/>.
+                        Another use of rules is in defining conditional contexts for code points and variants 
+                        as discussed in  <xref target="contexts" /> and <xref target="conditional_variants" />. </t>
+
+                    <t>A rule that is an immediate child element of the "rules" element MUST be named 
+                        using a "name" attribute containing a single
+                        identifier string with no spaces. A named rule may be incorporated into
+                        another rule by reference as well as referenced by an action, "when" or
+                        "not-when" attribute. 
+                        If the "name" attribute is omitted, the rule is anonymous and may only 
+                        be nested inside another rule or match operator.</t>                </section>
                 <section title="The Match Operators" anchor="match_operators">
                     <t>The child elements of a rule are a series of match operators, which are
                         listed here by type and name and with a basic example or two.</t>
@@ -2278,6 +2280,7 @@
                 &rfc4290;
                 &rfc5226;
                 &rfc5564;
+                &rfc5891;
                 &rfc5892;
                 &rfc6838;
                 &rfc7303;
@@ -2355,6 +2358,8 @@
 &lt;/lgr></artwork>
                 </figure>
             </t>
+             <t>In practice, any LGR that includes the hyphen might also contain a rule invalidating
+              any label with a hyphen in third and fourth position as required by <xref target="RFC5891" />.</t>
             <t>The following sample LGR shows a more complete collection of the elements and
                 attributes defined in this specification in a somewhat typical context.</t>
             <t>
@@ -2985,7 +2990,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                         <t hangText="draft-ietf-lager-specification-07">
                               Clarify the way the values of the "property" attribute are constructed
                 from the attribute name and value in <xref target="UAX42" />. Minor fixes to examples
-                and wording for a few of the match operators.
+                and wording for a few of the match operators and the description for reflexive variants.
                 Clarified default action, added new disposition named "valid" and changed "catch-all" action
                 to a disposition of "valid".
                         </t>
