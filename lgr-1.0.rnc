@@ -52,20 +52,22 @@ variant-type = xsd:NMTOKEN
 ## start with a "_"
 variant-type-list = xsd:NMTOKENS
 
-## reference to a rule name (used in "when" and "not-when" attributes,
-## as well as the "by-ref" attribute of the "rule" element.)
+## reference to a rule name (used in "when" and "not-when"
+## attributes, as well as the "by-ref" attribute of the "rule"
+## element.)
 rule-ref = xsd:IDREF
 
 ## a space-separated list of tags. Tags should generally follow
 ## xsd:Name syntax. However, we are using the xsd:NMTOKENS here
-## because there is no native XSD datatype for space-separated xsd:Name
+## because there is no native XSD datatype for space-separated
+## xsd:Name
 tags = xsd:NMTOKENS
 
-## The value space of a "from-tag" attribute. Although it is closer to
-## xsd:IDREF lexically and semantically, tags are not unique in the
-## document. As such, we are unable to take advantage of facilities
-## provided by a validator. xsd:NMTOKEN is used instead of the stricter
-## xsd:Names here so as to be consistent with the above.
+## The value space of a "from-tag" attribute. Although it is closer
+## to xsd:IDREF lexically and semantically, tags are not unique in
+## the document. As such, we are unable to take advantage of
+## facilities provided by a validator. xsd:NMTOKEN is used instead of
+## the stricter xsd:Names here so as to be consistent with the above.
 tag-ref = xsd:NMTOKEN
 
 ## an identifier type (used by "name" attributes).
@@ -93,7 +95,8 @@ ref-pattern = xsd:token {
 # STRUCTURES
 #
 
-## Representation of a single code point, or a sequence of code points
+## Representation of a single code point, or a sequence of code
+## points
 char = element char {
     attribute cp { code-point-literal },
     attribute comment { text }?,
@@ -136,17 +139,19 @@ variant = element var {
 ## If used as a matcher (appearing under a "rule" ## element),
 ## the "count" attribute may be present.
 class-invocation = element class {
-    (attribute by-ref { class-ref } | attribute from-tag { tag-ref }),
+    (
+      attribute by-ref { class-ref }
+      | attribute from-tag { tag-ref }),
     attribute count { count-pattern }?,
     attribute comment { text }?
 }
 
-## defines a new class (set of code points) using Unicode property or
-## code points of the same tag value or code point literals
+## defines a new class (set of code points) using Unicode property
+## or code points of the same tag value or code point literals
 class-declaration = element class {
-    # "name" attribute MUST be present if this is a "top-level" class
-    # declaration, i.e. appearing directly under the "rules" element.
-    # Otherwise, it MUST be absent.
+    # "name" attribute MUST be present if this is a "top-level"
+    # class declaration, i.e. appearing directly under the "rules"
+    # element. Otherwise, it MUST be absent.
     attribute name { identifier }?,
     # If used as a matcher (appearing in a "rule" element, but not
     # when nested inside a set operator or class), the "count"
@@ -159,7 +164,8 @@ class-declaration = element class {
       attribute property { xsd:NMTOKEN }
       # define the class by tagged code points, OR
       | attribute from-tag { tag-ref }
-      # text node to allow for shorthand notation e.g. "0061 0062-0063"
+      # text node to allow for shorthand notation
+      # e.g. "0061 0062-0063"
       | code-point-set-shorthand
     )
   }
@@ -269,8 +275,9 @@ char-matcher =
   # for use as a matcher - like "char" but without a "tag" attribute
   element char {
     attribute cp { code-point-literal },
-    # If used as a matcher (appearing in a "rule" element), the "count"
-    # attribute may be present. Otherwise, it MUST be absent.
+    # If used as a matcher (appearing in a "rule" element), the
+    # "count" attribute may be present. Otherwise, it MUST be
+    # absent.
     attribute count { count-pattern }?,
     attribute comment { text }?,
     attribute ref { ref-pattern }?
@@ -338,10 +345,10 @@ rule-declaration-top = element rule {
 ## match operators itself)
 rule-matcher =
   element rule {
-    ## "count attribute MUST only be used when the rule-matcher contains
-    ## no nested "start", "end", "anchor", "look-behind" or "look-ahead"
-    ## operators and no nested rule-matchers containing any of these
-    ## elements
+    ## "count attribute MUST only be used when the rule-matcher
+    ## contains no nested "start", "end", "anchor", "look-behind"
+    ## or "look-ahead" operators and no nested rule-matchers
+    ## containing any of these elements
     attribute count { count-pattern }?,
     attribute comment { text }?,
     attribute ref { ref-pattern }?,
@@ -374,11 +381,10 @@ lgr = element lgr {
     rules-section?
 }
 
-
 ## Meta section - information recorded with an label
-## generation ruleset that generally does not affect machine processing
-## (except for unicode-version).
-## However, if any "class-declaration" uses the "property" attribute,
+## generation ruleset that generally does not affect machine
+## processing (except for unicode-version).
+## However, if any "class-declaration" uses the "property" attribute
 ## a unicode-version MUST be present.
 meta-section = element meta {
     element version {
@@ -408,9 +414,9 @@ meta-section = element meta {
         element reference {
             attribute id {
                 xsd:token {
-                    # limit id attribute to uppercase letters, digits 
-                    # and a few punctuation marks; use of integers 
-                    # is RECOMMENDED
+                    # limit id attribute to uppercase letters,
+                    # digits and a few punctuation marks; use of
+                    # integers is RECOMMENDED
                     pattern = "[\-_.:0-9A-Z]*"
                     minLength = "1"
                 }
