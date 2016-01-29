@@ -2169,7 +2169,7 @@
                 <t>Object Identifiers: None.</t>
                 <t>Intended Usage: Common</t>
                 <t>Personal and email address for further information: See the Authors of this document.</t>
-                <t>Change Controller: [TBC]</t>
+                <t>Change Controller: IESG</t>
             </section>
             <section title="URN Registration" anchor="urn_reg">
                 <t>This specification uses a URN to describe the XML namespace, in accordance
