@@ -1412,7 +1412,7 @@
                 <section title="The any Element">
 
                     <t>The "any" element is an empty element that matches any single code point. 
-                        It may have a "count attribute. For an example see <xref target="IDNA2008_example"/>.
+                        It may have a "count" attribute. For an example see <xref target="IDNA2008_example"/>.
                     </t>
                     <t>Unlike a literal, the "any" element" may not have a "ref" attribute.</t>
                 </section>
@@ -2359,7 +2359,8 @@
                 </figure>
             </t>
              <t>In practice, any LGR that includes the hyphen might also contain a rule invalidating
-              any label with a hyphen in third and fourth position as required by <xref target="RFC5891" />.</t>
+                 any labels beginning, ending, and containing a hyphen in the third and fourth positions
+                 as required by <xref target="RFC5891" />.</t>
             <t>The following sample LGR shows a more complete collection of the elements and
                 attributes defined in this specification in a somewhat typical context.</t>
             <t>
