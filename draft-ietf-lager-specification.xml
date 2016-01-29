@@ -3005,18 +3005,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
           <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-07">
                               Clarify the way the values of the "property" attribute are constructed
-<<<<<<< HEAD
-                from the attribute name and value in <xref target="UAX42" />. Minor fixes to examples
-                and wording for a few of the match operators and the description for reflexive variants.
-                Clarified default action, added new disposition named "valid" and changed "catch-all" action
-                to a disposition of "valid". Removed an ambiguity in the evaluation of labels for LGRs that
-                define sequences of code points as elements.
-=======
                               from the attribute name and value in <xref target="UAX42" />. Minor fixes to examples
                               and wording for a few of the match operators and the description for reflexive variants.
                               Clarified default action, added new disposition named "valid" and changed "catch-all" action
-                              to a disposition of "valid". Added change controller for media type.
->>>>>>> origin/master
+                              to a disposition of "valid".  Removed an ambiguity in the evaluation of labels for LGRs that
+                             define sequences of code points as elements.Added change controller for media type.
                         </t>
                     </list>
                 </t>
