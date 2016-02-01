@@ -1950,7 +1950,7 @@
                    satisfies any required context at that position, the instances of its constituent code
                    points are deemed members of the LGR and evaluation proceeds with the next code
                    point following the sequence. If the sequence does not match a defined sequence or
-                   does not satisfy the required context, succcessively shorter sequences are evaluated,
+                   does not satisfy the required context, successively shorter sequences are evaluated,
                    until only a single code point remains. The eligibility of that code point is determined
                    as described above for an individual code point instance.</t>
 
