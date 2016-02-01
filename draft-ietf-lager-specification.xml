@@ -1919,7 +1919,7 @@
                 </t>
                 <t>
                     <figure>
-                        <artwork><![CDATA[    <action disp="valid" comment="catch-all"/>]]></artwork>
+                        <artwork><![CDATA[    <action disp="valid" comment="Catch-all if other rules not met"/>]]></artwork>
                     </figure>
                 </t>
             </section>
