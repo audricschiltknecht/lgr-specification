@@ -1931,40 +1931,51 @@
 
                 <t>In order to test a specific label for membership in the LGR, a consumer of the
                     LGR must iterate through each code point within a given label, and test that
-                    each code point is a member of the LGR. If any code point is not a member of
-                    the LGR, the label shall be deemed as invalid.</t>
+                    each instance of a code point is a member of the LGR. If any instance of a code 
+                    point is not a member of the LGR, the label shall be deemed as invalid.</t>
 
-                <t>An individual code point is deemed a member of the LGR when it is listed using
-                    a "char" element, or is part of a range defined with a "range" element, and all
-                    necessary condition in any "when" or "not-when" attributes are correctly
-                    satisfied.</t>
+                <t>An individual instance of a code point is deemed a member of the LGR when 
+                  it is listed using a "char" element, or is part of a range defined with a "range" element, 
+                  and all necessary conditions in any "when" or "not-when" attributes are correctly
+                  satisfied for that instance.</t>
 
-                <t>Alternatively, a code point is also deemed a member of the LGR when it forms
-                    part of a sequence that corresponds to a sequence listed using a "char"
-                    element for which the "cp" attribute defines a sequence, and all necessary
-                    condition in any "when" or "not-when" attributes are correctly satisfied.</t>
+                 <t>Alternatively, an instance of a code point is also deemed a member of the LGR
+                   when it forms part of a sequence that corresponds to a sequence listed using a "char"
+                   element for which the "cp" attribute defines a sequence, and all necessary
+                   conditions in any "when" or "not-when" attributes are correctly satisfied
+                   for that instance of the sequence.</t>
+          
+                <t>In determining eligibility, at each position the longest possible sequence of code
+                   points is evaluated first. If that sequence matches a sequence defined in the LGR and
+                   satisfies any required context at that position, the instances of its constituent code
+                   points are deemed members of the LGR and evaluation proceeds with the next code
+                   point following the sequence. If the sequence does not match a defined sequence or
+                   does not satisfy the required context, succcessively shorter sequences are evaluated,
+                   until only a single code point remains. The eligibility of that code point is determined
+                   as described above for an individual code point instance.</t>
 
                 <t>A label must also not trigger any action that results in a disposition of
-                    "invalid", otherwise it is deemed not eligible. (This step may need to be
-                    deferred, until variant code point dispositions have been determined).</t>
+                   "invalid", otherwise it is deemed not eligible. (This step may need to be
+                   deferred, until variant code point dispositions have been determined).</t>
 
-                <t>For LGRs that contain reflexive variant mappings (defined in
-                    <xref target="reflexive_mapping" />), the final evaluation of eligibility for
-                    the label must be deferred until variants are generated. In essence, LGRs that
-                    use this feature treat the original label as the (identity) variant of itself.
-                    For such LGRs, the ordinary iteration over code points would generally only
-                    exclude a subset of invalid labels, but it could be used effectively as a
-                    pre-screening.</t>
+                <section title="Determining Eligibility using Reflexive Variant Mappings">
+                   <t>For LGRs that contain reflexive variant mappings (defined in
+                      <xref target="reflexive_mapping" />), the final evaluation of eligibility for
+                      the label must be deferred until variants are generated. In essence, LGRs that
+                      use this feature treat the original label as the (identity) variant of itself.
+                      For such LGRs, the ordinary determination of elegibility described here
+                      is but a first step that generally excludes only a subset of invalid labels.</t>
 
-                <t>To check the validity of a label with reflexive mappings, it is not necessary
-                    to generate all variant labels. Only a single variant needs to be created,
-                    where for each code point, any reflexive variants are applied, and the label
-                    disposition is evaluated. A disposition of "invalid" results in the label being not
-                    eligible. (In the exceptional case where context rules are present on reflexive
-                    mappings, multiple reflexive variants may be defined, but for each original
-                    label, at most one of these can be valid at each code position. However,
-                    see <xref target="duplicate_variants" />).</t>
-
+                   <t>To further check the validity of a label with reflexive mappings, it is not necessary
+                      to generate all variant labels. Only a single variant needs to be created,
+                      where any reflexive variants are applied for each code point, and the label
+                      disposition is evaluated (as described in <xref target="determining_dispositions" />). 
+                      A disposition of "invalid" results in the label being not
+                      eligible. (In the exceptional case where context rules are present on reflexive
+                      mappings, multiple reflexive variants may be defined, but for each original
+                      label, at most one of these can be valid at each code position. However,
+                      see <xref target="duplicate_variants" />).</t>
+                   </section>
             </section>
 
             <section title="Determining Variants for a Label">
@@ -2004,6 +2015,11 @@
                 <t>The number of potential permutations can be very large. In practice, implementations
                     would use suitable optimizations to avoid having to actually create all permutations.</t>
 
+         <t>In determining the permuted set of variant labels in step (1) above, all eligible 
+           partitions into sequences must be evaluated. A label "ab" that matches a sequence "ab"
+           defined in the LGR but also matches the sequence of individual code points "a" and "b" 
+           (both defined in the LGR), must be permuted using any defined variant mappings 
+           for  both the sequence "ab" and the code points "a" and "b" individually.</t>
             </section>
 
             <section title="Determining a Disposition for a Label or Variant Label"
@@ -2993,7 +3009,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               from the attribute name and value in <xref target="UAX42" />. Minor fixes to examples
                               and wording for a few of the match operators and the description for reflexive variants.
                               Clarified default action, added new disposition named "valid" and changed "catch-all" action
-                              to a disposition of "valid". Added change controller for media type.
+                              to a disposition of "valid".  Removed an ambiguity in the evaluation of labels for LGRs that
+                             define sequences of code points as elements.Added change controller for media type.
                         </t>
                     </list>
                 </t>
