@@ -3010,7 +3010,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               and wording for a few of the match operators and the description for reflexive variants.
                               Clarified default action, added new disposition named "valid" and changed "catch-all" action
                               to a disposition of "valid".  Removed an ambiguity in the evaluation of labels for LGRs that
-                             define sequences of code points as elements.Added change controller for media type.
+                             define sequences of code points as elements. Added change controller for media type.
                         </t>
                     </list>
                 </t>
