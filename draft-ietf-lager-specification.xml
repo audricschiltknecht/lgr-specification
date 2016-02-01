@@ -1850,9 +1850,9 @@
                             the same operator of the origin string, but not automatically allocated
                             for use. </t>
                         <t hangText="activated">The resulting string should be activated for use.
-                            (This is the typical default action if no dispositions are defined and
-                            is known as a preferred variant in <xref target="RFC3743"/>.)</t>
-                        <t hangText="valid">The resultant string is a valid label.</t>
+                            (This is the same as a preferred variant in <xref target="RFC3743"/>.)</t>
+                        <t hangText="valid">The resultant string is a valid label. (This is the
+                            typical default action if no dispositions are defined.)</t>
                     </list>
                 </t>
             </section>
