@@ -2374,7 +2374,7 @@
 &lt;/lgr></artwork>
                 </figure>
             </t>
-             <t>In practice, any LGR that includes the hyphen might also contain a rule invalidating
+             <t>In practice, any LGR that includes the hyphen might also contain rules invalidating
                  any labels beginning, ending, and containing a hyphen in the third and fourth positions
                  as required by <xref target="RFC5891" />.</t>
             <t>The following sample LGR shows a more complete collection of the elements and
