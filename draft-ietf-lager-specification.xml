@@ -128,7 +128,7 @@
                         unambiguously, so that independent implementations that utilize the
                         contents will arrive at the same results. </t>
                     <t>To the largest extent possible, policy rules should be able to be specified
-                        in the XML format without relying hidden, or built-in algorithms in
+                        in the XML format without relying on hidden, or built-in algorithms in
                         implementations. </t>
                     <t>LGRs should be suitable for comparison and re-use, such that one could easily
                         compare the contents of two or more to see the differences, to merge them,
@@ -733,7 +733,7 @@
                         
                     <t>In the following example, let's assume the goal is to allocate only those labels
                          that contain a variant that is considered "preferred" in some way.
-                        As defined in the example, he code point U+3473 exists both as a variant of U+3447
+                        As defined in the example, the code point U+3473 exists both as a variant of U+3447
                         and as a variant of itself (reflexive mapping). Assuming an original label of
                         "U+3473 U+3447", the permuted variant "U+3473 U+3473" would consist of the reflexive
                         variant of U+3473 followed by a variant of U+3447. Given the variant mappings  as
@@ -1680,9 +1680,9 @@
                 <t>Since rules are evaluated for all labels, whether they are the original label or
                     computed by permuting the defined and valid variant mappings for the label's
                     code points, actions based on matching or not matching a rule may be triggered
-                    for both original and variant labels, but they the rules are not affected by the
-                    disposition attributes of the variant mappings. To trigger any actions base on
-                    these dispositions requires the use additional optional attributes for actions
+                    for both original and variant labels, but the rules are not affected by the
+                    disposition attributes of the variant mappings. To trigger any actions based on
+                    these dispositions requires the use of additional optional attributes for actions
                     described next. </t>
             </section>
             <section title="Actions with Variant Type Triggers" anchor="variants_actions">
@@ -1908,7 +1908,7 @@
                         <artwork><![CDATA[    <action disp="invalid" any-variant="invalid"/>
     <action disp="blocked" any-variant="blocked"/>
     <action disp="allocatable" any-variant="allocatable"/>
-    <action disp="activated" all-variants="activate"/>>]]></artwork>
+    <action disp="activated" all-variants="activate"/>]]></artwork>
                     </figure>
                 </t>
 
