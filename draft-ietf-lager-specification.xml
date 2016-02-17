@@ -13,7 +13,7 @@
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-07">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-08">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -3003,7 +3003,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               appendix. Move registration related procedures to informative references.
                         </t>
                     </list>
-          <list style="hanging" hangIndent="5">
+                    <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-07">
                               Clarify the way the values of the "property" attribute are constructed
                               from the attribute name and value in <xref target="UAX42" />. Minor fixes to examples
@@ -3011,6 +3011,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               Clarified default action, added new disposition named "valid" and changed "catch-all" action
                               to a disposition of "valid".  Removed an ambiguity in the evaluation of labels for LGRs that
                              define sequences of code points as elements. Added change controller for media type.
+                        </t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-08">
+                              Minor typographical fixes.
                         </t>
                     </list>
                 </t>
