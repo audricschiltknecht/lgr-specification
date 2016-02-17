@@ -1844,7 +1844,7 @@
                             from a variant mapping with this type. </t>
                         <t hangText="blocked">The resulting string is a valid label, but should be
                             blocked from registration. This would typically apply for a derived
-                            variant that has is undesirable as having no practical use or being
+                            variant that is undesirable as having no practical use or being
                             confusingly similar to some other label. </t>
                         <t hangText="allocatable">The resulting string should be reserved for use by
                             the same operator of the origin string, but not automatically allocated
