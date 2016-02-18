@@ -136,12 +136,10 @@ variant = element var {
 
 ## a "class" element that references the name of another "class"
 ## (or set-operator like "union") defined elsewhere.
-## If used as a matcher (appearing under a "rule" ## element),
+## If used as a matcher (appearing under a "rule" element),
 ## the "count" attribute may be present.
 class-invocation = element class {
-    (
-      attribute by-ref { class-ref }
-      | attribute from-tag { tag-ref }),
+    attribute by-ref { class-ref },
     attribute count { count-pattern }?,
     attribute comment { text }?
 }
