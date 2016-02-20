@@ -331,8 +331,9 @@
 
                     <t>There may be multiple "scope" tags used, for example to reflect a list of domains
                         to which the LGR is applied. Types of scope other than "domain" are application-defined. 
-                        Such application-defined type values must be in a namespace "apptype" previously
-                        defined in the document. An explanation of the application-defined type in the
+                        Such application-defined type values must be in a namespace "apptype", which, if used,
+                        must have been previously defined according to the usual XML document rules.
+                        An explanation of the application-defined type in the
                         "description" element is RECOMMENDED.</t>
 
                 </section>
@@ -528,7 +529,7 @@
               <t>A conditional context is specified by a rule that must be satisfied (or alternatively,
                   must not be satisfied) for a code point in a given label, often at a particular location in a label.</t>
 
-             <t>To specify a conditional context a "when" or "not-when" attribute
+             <t>To specify a conditional context either a "when" or "not-when" attribute
                     may be used. The value of each "when" or "not-when" attributes is a whole label or
                     parameterized context rule as described below in <xref target="whole_label"/>.
                     The content condition is met when the rule specified in the "when"
@@ -997,8 +998,7 @@
                 <t>
                     <figure>
                         <artwork><![CDATA[    <class name="example" comment="an example class definition">
-        <char cp="0061" />
-        <char cp="4E00" />
+        0061 4E00
     </class>
     ...
     <rule>
@@ -1183,7 +1183,7 @@
                         precisely two, and a "union" element MUST contain two or more of these
                         elements. </t>
 
-                    <t>An anonymous combined class can be defined directly inside a rule or of the
+                    <t>An anonymous combined class can be defined directly inside a rule or any of the
                         match operator elements that allow child elements (see <xref
                             target="match_operators"/>) by using the set combination as the outer
                         element. </t>
@@ -2490,7 +2490,7 @@
     &lt;!-- Subtract vowels from letters to get
          consonant, demonstrating the different 
          set notations and the difference operator --&gt;
-    &lt;difference name="consonants"&gt;
+     &lt;difference name="consonants"&gt;
          &lt;class comment="all letters"&gt;0061-007A&lt;/class&gt;
          &lt;class comment="all vowels"&gt;
                  0061 0065 0069 006F 0075
@@ -2516,7 +2516,7 @@
 
    &lt;!-- actions triggered by matching rules and/or 
         variant types --&gt;
-    &lt;action disp="consonants" 
+    &lt;action disp="invalid" 
             match="three-or-more-consonants" /&gt;
     &lt;action disp="blocked" any-variant="blocked" /&gt;
     &lt;action disp="allocatable" all-variants="allocatable"
@@ -3031,7 +3031,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-08">
-                              Minor typographical fixes. Fixed exmaple in 4.4.1, added clarification on rfc2119 language, 
+                              Minor typographical fixes. Fixed example in 4.4.1, and 5.2.1, reviewed usage of rfc2119 language, 
                               and other editorial suggestions.
                         </t>
                     </list>
