@@ -221,18 +221,20 @@
             </section>
             <section title="Metadata">
 
-                <t>The "meta" element is RECOMMENDED to express meta-data associated within the
+                <t>The "meta" element is RECOMMENDED to express metadata associated within the
                     LGR. It can be used to identify the author or relevant contact person, explain
                     the intended usage of the LGR, and provide implementation notes as well as
-                    references. With the exception of "unicode-version" element, the data contained
+                    references.  Providing metadata pertaining to the date and version of the 
+                    LGR is particularly encouraged to make it easier for interoperating
+                    consumers to ensure that they are using the correct LGR.</t>
+                    
+                <t>With the exception of "unicode-version" element, the data contained
                     within is not required by software consuming the LGR in order to calculate valid
                     labels, or to calculate variants. If present, the "unicode-version" element MUST
                     be used by a consumer of the table to identify that it has the correct Unicode
-                    property data to perform operations on the table.</t>
-
-                   <t>While not mandatory, absence of metadata such as the "version" and "date"
-                     elements, makes it harder for interoperating consumers to ensure that they are
-                     using the correct LGR.</t>
+                    property data to perform operations on the table. This ensures that possible
+                    differences in code point properties between editions of the Unicode standard
+                    do not impact the product of calculations utilizing an LGR.</t>
 
                 <section title="The version Element">
 
@@ -281,7 +283,7 @@
                         refer to a script plus undefined language if the LGR is not intended for a
                         specific language.</t>
 
-                    <t>Example of an LGR for the English language :</t>
+                    <t>Example of an LGR for the English language:</t>
 
                     <figure>
                         <artwork><![CDATA[
@@ -309,14 +311,6 @@
    <language>und-Zyyy</language>
 ]]></artwork>
                     </figure>
-                    <t>Note that that for the particular case of Japanese, a script tag "Jpan"
-                        exists that matches the mixture of scripts used in writing that language.
-                        The preferred "language" element would be:</t>
-                    <figure>
-                        <artwork><![CDATA[
-   <language>und-Jpan</language>
-]]></artwork>
-                    </figure>
                 </section>
 
                 <section title="The scope Element">
@@ -325,8 +319,9 @@
                         policy is applied. The "type" attribute specifies the type of scope being
                         defined. A type of "domain" means that the scope is a domain that represents 
                         the apex of the DNS zone to which the LGR is applied. For that type, the content
-                        of the "scope" element MUST be a valid absolute domain name, without a
-                        trailing dot. However, the DNS root zone is represented as ".".
+                        of the "scope" element MUST be a a domain name written relative to the root
+                        zone, in presentation format with no trailing dot. However, in the unique case of
+                        the DNS root zone, it is represented as ".".
                    </t>
                     <t>
                         <figure>
@@ -940,6 +935,7 @@
         </section>
 
         <section title="Whole Label and Context Evaluation">
+          
             <section title="Basic Concepts">
                 <t>The code points in a label sometimes need to satisfy context-based rules, for
                     example for the label to be considered valid, or to satisfy the context for a
@@ -3038,7 +3034,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-09">
                               Incorporated feedback from LAGER WG Last Call. Fixed examples in 4.4.1 and 5.2.1.
-                              Reviewed usage of RFC 2119 language, and other editorial suggestions.
+                              Reviewed usage of RFC 2119 language, and other editorial suggestions. Removed
+                              "und-Jpan" example as "ja" would suffice in normal cases.
                        </t>
                     </list>
                </t>
