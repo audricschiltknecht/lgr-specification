@@ -330,11 +330,21 @@
                    </t>
 
                     <t>There may be multiple "scope" tags used, for example to reflect a list of domains
-                        to which the LGR is applied. Types of scope other than "domain" are application-defined. 
-                        Such application-defined type values must be in a namespace "apptype", which, if used,
-                        must have been previously defined according to the usual XML document rules.
-                        An explanation of the application-defined type in the
+                        to which the LGR is applied.</t>
+
+                    <t>No other values of the "type" attribute are defined by
+                        this specification, however this specification can be used for
+                        applications other than domain names. Implementers of LGRs for applications other
+                        than domain names SHOULD define the scope extension grammar in an IETF Specification,
+                        or use XML Namespaces to distinguish their scoping mechanism distinctly from the
+                        base LGR namespace. An explanation of any custom usage of the scope in the
                         "description" element is RECOMMENDED.</t>
+
+                        <t><figure>
+                            <artwork><![CDATA[    <scope xmlns="http://example.com/ns/scope/1.0">
+        ... content per alternate namespace ...
+    </scope>]]></artwork></figure>
+                        </t>
 
                 </section>
                 <section title="The description Element">
@@ -1875,7 +1885,7 @@
             <section title="Precedence" anchor="precedence">
                 <t>Actions are applied in the order of their appearance in the file. This defines
                     their relative precedence. The first action triggered by a label defines the
-                    disposition for that label. To define a the order of precedence, list the
+                    disposition for that label. To define the order of precedence, list the
                     actions in the desired order. The conventional order of precedence for the
                     actions defined in <xref target="recommended_disposition_values"/> is "invalid",
                     "blocked", "allocatable", "activated" then "valid". This default precedence is used for the
@@ -3035,7 +3045,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                         <t hangText="draft-ietf-lager-specification-09">
                               Incorporated feedback from LAGER WG Last Call. Fixed examples in 4.4.1 and 5.2.1.
                               Reviewed usage of RFC 2119 language, and other editorial suggestions. Removed
-                              "und-Jpan" example as "ja" would suffice in normal cases.
+                              "und-Jpan" example as "ja" would suffice in normal cases. Document approach to
+                              expanding "scope" element.
                        </t>
                     </list>
                </t>
