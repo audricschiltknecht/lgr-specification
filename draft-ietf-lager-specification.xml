@@ -209,30 +209,30 @@
 ]]></artwork>
                 </figure>
 
-                <t>A document MUST contain exactly one "lgr" element. Each "lgr" element MAY 
-                contain zero or one "meta" element, MUST contain exactly one "data" element, and 
-                MAY contain zero or one "rules" element; these three elements MUST be in that order.</t>
+                <t>A document MUST contain exactly one "lgr" element. Each "lgr" element MUST
+                contain zero or one "meta" element, contain exactly one "data" element, and
+                contain zero or one "rules" element; and these three elements MUST be in that order.</t>
 
                 <t>In the following descriptions, required, non-repeating elements or attributes are
-                    generally not called out explicitly, in contrast to OPTIONAL ones ,
-                    or those that MAY be repeated. For attributes that take lists as values, the elements MUST be
+                    generally not called out explicitly, in contrast to "OPTIONAL" ones,
+                    or those that "MAY" be repeated. For attributes that take lists as values, the elements MUST be
                     space-separated.</t>
 
             </section>
             <section title="Metadata">
 
-                <t>The OPTIONAL "meta" element is used to express meta-data associated within the
+                <t>The "meta" element is RECOMMENDED to express meta-data associated within the
                     LGR. It can be used to identify the author or relevant contact person, explain
                     the intended usage of the LGR, and provide implementation notes as well as
                     references. With the exception of "unicode-version" element, the data contained
                     within is not required by software consuming the LGR in order to calculate valid
-                    labels, or to calculate variants. The "unicode-version" element MUST be used by a
-                    consumer of the table to identify that it has the correct Unicode property
-                    data to perform operations on the table.</t>
+                    labels, or to calculate variants. If present, the "unicode-version" element MUST
+                    be used by a consumer of the table to identify that it has the correct Unicode
+                    property data to perform operations on the table.</t>
 
-                   <t>While neither a version nor a date element are required, their
-                    omission makes it harder for interoperating consumers to ensure that
-                    they are using the correct LGR. Their inclusion RECOMMENDED.</t>
+                   <t>While not mandatory, absence of metadata such as the "version" and "date"
+                     elements, makes it harder for interoperating consumers to ensure that they are
+                     using the correct LGR.</t>
 
                 <section title="The version Element">
 
@@ -290,7 +290,7 @@
                     </figure>
 
                     <t>If the LGR applies to a script, rather than a specific language, the "und"
-                        language tag should be used followed by the relevant <xref target="RFC5646"
+                        language tag SHOULD be used followed by the relevant <xref target="RFC5646"
                         /> script subtag. For example, for a Cyrillic script LGR:</t>
 
                     <figure>
@@ -3035,7 +3035,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               Minor typographical fixes.
                        </t>
                     </list>
-                    <list>
+                    <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-09">
                               Fixed examples in 4.4.1 and 5.2.1. Reviewed usage of RFC 2119
                               language, and other editorial suggestions.
