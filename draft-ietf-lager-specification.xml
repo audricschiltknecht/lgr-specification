@@ -152,10 +152,17 @@
 
         </section>
 
+        <section title="Normative Language">
+        
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+          document are to be interpreted as described in <xref target="RFC2119"/>.
+        </t>
 
+        </section>
 
         <section title="LGR Format">
-
+          
             <t>An LGR is expressed as a well-formed XML Document <xref target="XML"/>.</t>
 
             <section title="Namespace">
@@ -2875,13 +2882,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                 Mayrhofer, Nicholas Ostler, Thomas Roessler, Audric Schiltknecht, Steve Sheng, Michel
                 Suignard, Andrew Sullivan, Wil Tan and John Yunker.</t>
         </section>
-        <section title="Editorial Notes">
-            <t>This appendix to be removed prior to final publication.</t>
-
-            <section title="Known Issues and Future Work">
-                <t>These are being tracked at http://trac.tools.ietf.org/wg/lager/trac/report/1</t>
-            </section>
             <section title="Change History">
+                <t>This appendix to be removed prior to final publication.</t>
                 <t>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-davies-idntables-00">
@@ -3042,7 +3044,6 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                        </t>
                     </list>
                </t>
-            </section>
         </section>
     </back>
 
