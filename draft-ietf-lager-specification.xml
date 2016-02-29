@@ -1091,7 +1091,7 @@
                         "unicode-version" element in the header. (Note: some Unicode properties are
                         by definition stable across versions and do not change once assigned (see
                             <xref target="Unicode-Stability"/>).</t>
-                    <t>It is RECOMMENDED that all implementations processing LGR files provide support
+                    <t>All implementations processing LGR files SHOULD provide support
                         for the following minimal set of Unicode properties:
                         <list style="symbols">
                             <t>General Category (gc)</t>
@@ -1428,9 +1428,9 @@
                 <section title="The any Element">
 
                     <t>The "any" element is an empty element that matches any single code point. 
-                        It MAY have a "count attribute. For an example see <xref target="IDNA2008_example"/>.
+                        It MAY have a "count" attribute. For an example see <xref target="IDNA2008_example"/>.
                    </t>
-                    <t>Unlike a literal, the "any" element" MUST NOT have a "ref" attribute.</t>
+                    <t>Unlike a literal, the "any" element MUST NOT have a "ref" attribute.</t>
                 </section>
 
                 <section title="The start and end Elements">
@@ -2222,7 +2222,7 @@
                 <list style="symbols">
                     <t>Standard Dispositions - This registry shall list dispositions that have been
                     defined in published specifications, i.e. the eligibility for such registrations
-                    shall be Specification Required <xref target="RFC5226"/>. The initial set of
+                    shall be "Specification Required" <xref target="RFC5226"/>. The initial set of
                     registrations shall be the five dispositions in this document described in
                     <xref target="recommended_disposition_values"/>.</t>
                     <t>Private Dispositions - This registry shall list dispositions that have been
@@ -3037,8 +3037,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-09">
-                              Fixed examples in 4.4.1 and 5.2.1. Reviewed usage of RFC 2119
-                              language, and other editorial suggestions.
+                              Incorporated feedback from LAGER WG Last Call. Fixed examples in 4.4.1 and 5.2.1.
+                              Reviewed usage of RFC 2119 language, and other editorial suggestions.
                        </t>
                     </list>
                </t>
