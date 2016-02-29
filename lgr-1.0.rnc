@@ -27,10 +27,10 @@ code-point-sequence = xsd:token {
     pattern = "[0-9A-F]{4,6}( [0-9A-F]{4,6})+"
 }
 
-## single code point, or a sequence of code points
+## single code point, or a sequence of code points, or empty string
 code-point-literal = code-point | code-point-sequence | ""
 
-## code point, sequence, or empty (null)
+## code point or sequence only
 non-empty-code-point-literal = code-point | code-point-sequence
 
 ## code point sent represented in short form
