@@ -167,11 +167,9 @@
 
             <section title="Namespace">
 
-                <t>The XML Namespace URI is "urn:ietf:params:xml:ns:lgr-1.0". [Note: the examples
-                        and schemas for any non-final versions of this specification use a namespace
-                        that is not guaranteed. Early implementors should consider the need to revise
-                        the namespace in subsequent revisions.]</t>
-                        <t>See <xref target="urn_reg"/> for more information.</t>
+                <t>The XML Namespace URI is "urn:ietf:params:xml:ns:lgr-1.0".</t>
+                
+                <t>See <xref target="urn_reg"/> for more information.</t>
 
             </section>
 
