@@ -14,7 +14,7 @@
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-09">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-10">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -1358,7 +1358,7 @@
                     <t>A "count" attribute MUST NOT be applied to any element that contains a "name"
                         attribute, but MAY be applied to operators such as "class" that declare
                         anonymous classes (including combined classes) or invoke any predefined classes
-                        by reference. The count attribute MUST not be applied to any "class" element,
+                        by reference. The count attribute MUST NOT be applied to any "class" element,
                        or element defining a combined class, when it is nested inside a combined class.</t>
 
                    <t>A "count" attribute MUST NOT be applied to match operators of type "start",
@@ -2199,14 +2199,14 @@
                 <t>Subtype name: lgr+xml</t>
                 <t>Required parameters: None.</t>
                 <t>Optional parameters: charset (as for application/xml per <xref target="RFC7303"/>)</t>
-                <t>Security considerations: As for application/xml per <xref target="RFC7303"/></t>
+                <t>Security considerations: See the security considerations for application/xml in <xref target="RFC7303"/> and the specific security considerations for Label Generation Rulesets in RFC XXXX (RFC Editor/IANA, please replace XXXX with the final number of this document)</t>
                 <t>Interoperability considerations: As for application/xml per <xref target="RFC7303"/></t>
-                <t>Published specification: This document.</t>
-                <t>Applications which use this media type: Software using label generation rulesets,
-                including registry applications and client validators.</t>
+                <t>Published specification: See RFC XXXX (RFC Editor/IANA, please replace XXXX with the final number of this document)</t>
+                <t>Applications which use this media type: Software using label generation rulesets for
+                  international identifiers, such as IDNs, including registry applications and client validators.</t>
                 <t>Additional information: None.</t>
                 <t>Magic number: None.</t>
-                <t>File extension: .lgr or .xml</t>
+                <t>File extension: .lgr</t>
                 <t>Macintosh file-type code: None.</t>
                 <t>Object Identifiers: None.</t>
                 <t>Intended Usage: Common</t>
@@ -2296,7 +2296,7 @@
                 </front>
                 <format type="HTML" target="http://unicode.org/versions/#Version_Numbering"/>
             </reference>
-            <reference anchor="UAX42">
+            <reference anchor="UAX42" target="http://unicode.org/reports/tr42/">
                 <front>
                     <title>Unicode Character Database in XML</title>
                     <author>
@@ -2306,7 +2306,7 @@
                 </front>
                 <format type="HTML" target="http://unicode.org/reports/tr42/"/>
             </reference>
-            <reference anchor="XML">
+            <reference anchor="XML" target="http://www.w3.org/TR/REC-xml/">
                 <front>
                     <title>Extensible Markup Language (XML) 1.0</title>
                     <author>
@@ -2870,7 +2870,9 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
         <section title="RelaxNG Compact Schema">
             <figure>
                 <artwork><![CDATA[
+<CODE BEGINS>
 %schema%
+<CODE ENDS>
 ]]></artwork>
             </figure>
         </section>
@@ -3047,6 +3049,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               Reviewed usage of RFC 2119 language, and other editorial suggestions. Removed
                               "und-Jpan" example as "ja" would suffice in normal cases. Document approach to
                               expanding "scope" element.
+                       </t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-10">
+                              Minor ID-nits related edits. Integrate feedback on media type registration.
                        </t>
                     </list>
                </t>
