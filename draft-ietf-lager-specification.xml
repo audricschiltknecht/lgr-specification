@@ -14,7 +14,7 @@
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-10">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-11">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -65,14 +65,16 @@
 
         <section title="Introduction">
 
-            <t>This memo describes a method of using Extensible Markup Language (XML) to describe
-                the algorithm used to determine whether a given identifier label is permitted, and
-                under which conditions, based on the code points it contains and their context.
-                These algorithms are comprised of a list of permissible code points, variant code
-                point mappings, and a set of rules acting on them. These algorithms form part of an
-                administrator's policies, and can be referred to as Label Generation Rulesets
-                (LGRs). In deploying internationalized domain names (IDNs), they have also been
-                known as IDN tables or variant tables.</t>
+            <t>This document specifies a method of using Extensible Markup Language
+               (XML) to describe Label Generation Rulesets (LGRs).  LGRs are
+               algorithms used to determine whether, and under what conditions, a
+               given identifier label is permitted, based on the code points it
+               contains and their context.  These algorithms comprise a list of
+               permissible code points, variant code point mappings, and a set of
+               rules that act on the code points and mappings.  LGRs form part of
+               an administrator's policies.  In deploying internationalized domain
+               names (IDNs), they have also been known as IDN tables or variant
+               tables.</t>
             <t>There are other kinds of policies relating to labels which are not normally covered by
                 Label Generation Rulesets and are therefore not necessarily representable by the XML
                 format described here. These include, but are not limited to policies around
@@ -114,7 +116,7 @@
                         so that common mistakes can be caught.</t>
                     <t>An LGR needs to be able to express the set of valid code points that are
                         allowed for registration under a specific administrator's policies.</t>
-                    <t>Provide the ability to express computed alternatives to a given identifier 
+                    <t>An LGR need to be able to express computed alternatives to a given identifier 
                         based on mapping relationships between code points, whether one-to-one or
                         many-to-many. These computed alternatives are commonly known as "variants".</t>
                     <t>Variant code points should be able to be tagged with explicit dispositions or
@@ -187,7 +189,7 @@
                 <t>The "lgr" element contains up to three sub-elements. First is an optional "meta"
                     element that contains all meta-data associated with the LGR, such as its
                     authorship, what it is used for, implementation notes and references. This is
-                    followed by a "data" element that contains the substantive code point data.
+                    followed by a required "data" element that contains the substantive code point data.
                     Finally, an optional "rules" element contains information on contextual and
                     whole-label evaluation rules, if any, along with "action" elements
                     providing for the disposition of labels and computed variant labels.</t>
@@ -210,8 +212,8 @@
                 </figure>
 
                 <t>A document MUST contain exactly one "lgr" element. Each "lgr" element MUST
-                contain zero or one "meta" element, contain exactly one "data" element, and
-                contain zero or one "rules" element; and these three elements MUST be in that order.</t>
+                contain zero or one "meta" element, exactly one "data" element, and
+                zero or one "rules" element; and these three elements MUST be in that order.</t>
 
                 <t>In the following descriptions, required, non-repeating elements or attributes are
                     generally not called out explicitly, in contrast to "OPTIONAL" ones,
@@ -221,10 +223,16 @@
             </section>
             <section title="Metadata">
 
-                <t>The "meta" element is RECOMMENDED to express metadata associated within the
-                    LGR. It can be used to identify the author or relevant contact person, explain
+                <t>The "meta" element expresses metadata associated with the LGR,
+                    and the element SHOULD be included so that the associated
+                    metadata are available as part of the LGR and cannot become disassociated.
+                   The following subsections describe elements that may appear within the "meta" element.</t>
+                    
+                    <t>The "meta" element can be used to identify the author or relevant contact person, explain
                     the intended usage of the LGR, and provide implementation notes as well as
-                    references.  Providing metadata pertaining to the date and version of the 
+                    references. Detailed metadata allow the LGR document to become self-documenting,
+                    for example if rendered in a human readable format by an appropriate tool.</t>
+                    <t>Providing metadata pertaining to the date and version of the 
                     LGR is particularly encouraged to make it easier for interoperating
                     consumers to ensure that they are using the correct LGR.</t>
                     
@@ -394,8 +402,8 @@
                             <xref target="Unicode-Versions"/>). If any software processing the table
                         does not have access to character property data of the requisite version, it
                         MUST NOT perform any operations relating to whole-label evaluation relying
-                        on Unicode properties (<xref target="property"/>).</t>
-                    <t> The value of a given Unicode property in may change
+                        on Unicode character properties (<xref target="property"/>).</t>
+                    <t> The value of a given Unicode character property may change
                         between versions of the Unicode Character Database <xref target="UAX44"/>,
              unless such change has been explicitly disallowed in <xref
                             target="Unicode-Stability"/>. It is RECOMMENDED to only reference properties
@@ -408,7 +416,7 @@
                         </figure>
                    </t>
                     <t>It is not necessary to include a "unicode-version" element for LGRs that do
-                        not make use of Unicode properties, however, it is RECOMMENDED.</t>
+                        not make use of Unicode character properties, however, it is RECOMMENDED.</t>
                 </section>
                 <section title="The references Element" anchor="references">
                     <t>A Label Generation Ruleset may define a list of references which are used to
@@ -464,8 +472,10 @@
                 series of "char" and "range" elements describe eligible code points, or ranges of
                 code points, respectively.</t>
 
-            <t>Discrete permissible code points or code point sequences are declared with a "char"
-                element, e.g.</t>
+            <t>Discrete permissible code points or code point sequences (see Section
+               <xref target="sequences" />) are declared with a "char"
+                element. Here is a minimal example declaration for a single code point, 
+                with the code point value given in the "cp" attribute:</t>
 
             <t>
                 <figure>
@@ -473,7 +483,13 @@
                 </figure>
            </t>
 
-            <t>Ranges of permissible code points may be stipulated with a "range" element, e.g.</t>
+                  <t>As described below, a full declaration for a "char" element, whether or
+                   not it is used for a single code point, or for a sequence (see Section <xref target="sequences" />), 
+                    may have optional child elements defining variants. Both the "char" and "range" elements can 
+                    take a number of optional attributes for conditional inclusion, commenting, cross referencing and
+                    character tagging, as described below.</t>
+              
+            <t>Ranges of permissible code points may be declared with a "range" element, as in this minimal example:</t>
 
             <t>
                 <figure>
@@ -481,7 +497,7 @@
                 </figure>
            </t>
 
-            <t>The range is inclusive of the first and last code points. All attributes defined
+            <t>The range is inclusive of the first and last code points. Any additional attributes defined
                 for a "range" element act as if applied to each code point within. A "range" element
                 has no child elements.</t>
             <t>It is always possible to substitute a list of individually specified code points for
@@ -489,13 +505,17 @@
                 substitution is possible, it makes no difference in processing the data. Tools
                 reading or writing the LGR format are free to aggregate
                 sequences of consecutive code points of the same properties into range elements.</t>
-            <t>Code points must be expressed in uppercase, hexadecimal, and zero padded to a minimum
-                of 4 digits. In other words, they are represented according to the standard Unicode convention but
-                without the prefix "U+". The rationale for not allowing other encoding formats,
+            <t>Code points MUST be represented according to the standard
+               Unicode convention but without the prefix "U+": they are
+                expressed in uppercase hexadecimal, and are zero-padded
+                 to a minimum of 4 digits. </t>
+               <t>The rationale for not allowing other encoding formats,
                 including native Unicode encoding in XML, is explored in <xref target="UAX42"/>. The
                 XML conventions used in this format, such as element and attribute names,
                 mirror this document where practical and reasonable to do so. It is RECOMMENDED to
-                list all "char" elements in ascending order of the "cp" attribute.</t>
+                list all "char" elements in ascending order of the "cp" attribute.  Not doing so makes it
+                 unnecessarily difficult for authors and reviewers to check for errors, such as duplications,
+                 or to review and compare against listing of code points in other documents and specifications.</t>
             <t>All "char" elements in the data section MUST have distinct "cp" attributes. The
                 "range" elements MUST NOT specify code point ranges that overlap either another range
                 or any single code point "char" elements. An LGR that defines the same code point more than
@@ -525,14 +545,8 @@
                 <t>As an alternative to using sequences to define a required context, a "char" or
                     "range" element may specify conditional context using an optional "when" 
                     attribute as described below in <xref target="contexts" />. Using a conditional context 
-                    is more flexible because a context is not limited to specific code points.
-                    In addition, doing so allows the choice of either specifying a prohibited or a required context.</t>
-
-                <t>As described below, the "char" element, whether or not it is used for a single
-                    code point, or for a sequence, may have optional child elements defining
-                    variants. Both the "char" and "range" elements can take a number of optional
-                    attributes for conditional inclusion, commenting, cross referencing and
-                    character tagging, as described below.</t>
+                    is more flexible because a context is not limited to a specific sequence of code points.
+                    In addition, using a context allows the choice of specifying either a prohibited or a required context.</t>
             </section>
 
             <section title="Conditional Contexts" anchor="contexts">
@@ -542,15 +556,14 @@
              <t>To specify a conditional context either a "when" or "not-when" attribute
                     may be used. The value of each "when" or "not-when" attributes is a whole label or
                     parameterized context rule as described below in <xref target="whole_label"/>.
-                    The content condition is met when the rule specified in the "when"
-                    attribute is matched. Alternatively, a "not-when" attribute may be used
-                    for a rule that must not be matched. It is an error to reference a rule that is
-                    not actually defined in the "rules" element.</t>
+                    The context condition is met when the rule specified in the "when"
+                    attribute is matched or when the rule in the "not-when" attribute fails to match.
+                    It is an error to reference a rule that is not actually defined in the "rules" element.</t>
 
                 <t>A parameterized context rule (see <xref target="parameterized_context_rule"/>)
                   defines the context immediately surrounding a given code point; unlike a sequence, the context
                   is not limited to a specific fixed code point, but for example may designate any member
-                  of a certain character class or a code point that has a certain Unicode property.</t>
+                  of a certain character class or a code point that has a certain Unicode character property.</t>
 
                   <t>Given a suitable definition of a parameterized context rule named "follows-virama" this
                     example specifies that a ZERO-WIDTH JOINER (U+200D) is restricted
@@ -566,8 +579,8 @@
 
                 <t>In contrast, a whole label rule (see <xref target="whole_label"/>) specifies a condition
                   to be met by the entire label, for example that it must contain at least one code point
-                  from a given script anywhere in the label.  In the following example no digit from either
-                  range must occur in a label that mixes digits from both ranges:</t>
+                  from a given script anywhere in the label.  In the following example, no digit from either
+                  range may occur in a label that mixes digits from both ranges:</t>
                   <t>
                    <figure>
                             <artwork><![CDATA[    <data>
@@ -582,9 +595,9 @@
 
                 <t>The OPTIONAL "when" or "not-when" attributes are mutually exclusive. They MAY be
                     applied to both "char" and "range" elements in the "data" element, including "char" elements
-                    definining sequences of code points, as well as to "var" elements (see <xref target="conditional_variants"/>).</t>
+                    defining sequences of code points, as well as to "var" elements (see <xref target="conditional_variants"/>).</t>
 
-                    <t>If a contextual condition is not satisfied for any code point in a label, the label is invalid, see <xref
+                    <t>If a label contains one or more code points that fail to satisfy a conditional context, the label is invalid, see <xref
                     target="implied_actions"/>. For variants, the conditional context restricts the definition of the variant
                     to the case where the condition is met. Outside the specified context, a variant is not defined.</t>
             </section>
@@ -691,10 +704,10 @@
                         explicit. See the discussion in <xref target="variants_actions" />. Making
                         this relation explicit allows a generalization of the "type" attribute from
                         directly reflecting dispositions to a more differentiated intermediate value
-                        that used in the resolution of label disposition. Instead of the default
+                        that is then used in the resolution of label disposition. Instead of the default
                         action of applying the most restrictive disposition to the entire label, such
                         a generalized resolution can be used to achieve additional goals, such as
-                        limiting the set of allocated variant labels, or to implement other policies
+                        limiting the set of allocatable variant labels, or to implement other policies
                         found in existing LGRs (see for example <xref target="translate_rfc3743" />).
                    </t>
                     <t>Because variant mappings MUST be unique, it is not possible to define the same
@@ -814,10 +827,11 @@
 ]]></artwork>
                         </figure>
                    </t>
-                    <t>While only a single "when" or "not-when" attribute MUST be applied to any "var"
-                        element, multiple "var" elements using the same mapping, but
-                        different "when" or "not-when" attributes MAY be specified. The combination of
-                        mapping and conditional context defines a unique variant.</t>
+                    <t> While a "var" element MUST NOT contain multiple conditions (it
+                       is only allowed a single "when" or "not-when" attribute), multiple
+                       "var" elements using the same mapping MAY be specified with
+                       different "when" or "not-when" attributes.  The combination of
+                       mapping and conditional context defines a unique variant..</t>
 
                         <t>Care must be taken to ensure that
                         for each variant label at most one of the contextual conditions is met for variants
@@ -828,7 +842,7 @@
                    
                    <t>Two contexts may be complementary, as in the following example, which shows
                            ARABIC LETTER TEH MARBUTA (U+0629) as a variant of ARABIC LETTER ALEF 
-                           MAKSURA (U+0649), but with two different types.</t>
+                           MAKSURA (U+0647), but with two different types.</t>
                     <t>
                         <figure>
                             <artwork><![CDATA[    <char cp="0647" >
@@ -953,7 +967,7 @@
                         target="parameterized_context_rule"/>).</t>
                 <t>A Whole Label Evaluation rule (WLE) is applied to the whole label. It is used to
                     validate both original labels and variant labels computed from them using a
-                    permutation over all applicable variant mappings. A conditional context rules is
+                    permutation over all applicable variant mappings. A conditional context rule is
                     a specialized form of WLE specific to the context around a single code point or
                     code point sequence. For example, if a rule is referenced in the "when"
                     attribute of a variant mapping it is used to describe the conditional context
@@ -1130,7 +1144,8 @@
                     <t>This defines a class named "abcd" containing the code points for
                         characters "a", "b", "c" and "d". The ordering of the code points
                         is not material, but it is RECOMMENDED to list them in ascending
-                        order.
+                        order; not doing so makes it unnecessarily difficult for users to detect errors, such
+                        as duplicates or to compare and review these classes against other specifications.
                    </t>
                     <t>In a class definition, ranges of code points are represented by a hexadecimal 
                         start and end value separated by a hyphen. The following declaration is equivalent
@@ -1151,7 +1166,7 @@
                 </section>
                 <section title="Combined Classes" anchor="combined_classes">
                     <t>Classes may be combined using operators for set complement, union,
-                        intersection, difference and symmetric difference (exclusive-or). Because
+                        intersection, difference (subtraction) and symmetric difference (exclusive-or). Because
                         classes fundamentally function like sets, the union of several character
                         classes is itself a class, for example.</t>
                     <t>
@@ -1242,7 +1257,7 @@
           </section> 
 
             <section title="Whole Label and Context Rules" anchor="whole_label">
-                <t>Each rule is comprised of a series of matching operators that must be satisfied
+                <t>Each rule is comprises a series of matching operators that must be satisfied
                     in order to determine whether a label meets a given condition. Rules may
                     reference other rules or character classes defined elsewhere in the table.</t>
 
@@ -1483,7 +1498,7 @@
 
                 </section>
 
-                <section title="Example rule from IDNA2008" anchor="IDNA2008_example">
+                <section title="Example context rule from IDNA2008" anchor="IDNA2008_example">
 
                     <t>This is an example of the whole label evaluation rule from <xref
                             target="RFC5892"/> forbidding the mixture of the Arabic-Indic and
@@ -1516,34 +1531,44 @@
     </rules>]]></artwork>
                         </figure>
                    </t>
-                    <t>The effect of this example is that a label containing a code point
+                    <t>
+                        As specified in the example, a label containing a code point
                         from either of the two digit ranges is invalid for any label matching
                         the "mixed-digits" rule, that is, anytime a code point from the other
-                        range is also present. Note that this is not the same as invalidating
-                        the definition of the "range" elements.</t>
+                        range is also present. Note that invalidating the label is not the same 
+                        as invalidating the definition of the "range" elements; in particular,
+                        the definition of the tag values does not depend on the "when"
+                        attribute.</t>
+                       <t></t>
                 </section>
             </section>
 
             <section anchor="parameterized_context_rule" title="Parameterized Context or When Rules">
-                <t>A special type of rule provides a context for evaluating the validity of a code
-                    point or variant mapping. This rule is invoked by the "when" or "not-when" attributes described
+                <t>To recap: when a rule is intended to provide a context for evaluating the validity of a code
+                    point or variant mapping it is invoked by the "when" or "not-when" attributes described
                     in <xref target="contexts"/>. For "char" and "range" elements, an action implied 
                     by a context rule always has a
                     disposition of "invalid" whenever the rule given by the "when" attribute is not matched (see <xref
                         target="implied_actions"/>). Conversely, a "not-when" attribute results in a
-                    disposition of "invalid" whenever the rule is matched.</t>
+                    disposition of "invalid" whenever the rule is matched. When a rule is used in this way, 
+                    it is called a context  or "when" rule.</t>
+                   <t>The example in the previous, section shows a whole label rule used as a context 
+                     rule, essentially making the whole label the context. The next sections 
+                     describe several match operators that can be used to provide a more specific
+                     specification of a context, allowing a parameterized context rule. See Section <xref target="actions"/> 
+                     for an alternative method of defining an invalid disposition for a label not matching a whole label rule.</t>
 
                 <section title="The anchor Element">
 
-                    <t>Such parameterized context or "When Rules" MAY contain a special place holder
-                        represented by an "anchor" element. As each When Rule is evaluated, the
-                        "anchor" element is replaced by a literal corresponding to the "cp"
+                    <t>Such parameterized context rules are rules that contain a special place holder
+                        represented by an "anchor" element. As each When Rule is evaluated, if an "anchor"
+                        element if present, it is replaced by a literal corresponding to the "cp"
                         attribute of the element containing the "when" (or "not-when") attribute.
                         The match to the "anchor" element must be at the same position in the label
                         as the code point or variant mapping triggering the When Rule.</t>
                     <t>For example, the Greek lower numeral sign is invalid if not immediately
                         preceding a character in the Greek script. This is most naturally addressed
-                        with a When Rule using look-ahead:</t>
+                        with a parameterized When Rule using look-ahead:</t>
                     <t>
                         <figure>
                             <artwork><![CDATA[    <char cp="0375" when="preceding-greek"/>
@@ -1568,7 +1593,7 @@
                         label had two instances of U+0375 with the first one matching the rule and
                         the second not, then evaluating the When Rule MUST succeed for the first and
                         fail for the second instance.</t>
-                    <t>Unlike other rules, When Rules containing an "anchor" element MUST only be
+                    <t>Unlike other rules, rules containing an "anchor" element MUST only be
                         invoked via the "when" or "not-when" attributes on code points or variants;
                         otherwise their "anchor" elements cannot be evaluated. However, it is
                         possible to invoke rules not containing an "anchor" element from a "when" or
@@ -2145,20 +2170,21 @@
                   other label as a member. As discussed above, this can be prohibitive and is not
                   necessary.</t>
 
-               <t>Because of symmetry and transitivity, all variant mappings form disjoint sets
-                 in which each of them is a variant of all other members. As a consequence,
-                 the set of variant labels likewise forms disjoint subsets, based on which set of
-                 mappings was used.</t>
+               <t>Because of symmetry and transitivity, all variant mappings form disjoint sets. 
+                 In each of these sets, the source and target of each mapping are also variants 
+                 of the sources and targets of all the other mappings. As a consequence, if two labels
+                 have code points at the same position from two different of these variant mapping sets,
+                 the sets of their variant labels are likewise disjoint.</t>
 
               <t>Instead of generating all permutations, that is, using each variant mapping in each
-                set, it is sufficient to substitute an "index" mapping, in effect identifying the set
-                of variant code points. Such an index mapping could be, for example, the variant
-                mapping for which the target code point (or sequence) comes first in some sorting
-                order.</t>
+                set at a particular code position in the label, it is sufficient to substitute an "index" mapping,
+                in effect identifying the set of variant code points for that position. Such an index mapping 
+                could be, for example, the variant mapping for which the target code point (or sequence) 
+                comes first in some sorting order.</t>
 
               <t>To check collision then means generating a single variant label from the original
                 by substituting the "index" value as the target for mapping from any code
-                point. This results in an "index label".  Two labels collide whenever the index labels 
+                point. This results in an "index label". Two labels collide whenever the index labels 
                 for them are the same.</t>
              </section>
 
@@ -2167,11 +2193,11 @@
         <section title="Conversion to and from Other Formats">
 
             <t>Both <xref target="RFC3743"/> and <xref target="RFC4290"/> provide different grammars
-                for IDN tables. These formats are unable to fully cater for the increased
+                for IDN tables. The formats in those documents are unable to fully support the increased
                 requirements of contemporary IDN variant policies.</t>
 
-            <t>This specification is a superset of functionality provided by these IDN table
-                formats, thus any table expressed in those formats can be expressed in this format.
+            <t>This specification is a superset of functionality provided by the older IDN table
+                formats, thus any table expressed in those formats can be expressed in this new format.
                 Automated conversion can be conducted between tables conformant with the grammar
                 specified in each document.</t>
 
@@ -2182,7 +2208,7 @@
         
         <section title="Media Type">
                 
-            <t>Transmission of a well-formed LGR in accordance with this specification SHOULD
+            <t>Well-formed LGRs that comply with this specification SHOULD
                 be transmitted with a media type of "application/lgr+xml". This media
                 type will signal to an LGR-aware client that the content is designed to
                 be interpreted as an LGR.</t>
@@ -2403,7 +2429,49 @@
            </t>
              <t>In practice, any LGR that includes the hyphen might also contain rules invalidating
                  any labels beginning, ending, and containing a hyphen in the third and fourth positions
-                 as required by <xref target="RFC5891" />.</t>
+                 as required by <xref target="RFC5891" />. </t>
+            <t>
+                <figure>
+                    <artwork><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<lgr xmlns="urn:ietf:params:xml:ns:lgr-1.0">
+<data>
+    <char cp="002D"  
+          not-when="hyphen-minus-disallowed" />
+    <range first-cp="0030" last-cp="0039" />
+    <range first-cp="0061" last-cp="007A" />
+</data>
+<rules>
+    <rule name="hyphen-minus-disallowed" 
+          comment="RFC5891 restrictions on U+002D">
+      <choice>
+        <rule comment="no leading hyphen">
+          <look-behind>
+            <start />
+          </look-behind>
+          <anchor />
+        </rule>
+        <rule comment="no trailing hyphen">
+          <anchor />
+          <look-ahead>
+            <end />
+          </look-ahead>
+        </rule>
+        <rule comment="no consecutive hyphens 
+                in third and fourth positions">
+          <look-behind>
+            <start />
+            <any />
+            <any />
+            <char cp="002D" comment="hyphen-minus" />
+          </look-behind>
+          <anchor />
+        </rule>
+      </choice>
+    </rule>
+</rules>
+</lgr>]]></artwork>
+                </figure>
+           </t>
             <t>The following sample LGR shows a more complete collection of the elements and
                 attributes defined in this specification in a somewhat typical context.</t>
             <t>
@@ -2451,7 +2519,7 @@
     &lt;range first-cp="0061" last-cp="007A" ref ="1" tag="letter" /&gt;
 
     &lt;!-- code point sequence --&gt;
-    &lt;char cp="006C 00B7 006C" comment="catalan middle dot" /&gt;
+    &lt;char cp="006C 00B7 006C" comment="Catalan middle dot" /&gt;
 
     &lt;!-- alternatively use a when rule --&gt;
     &lt;char cp="00B7" when="catalan-middle-dot" /&gt;
@@ -2663,7 +2731,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
             <t>However, if allocatable labels were generated simply by a straight permutation
                 of all variants with type other than type="blocked" and without regard to the
                 simplified and traditional variants, we would end up with an extra allocatable
-                label of "U+5E72 U+4E7E". This label is comprised of a both Simplified Chinese
+                label of "U+5E72 U+4E7E". This label is comprises both a Simplified Chinese
                 character and a Traditional Chinese code point and therefore shouldn't be
                 allocatable.</t>
             <t>To more fully resolve the dispositions requires several actions to be defined as
@@ -2786,7 +2854,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <t hangText="|"> separates items, out of which only one can be present</t>
                 </list>
            </t>
-            <t> By using the Unicode property "InSC" or "Indic_Syllabic_Category" which corresponds
+            <t> By using the Unicode character property "InSC" or "Indic_Syllabic_Category" which corresponds
                 rather directly to the classification of characters in the BNF above, we can
                 translate the BNF into a set of WLE rules matching the definition of an
                 akshara.</t>
@@ -2851,7 +2919,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                 aksharas, optionally interspersed with other characters, perhaps digits, for
                 example.</t>
 
-            <t>The relevant Unicode property could be replicated by tagging repertoire values 
+            <t>The relevant Unicode character property could be replicated by tagging repertoire values 
                 directly in the LGR which would remove the dependency on any specific version 
                 of the Unicode Standard.</t>
                 
@@ -2884,7 +2952,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                 registrations <xref target="RFC5564"/> was published by the Arabic-language
                 community.</t>
             <t>Contributions that have shaped this document have been provided by Francisco Arias,
-                Julien Bernard, Mark Davis, Martin Duerst, Paul Hoffman, Sarmad Hussain, Alexander
+                Julien Bernard, Mark Davis, Martin Duerst, Paul Hoffman, Sarmad Hussain, Barry Leiba, Alexander
                 Mayrhofer, Nicholas Ostler, Thomas Roessler, Audric Schiltknecht, Steve Sheng, Michel
                 Suignard, Andrew Sullivan, Wil Tan and John Yunker.</t>
         </section>
@@ -3054,6 +3122,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-10">
                               Minor ID-nits related edits. Integrate feedback on media type registration.
+                       </t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-11">
+                              Integrate feedback from AD review.
                        </t>
                     </list>
                </t>
