@@ -841,8 +841,8 @@
                        </t>
                    
                    <t>Two contexts may be complementary, as in the following example, which shows
-                           ARABIC LETTER TEH MARBUTA (U+0629) as a variant of ARABIC LETTER ALEF 
-                           MAKSURA (U+0647), but with two different types.</t>
+                           ARABIC LETTER TEH MARBUTA (U+0629) as a variant of ARABIC LETTER HEH
+                           (U+0647), but with two different types.</t>
                     <t>
                         <figure>
                             <artwork><![CDATA[    <char cp="0647" >
@@ -949,11 +949,11 @@
                 <t>Each "tag" attribute MAY contain multiple values separated by white space. A tag
                     value is an identifier,  which may also include certain punctuation marks, such
                     as colon. Formally, it MUST correspond to the XML 1.0 Nmtoken (Name token)
-                    production. It is an error to duplicate a value within the same "tag"
-                    attribute. A "tag" attribute for a "range" element applies to all code points
-                    in the range. Because code point sequences are not proper members of a set of
-                    code points, a "tag" attribute MUST NOT be present in a "char" element defining
-                    a code point sequence.
+                    production (see <xref target="XML"/> Section 2.3). It is an error to duplicate a
+                    value within the same "tag" attribute. A "tag" attribute for a "range" element
+                    applies to all code points in the range. Because code point sequences are not
+                    proper members of a set of code points, a "tag" attribute MUST NOT be present
+                    in a "char" element defining a code point sequence.
                </t>
             </section>
         </section>
