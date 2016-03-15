@@ -116,7 +116,7 @@
                         so that common mistakes can be caught.</t>
                     <t>An LGR needs to be able to express the set of valid code points that are
                         allowed for registration under a specific administrator's policies.</t>
-                    <t>An LGR need to be able to express computed alternatives to a given identifier 
+                    <t>An LGR needs to be able to express computed alternatives to a given identifier 
                         based on mapping relationships between code points, whether one-to-one or
                         many-to-many. These computed alternatives are commonly known as "variants".</t>
                     <t>Variant code points should be able to be tagged with explicit dispositions or
@@ -472,7 +472,7 @@
                 series of "char" and "range" elements describe eligible code points, or ranges of
                 code points, respectively.</t>
 
-            <t>Discrete permissible code points or code point sequences (see Section
+            <t>Discrete permissible code points or code point sequences (see
                <xref target="sequences" />) are declared with a "char"
                 element. Here is a minimal example declaration for a single code point, 
                 with the code point value given in the "cp" attribute:</t>
@@ -484,7 +484,7 @@
            </t>
 
                   <t>As described below, a full declaration for a "char" element, whether or
-                   not it is used for a single code point, or for a sequence (see Section <xref target="sequences" />), 
+                   not it is used for a single code point, or for a sequence (see <xref target="sequences" />), 
                     may have optional child elements defining variants. Both the "char" and "range" elements can 
                     take a number of optional attributes for conditional inclusion, commenting, cross referencing and
                     character tagging, as described below.</t>
@@ -1258,7 +1258,7 @@
           </section> 
 
             <section title="Whole Label and Context Rules" anchor="whole_label">
-                <t>Each rule is comprises a series of matching operators that must be satisfied
+                <t>Each rule comprises a series of matching operators that must be satisfied
                     in order to determine whether a label meets a given condition. Rules may
                     reference other rules or character classes defined elsewhere in the table.</t>
 
@@ -1499,7 +1499,7 @@
 
                 </section>
 
-                <section title="Example context rule from IDNA2008" anchor="IDNA2008_example">
+                <section title="Example context rule from IDNA specification" anchor="IDNA2008_example">
 
                     <t>This is an example of the whole label evaluation rule from <xref
                             target="RFC5892"/> forbidding the mixture of the Arabic-Indic and
@@ -2295,15 +2295,15 @@
         </section>
 
         <section title="Security Considerations">
-            <t>If a system that is querying an identifier list (such as a domain zone) that uses
+            <t>If a system that is querying an identifier list (such as a domain zone)  uses
                 the rules in this memo, and those rules are not implemented correctly, and that
                 system is relying on the rules being applied, the system might fail if the rules
                 are not applied in a predictable fashion. This could cause security problems for
                 the querying system.</t>
             <t>A naive implementation attempting to generate all variant labels for a given label
                 could lead to the possibility of exhausting the resources on the machine running the LGR
-                processor, potentially causing a DoS on the server. For many operations, brute force
-                generation can be avoided by optimization, and if needed, the number of permuted
+                processor, potentially causing denial-of-service consequences. For many operations,
+                brute force generation can be avoided by optimization, and if needed, the number of permuted
                 labels can be estimated more cheaply ahead of time.</t>
             <t>The implementation of Whole Label Evaluation rules, using certain backtracking
                 algorithms, can take exponential time for pathological rules or labels and exhaust
