@@ -372,7 +372,7 @@
 
                     <t>The element has an OPTIONAL "type" attribute, which refers to the internet
                         media type of the enclosed data. Typical types would be "text/plain" or
-                        "text/html". The attribute SHOULD be a valid MIME type. If supplied, it will
+                        "text/html". The attribute SHOULD be a valid media type. If supplied, it will
                         be assumed that the contents are of that media type. If the description
                         lacks a type field, it will be assumed to be plain text ("text/plain").</t>
 
@@ -380,10 +380,11 @@
 
                 <section title="The validity-start and validity-end Elements">
 
-                    <t>The "validity-start" and "validity-end" elements are OPTIONAL elements that
-                        describe the time period from which the contents of the LGR become valid
-                        (i.e. are used in registry policy), and the contents of the LGR cease to be
-                        used.</t>
+                    <t>The "validity-start" and "validity-end" elements are OPTIONAL
+                        elements that describe the time period from which the contents of the
+                        LGR become valid (are used in registry policy), and time when the
+                        contents of the LGR cease to be used, respectively.</t>
+                        
                     <t>The dates MUST confirm to the "full-date" format described in section 5.6 of
                             <xref target="RFC3339"/>.</t>
 
@@ -2275,8 +2276,8 @@
                     registrations shall be the five dispositions in this document described in
                     <xref target="recommended_disposition_values"/>.</t>
                     <t>Private Dispositions - This registry shall list dispositions that have been
-                    registered on a first-come first-served basis by third parties with the IANA.
-                    Such dispositions must take the form "entity:disposition" where the
+                    registered  "First Come First Served" <xref target="RFC5226"/> by third parties
+                    with the IANA. Such dispositions must take the form "entity:disposition" where the
                     entity is a prefix that uniquely identifies the private user of the
                     namespace. For example, "acme:reserved" could be a private extension used by the
                     organization ACME to denote a disposition relating to reserved labels. These
@@ -2294,8 +2295,8 @@
             </section>
         </section>
 
-        <section title="Security Considerations">
-            <t>If a system that is querying an identifier list (such as a domain zone)  uses
+        <section title="Considerations">
+            <t>If a system that is querying an identifier list (such as a domain zone) uses
                 the rules in this memo, and those rules are not implemented correctly, and that
                 system is relying on the rules being applied, the system might fail if the rules
                 are not applied in a predictable fashion. This could cause security problems for
