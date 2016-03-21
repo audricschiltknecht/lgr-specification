@@ -2295,12 +2295,7 @@
             </section>
         </section>
 
-        <section title="Considerations">
-            <t>If a system that is querying an identifier list (such as a domain zone) uses
-                the rules in this memo, and those rules are not implemented correctly, and that
-                system is relying on the rules being applied, the system might fail if the rules
-                are not applied in a predictable fashion. This could cause security problems for
-                the querying system.</t>
+        <section title="Security Considerations">
             <t>A naive implementation attempting to generate all variant labels for a given label
                 could lead to the possibility of exhausting the resources on the machine running the LGR
                 processor, potentially causing denial-of-service consequences. For many operations,
