@@ -14,7 +14,7 @@
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-11">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-12">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -974,7 +974,7 @@
                     attribute of a variant mapping it is used to describe the conditional context
                     under which the particular variant mapping is defined to exist.</t>
 
-                <t>Each rule is defined in a "rule" element. A rule MAY contain the following as
+                <t>Each rule is defined in a "rule" element. A rule may contain the following as
                     child elements:</t>
                 <t>
                     <list style="symbols">
@@ -1771,7 +1771,7 @@
     ...
     <action disp="blocked" any-variant="blocked" />
     <action disp="allocatable" only-variants="allocatable" />
-    <action disp="some-type" any-variant="allocatable" />    ]]></artwork></figure></t>
+    <action disp="some-disp" any-variant="allocatable" />    ]]></artwork></figure></t>
                     <t>In the example above, the label "xx" would have variant labels "xx", "xy",
                         "yx" and "yy". The first action would result in blocking any variant label
                         containing "y", because the variant mapping from "x" to "y" is of type
@@ -1941,21 +1941,15 @@
             </section>
             <section title="Default Actions" anchor="default_actions">
 
-                <t>As described in <xref target="actions"/> any variant mapping may be given a
-                    "type" attribute. An action containing an "any-variant", "only-variants",
-                    or "all-variants" attribute relates these type values to a resulting
-                    disposition for the entire variant label.</t>
+                 <t>If a label does not trigger any of the actions defined explicitly in the LGR,
+                    the following implicitly defined default actions are evaluated. They are shown
+                     below in their relative order of precedence (see <xref target="precedence"/>).
+                     Default actions have a lower order of precedence than explicit actions (see 
+                     <xref target="determining_dispositions"/>). </t>
 
-                <t>If no actions are defined for the standard disposition values of "invalid",
-                    "blocked", "allocatable", "activated", then the following implicitly defined
-                    default actions are evaluated. They are shown below in their default order of precedence (see <xref
-                        target="precedence"/>). This default order for evaluating dispositions
-                    applies only to labels that triggered no explicitly defined actions and which
-                    are therefore handled by implicitly defined default actions. Default actions have a lower order of
-                    precedence than explicit actions (see <xref target="determining_dispositions"
-                    />).</t>
-                <t>The default actions for variant labels are defined as follows:</t>
-
+                <t>The default actions for variant labels are defined as follows. The first set is
+                     triggered based on the standard variant type values of "invalid",
+                    "blocked", "allocatable", "activated":</t>
                 <t>
                     <figure>
                         <artwork><![CDATA[    <action disp="invalid" any-variant="invalid"/>
@@ -1975,6 +1969,11 @@
                         <artwork><![CDATA[    <action disp="valid" comment="Catch-all if other rules not met"/>]]></artwork>
                     </figure>
                </t>
+                <t>Conceptually, the implicitly defined default actions act just like a block of action 
+                elements that is added (virtually) beyond the last of the user-supplied actions. 
+                Any label not processed by the user-supplied actions would thus be processed 
+                by the default actions as if they were present in the LGR. As the last default action 
+                is a "catch-all", all processing is guaranteed to end with a definite disposition for the label.</t>
             </section>
         </section>
 
@@ -3142,6 +3141,12 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               Integrate feedback from AD review.
                        </t>
                     </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-12">
+                              Integrate additional feedback from AD review.
+                       </t>
+                    </list>
+
                </t>
         </section>
     </back>
