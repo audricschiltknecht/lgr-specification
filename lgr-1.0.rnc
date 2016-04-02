@@ -142,15 +142,18 @@ variant = element var {
 ## (or set-operator like "union") defined elsewhere.
 ## If used as a matcher (appearing under a "rule" element),
 ## the "count" attribute may be present.
-class-invocation = element class {
+class-invocation = element class { class-invocation-content }
+
+class-invocation-content =
     attribute by-ref { class-ref },
     attribute count { count-pattern }?,
     attribute comment { text }?
-}
 
 ## defines a new class (set of code points) using Unicode property
 ## or code points of the same tag value or code point literals
-class-declaration = element class {
+class-declaration = element class { class-declaration-content }
+
+class-declaration-content =
     # "name" attribute MUST be present if this is a "top-level"
     # class declaration, i.e. appearing directly under the "rules"
     # element. Otherwise, it MUST be absent.
@@ -170,12 +173,16 @@ class-declaration = element class {
       # e.g. "0061 0062-0063"
       | code-point-set-shorthand
     )
-  }
+
+
+class-invocation-or-declaration = element class {
+  class-invocation-content | class-declaration-content
+}
 
 class-or-set-operator-nested =
-  class-invocation | class-declaration | set-operator
+  class-invocation-or-declaration | set-operator
 
-class-or-set-operator-declaration = 
+class-or-set-operator-declaration =
   # a "class" element or set operator (effectively defining a class)
   # directly in the "rules" element.
   class-declaration | set-operator
