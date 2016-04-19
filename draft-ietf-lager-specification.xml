@@ -1711,7 +1711,7 @@
             <section title="The match and not-match Attributes" anchor="match_attribute">
             
                 <t>An OPTIONAL "match" or "not-match" attribute specifies a rule that must be matched or not
-                    matched as a condition for triggering an action. . Only a single rule may be named
+                    matched as a condition for triggering an action. Only a single rule may be named
                     as the value of a "match" or "not-match" attribute. Because rules may be
                     composed of other rules, this restriction to a single attribute value does not
                     impose any limitation on the contexts that can trigger an action.</t>
