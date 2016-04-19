@@ -2285,7 +2285,7 @@
                     with the IANA. Such dispositions must take the form "entity:disposition" where the
                     entity is a domain name that uniquely identifies the private user of the
                     namespace. For example, "example.org:reserved" could be a private extension used
-                    by the example organization to denote a disposition relating to reserved labels
+                    by the example organization to denote a disposition relating to reserved labels.
                     These extensions are not intended to be interoperable, but registration is designed
                     to minimize potential conflicts. It is strongly recommended any new dispositions
                     that require interoperability and have applicability beyond a single
@@ -2293,8 +2293,8 @@
                 </list>
                </t>
                 <t>Standard dispositions MUST NOT contain the ":" character in order to
-                    distinguish them from private dispositions.</t>
-                <t>All disposition names shall be in lowercase ASCII.</t>
+                    distinguish them from private dispositions. All disposition names shall be in
+                    lowercase ASCII.</t>
                 <t>The IANA registry should provide data on the name of the disposition, the
                     intended purposes, and the registrant or defining specification for the
                     disposition.</t>
