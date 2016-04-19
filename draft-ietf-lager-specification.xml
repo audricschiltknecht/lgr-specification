@@ -1949,7 +1949,7 @@
 
                 <t>The default actions for variant labels are defined as follows. The first set is
                      triggered based on the standard variant type values of "invalid",
-                    "blocked", "allocatable", "activated":</t>
+                    "blocked", "allocatable" and "activated":</t>
                 <t>
                     <figure>
                         <artwork><![CDATA[    <action disp="invalid" any-variant="invalid"/>
