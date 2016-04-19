@@ -2277,10 +2277,10 @@
                     <t>Private Dispositions - This registry shall list dispositions that have been
                     registered  "First Come First Served" <xref target="RFC5226"/> by third parties
                     with the IANA. Such dispositions must take the form "entity:disposition" where the
-                    entity is a prefix that uniquely identifies the private user of the
-                    namespace. For example, "acme:reserved" could be a private extension used by the
-                    organization ACME to denote a disposition relating to reserved labels. These
-                    extensions are not intended to be interoperable, but registration is designed
+                    entity is a domain name that uniquely identifies the private user of the
+                    namespace. For example, "example.org:reserved" could be a private extension used
+                    by the example organization to denote a disposition relating to reserved labels
+                    These extensions are not intended to be interoperable, but registration is designed
                     to minimize potential conflicts. It is strongly recommended any new dispositions
                     that require interoperability and have applicability beyond a single
                     organization be defined as Standard Dispositions.</t>
@@ -3143,7 +3143,8 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-12">
-                              Integrate additional feedback from AD review.
+                              Integrate additional feedback from AD review. Use domain names for the prefixes
+                              in private dispositions to reduce potential conflicts.
                        </t>
                     </list>
 
