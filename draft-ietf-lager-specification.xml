@@ -168,6 +168,11 @@
           
             <t>An LGR is expressed as a well-formed XML Document <xref target="XML"/>.</t>
 
+            <t>As XML is case-sensitive, an LGR must be authored with the correct
+                casing. For example, the XML element names must be in lower
+                case as described in this specification, and matching of attribute
+                values, is only performed in a case-sensitive manner.</t>
+
             <section title="Namespace">
 
                 <t>The XML Namespace URI is "urn:ietf:params:xml:ns:lgr-1.0".</t>
@@ -2287,8 +2292,9 @@
                     organization be defined as Standard Dispositions.</t>
                 </list>
                </t>
-                <t>All private dispositions MUST be registered using the prefix-colon notation
-                    to distinguish them from standard dispositions.</t>
+                <t>Standard dispositions MUST NOT contain the ":" character in order to
+                    distinguish them from private dispositions.</t>
+                <t>All disposition names shall be in lowercase ASCII.</t>
                 <t>The IANA registry should provide data on the name of the disposition, the
                     intended purposes, and the registrant or defining specification for the
                     disposition.</t>
