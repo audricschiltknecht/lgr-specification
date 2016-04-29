@@ -170,9 +170,12 @@
             that conforms to the schema defined in <xref target="schema"/>.</t>
 
             <t>As XML is case-sensitive, an LGR must be authored with the correct
-                casing. For example, the XML element names must be in lower
+                casing. For example, the XML element names MUST be in lower
                 case as described in this specification, and matching of attribute
                 values, is only performed in a case-sensitive manner.</t>
+			
+			<t>A document that is not well-formed, non-conforming or violates other 
+			constraints specified in this specification MUST be rejected.</t>
 
             <section title="Namespace">
 
@@ -221,10 +224,11 @@
                 <t>A document MUST contain exactly one "lgr" element. Each "lgr" element MUST
                 contain zero or one "meta" element, exactly one "data" element, and
                 zero or one "rules" element; and these three elements MUST be in that order.</t>
-
-                 <t>Most elements that are direct or nested child elements of the "rules" element
-                     MUST be placed in a specific relative order to other elements for the LGR to be valid.
-                    An LGR that violates these constraints MUST be rejected. </t>
+					
+				<t>Some elements that are direct or nested child elements of the "rules" element
+                   MUST be placed in a specific relative order to other elements for the LGR to be valid.
+                   An LGR that violates these constraints MUST be rejected. In other cases, changing
+                   the ordering would result in a valid, but different specification.</t>
 
                 <t>In the following descriptions, required, non-repeating elements or attributes are
                     generally not called out explicitly, in contrast to "OPTIONAL" ones,
