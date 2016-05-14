@@ -452,8 +452,9 @@
                     <t>
                         <figure>
                             <artwork><![CDATA[    <references>
-      <reference id="0">The Unicode Consortium. The Unicode Standard, Version 8.0.0, 
-        (Mountain View, CA: The Unicode Consortium, 2015. ISBN 978-1-936213-10-8)
+      <reference id="0">The Unicode Consortium. The Unicode
+        Standard, Version 8.0.0, (Mountain View, CA: The Unicode
+        Consortium, 2015. ISBN 978-1-936213-10-8)
         http://www.unicode.org/versions/Unicode8.0.0/</reference>
       <reference id="1">Big-5: Computer Chinese Glyph and Character
          Code Mapping Table, Technical Report C-26, 1984</reference>
