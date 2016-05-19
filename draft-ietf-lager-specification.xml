@@ -15,7 +15,7 @@
         <!ENTITY rfc6838 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6838.xml">
         <!ENTITY rfc7303 PUBLIC "" "http://xml.resource.org/public/rfc/bibxml/reference.RFC.7303.xml">
         ]>
-<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-12">
+<rfc category="std" ipr="trust200902" docName="draft-ietf-lager-specification-13">
     <?rfc toc="yes" ?>
     <?rfc symrefs="yes" ?>
     <?rfc sortrefs="yes"?>
@@ -173,9 +173,9 @@
                 casing. For example, the XML element names MUST be in lower
                 case as described in this specification, and matching of attribute
                 values, is only performed in a case-sensitive manner.</t>
-			
-			<t>A document that is not well-formed, non-conforming or violates other 
-			constraints specified in this specification MUST be rejected.</t>
+            
+            <t>A document that is not well-formed, non-conforming or violates other 
+            constraints specified in this specification MUST be rejected.</t>
 
             <section title="Namespace">
 
@@ -224,8 +224,8 @@
                 <t>A document MUST contain exactly one "lgr" element. Each "lgr" element MUST
                 contain zero or one "meta" element, exactly one "data" element, and
                 zero or one "rules" element; and these three elements MUST be in that order.</t>
-					
-				<t>Some elements that are direct or nested child elements of the "rules" element
+                    
+                <t>Some elements that are direct or nested child elements of the "rules" element
                    MUST be placed in a specific relative order to other elements for the LGR to be valid.
                    An LGR that violates these constraints MUST be rejected. In other cases, changing
                    the ordering would result in a valid, but different specification.</t>
@@ -2331,15 +2331,46 @@
         </section>
 
         <section title="Security Considerations">
-            <t>A naive implementation attempting to generate all variant labels for a given label
-                could lead to the possibility of exhausting the resources on the machine running the LGR
-                processor, potentially causing denial-of-service consequences. For many operations,
-                brute force generation can be avoided by optimization, and if needed, the number of permuted
-                labels can be estimated more cheaply ahead of time.</t>
-            <t>The implementation of Whole Label Evaluation rules, using certain backtracking
-                algorithms, can take exponential time for pathological rules or labels and exhaust
-                stack resources.  This can be mitigated by proper implementation and enforcing the
-                restrictions on permissible label length.</t>
+                <t>Substantially unrestricted use of non-ASCII characters
+               in security-relevant identifiers such as domain name labels may cause
+               user confusion and invite various types of attacks.  In many languages,
+               in particular those using complex or large scripts, an attacker has an
+               opportunity to divert or confuse users as a result of different code points
+               with identical appearance or similar semantics. </t>
+
+               <t>Label Generation Rule provide a partial remedy
+               for these risks by supplying a framework for prohibiting inappropriate
+               code points or sequences  from being registered at all and for permitting
+               "variant" code points to be grouped together so that labels containing
+               them may be mutually exclusive or registered only to the same owner.</t>
+            
+               <t>In addition, being fully machine processable, the format may enable
+               automated checks for known weaknesses in label generation rules.
+               However, by itself, the format or this document do not ensure that
+               the label generation rules expressed in this format are free of risk or
+               suitable for a given zone. And, of course, errors in construction of the
+               rules may significantly affect the quality of the result.</t>
+    		
+			   <t>A well-designed policy on identifier use (such as for domain names)
+				may require additional evaluation of labels that cannot be expressed in 
+			    this format.  Such further evaluations may involve a
+                tradeoff between flexibility and risk or a case-by-case evaluation of
+                a proposed label in context with already registered labels, for example,  
+                when reviewing labels for their degree of visual confusability.</t>
+            
+               <t>A naive implementation attempting to generate all variant labels for a
+               given label  could lead to the possibility of exhausting the resources on
+               the machine running the LGR processor, potentially causing denial-of-service
+               consequences. For many operations, brute force generation can be avoided
+               by optimization, and if needed, the number of permuted labels can be
+               estimated more cheaply ahead of time.</t>
+            
+               <t>The implementation of Whole Label Evaluation rules, using certain
+               backtracking  algorithms, can take exponential time for pathological
+               rules or labels and exhaust  stack resources. This can be mitigated by
+               proper implementation and enforcing the restrictions on permissible
+               label length.</t>
+            
         </section>
 
     </middle>
@@ -3183,6 +3214,11 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                               Integrate additional feedback from AD review. Use domain names for the prefixes
                               in private dispositions to reduce potential conflicts. Add clarifying language on 
                               ordering, well-formedness, collision checking and rules.
+                       </t>
+                    </list>
+                    <list style="hanging" hangIndent="5">
+                        <t hangText="draft-ietf-lager-specification-13">
+                              Integrate additional feedback from AD review. Security.
                        </t>
                     </list>
 
