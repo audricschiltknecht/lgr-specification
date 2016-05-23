@@ -2331,45 +2331,49 @@
         </section>
 
         <section title="Security Considerations">
+          
+          <section title="LGRs Are Only a Partial Remedy for Problem Space">
+            
                 <t>Substantially unrestricted use of non-ASCII characters
                in security-relevant identifiers such as domain name labels may cause
-               user confusion and invite various types of attacks.  In many languages,
+               user confusion and invite various types of attacks. In many languages,
                in particular those using complex or large scripts, an attacker has an
                opportunity to divert or confuse users as a result of different code points
-               with identical appearance or similar semantics. </t>
+               with identical appearance or similar semantics.</t>
 
-               <t>Label Generation Rule provide a partial remedy
+               <t>Label Generation Rules provide a partial remedy
                for these risks by supplying a framework for prohibiting inappropriate
-               code points or sequences  from being registered at all and for permitting
+               code points or sequences from being registered at all and for permitting
                "variant" code points to be grouped together so that labels containing
                them may be mutually exclusive or registered only to the same owner.</t>
             
-               <t>In addition, being fully machine processable, the format may enable
+               <t>In addition, by being fully machine processable the format may enable
                automated checks for known weaknesses in label generation rules.
-               However, by itself, the format or this document do not ensure that
-               the label generation rules expressed in this format are free of risk or
-               suitable for a given zone. And, of course, errors in construction of the
-               rules may significantly affect the quality of the result.</t>
-    		
-			   <t>A well-designed policy on identifier use (such as for domain names)
-				may require additional evaluation of labels that cannot be expressed in 
-			    this format.  Such further evaluations may involve a
-                tradeoff between flexibility and risk or a case-by-case evaluation of
-                a proposed label in context with already registered labels, for example,  
-                when reviewing labels for their degree of visual confusability.</t>
+               However, by itself, the format or this specification do not ensure that
+               the label generation rules expressed in this format are free of risk.
+               Additional approaches may be considered depending on the acceptable 
+               trade-off between flexibility and risk for a given application.
+               One method of managing risk may involve a case-by-case evaluation of
+               a proposed label in context with already registered labels, for example,
+               when reviewing labels for their degree of visual confusability.</t>
+             </section>
+             
+             <section title="Computational Expense of Complex Tables">
             
                <t>A naive implementation attempting to generate all variant labels for a
-               given label  could lead to the possibility of exhausting the resources on
+               given label could lead to the possibility of exhausting the resources on
                the machine running the LGR processor, potentially causing denial-of-service
                consequences. For many operations, brute force generation can be avoided
                by optimization, and if needed, the number of permuted labels can be
                estimated more cheaply ahead of time.</t>
             
                <t>The implementation of Whole Label Evaluation rules, using certain
-               backtracking  algorithms, can take exponential time for pathological
+               backtracking algorithms, can take exponential time for pathological
                rules or labels and exhaust  stack resources. This can be mitigated by
                proper implementation and enforcing the restrictions on permissible
                label length.</t>
+
+             </section>
             
         </section>
 
@@ -3218,7 +3222,7 @@ U+6F27;U+4E7E;U+6F27;U+4E81,U+5E72,U+5E79,U+69A6]]></artwork>
                     </list>
                     <list style="hanging" hangIndent="5">
                         <t hangText="draft-ietf-lager-specification-13">
-                              Integrate additional feedback from AD review. Security.
+                              Integrate additional feedback on Security Considerations.
                        </t>
                     </list>
 
